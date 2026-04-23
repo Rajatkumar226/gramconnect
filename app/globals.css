@@ -1,26 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
+/* ─── Theme Variables ─── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Backgrounds */
+  --bg:        #F6F3ED;
+  --bg-alt:    #EDE9E1;
+  --card:      #FFFFFF;
+  --card-2:    #F9F6F1;
+  --overlay:   rgba(255,255,255,0.88);
+
+  /* Text */
+  --text:      #1C1C1E;
+  --text-2:    #4B5563;
+  --text-3:    #9CA3AF;
+
+  /* Brand */
+  --green:     #1B4332;
+  --green-mid: #2D6A4F;
+  --green-lt:  #40916C;
+  --sage:      #74C69D;
+  --gold:      #C9922A;
+  --gold-lt:   #E8B84B;
+  --gold-pale: #FDF0D8;
+
+  /* Borders & Shadows */
+  --border:    rgba(27,67,50,0.10);
+  --shadow-sm: 0 2px 8px rgba(27,67,50,0.07);
+  --shadow:    0 8px 32px rgba(27,67,50,0.10);
+  --shadow-lg: 0 20px 60px rgba(27,67,50,0.14);
+
+  /* Navbar */
+  --nav-bg:    rgba(10,28,18,0.96);
+
+  /* Scrollbar */
+  --sb-track: #EDE9E1;
+  --sb-thumb: #40916C;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+[data-theme="dark"] {
+  --bg:        #0C120E;
+  --bg-alt:    #111A13;
+  --card:      #141E16;
+  --card-2:    #1A261C;
+  --overlay:   rgba(20,30,22,0.90);
+
+  --text:      #E2F0E8;
+  --text-2:    #8FAF96;
+  --text-3:    #4D6B55;
+
+  --green:     #3DD68C;
+  --green-mid: #2DBE7A;
+  --green-lt:  #5AE8A3;
+  --sage:      #A7F3D0;
+  --gold:      #E8B84B;
+  --gold-lt:   #F5CC6F;
+  --gold-pale: rgba(232,184,75,0.10);
+
+  --border:    rgba(255,255,255,0.06);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.30);
+  --shadow:    0 8px 32px rgba(0,0,0,0.40);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.55);
+
+  --nav-bg:    rgba(5,10,7,0.97);
+
+  --sb-track: #111A13;
+  --sb-thumb: #2DBE7A;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base ─── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s ease, color 0.3s ease;
+  /* bottom padding for mobile bottom nav */
+  padding-bottom: env(safe-area-inset-bottom);
 }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar            { width: 5px; height: 5px; }
+::-webkit-scrollbar-track      { background: var(--sb-track); }
+::-webkit-scrollbar-thumb      { background: var(--sb-thumb); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover{ background: var(--green); }
+
+/* ─── Font helpers ─── */
+.font-display { font-family: 'Playfair Display', Georgia, serif !important; }
+.font-hindi   { font-family: 'Noto Sans Devanagari', sans-serif !important; }
+
+/* ─── Cards ─── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  border-radius: 20px;
+  transition: box-shadow 0.3s ease, transform 0.3s ease, background 0.3s ease;
+}
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+}
+@media (max-width: 640px) {
+  .card:hover { transform: none; }
+}
+
+/* ─── Glass ─── */
+.glass {
+  background: var(--overlay);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border);
+}
+.glass-dark {
+  background: rgba(10,28,18,0.80);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(212,168,83,0.15);
+}
+
+/* ─── Gradient backgrounds ─── */
+.hero-gradient {
+  background: linear-gradient(160deg, #041A0C 0%, #0C2E1A 40%, #163A24 70%, #1B4332 100%);
+}
+.green-gradient {
+  background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%);
+}
+.gold-gradient {
+  background: linear-gradient(135deg, #C9922A 0%, #E8B84B 100%);
+}
+
+/* ─── Gold shimmer ─── */
+@keyframes shimmer {
+  0%   { background-position: -300% center; }
+  100% { background-position:  300% center; }
+}
+.gold-shimmer {
+  background: linear-gradient(90deg, #b87d1a, #E8B84B, #C9922A, #E8B84B, #b87d1a);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ─── Pulse on CTAs ─── */
+@keyframes pulse-ring {
+  0%,100%{ box-shadow: 0 0 0 0 rgba(201,146,42,0.50); }
+  50%    { box-shadow: 0 0 0 12px rgba(201,146,42,0); }
+}
+.pulse { animation: pulse-ring 2.4s ease-in-out infinite; }
+
+/* ─── Float ─── */
+@keyframes float {
+  0%,100%{ transform: translateY(0); }
+  50%    { transform: translateY(-10px); }
+}
+.float { animation: float 3.6s ease-in-out infinite; }
+
+/* ─── Bounce scroll ─── */
+@keyframes bounce-down {
+  0%,100%{ transform: translateY(0); }
+  50%    { transform: translateY(8px); }
+}
+.bounce-down { animation: bounce-down 1.6s ease-in-out infinite; }
+
+/* ─── Divider gold ─── */
+.divider-gold {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.4;
+}
+
+/* ─── Verified badge ─── */
+.badge-verified {
+  background: linear-gradient(135deg, #1B4332, #2D6A4F);
+  border: 1px solid rgba(201,146,42,0.35);
+  color: #E8B84B;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 99px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+[data-theme="dark"] .badge-verified {
+  background: linear-gradient(135deg, #0C2E1A, #163A24);
+  border-color: rgba(232,184,75,0.3);
+}
+
+/* ─── Emergency button ─── */
+.emergency-card {
+  transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s ease;
+}
+.emergency-card:active { transform: scale(0.96) !important; }
+
+/* ─── Input base ─── */
+.input {
+  background: var(--bg-alt, var(--bg));
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 15px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+.input:focus {
+  border-color: var(--green-mid);
+  box-shadow: 0 0 0 3px rgba(45,106,79,0.15);
+}
+[data-theme="dark"] .input { background: var(--card-2); }
+
+/* ─── Bottom nav height compensation ─── */
+@media (max-width: 767px) {
+  .page-content { padding-bottom: 80px; }
+}
+
+/* ─── Smooth theme transition ─── */
+*, *::before, *::after {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+/* Exclude transitions that would feel sluggish */
+.no-transition, .no-transition * { transition: none !important; }

@@ -1,65 +1,253 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import type { Transition } from "framer-motion";
+import {
+  FileText, Stethoscope, Phone, Store,
+  ArrowRight, Bell, AlertTriangle, CloudRain,
+  CheckCircle2, Megaphone, Shield, ChevronDown,
+} from "lucide-react";
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 32 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.65, ease: "easeOut" as const, delay } as Transition,
+});
+
+const notices = [
+  { id: 1, date: "22 Apr 2025", title: "Gram Sabha — 28 April 2025", body: "Monthly Gram Sabha at Panchayat Bhawan, 11:00 AM. Agenda: PMAY housing list, road repair tender.", urgent: true },
+  { id: 2, date: "20 Apr 2025", title: "PM-KISAN 17th Instalment Released", body: "₹2,000 credited to eligible farmers. Check your passbook or call 155261.", urgent: false },
+  { id: 3, date: "18 Apr 2025", title: "Free Eye Check-up Camp — 25 April", body: "Eye check + free spectacles at PHC Dehrian. Bring Aadhaar. HP Health Dept.", urgent: false },
+  { id: 4, date: "15 Apr 2025", title: "Panchayat Holiday — 14 Apr", body: "Office closed on Ambedkar Jayanti (14 Apr). Work resumed 15 April.", urgent: false },
+];
+
+const quickLinks = [
+  { icon: FileText,    label: "Sarkari Yojnaen",   hi: "सरकारी योजनाएँ",  href: "/yojnaen",   from: "#1B4332", to: "#2D6A4F", iconCol: "#74C69D" },
+  { icon: Stethoscope, label: "Health Directory",   hi: "स्वास्थ्य सेवाएँ", href: "/health",    from: "#1e3a5f", to: "#2d5986", iconCol: "#7ab3e0" },
+  { icon: Phone,       label: "Emergency",          hi: "आपातकाल",        href: "/emergency", from: "#7f1d1d", to: "#b91c1c", iconCol: "#fca5a5" },
+  { icon: Store,       label: "Business Directory", hi: "स्थानीय व्यापार",  href: "/directory", from: "#78350f", to: "#b45309", iconCol: "#fde68a" },
+];
+
+const stats = [
+  { v: "847", l: "Villagers",   hi: "ग्रामीण" },
+  { v: "32+", l: "Businesses",  hi: "व्यापार" },
+  { v: "16+", l: "Schemes",     hi: "योजनाएँ" },
+  { v: "6",   l: "Emergency #", hi: "आपातकाल" },
+];
+
+export default function HomePage() {
+  const [ticker, setTicker] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setTicker((p) => (p + 1) % notices.length), 5000);
+    return () => clearInterval(t);
+  }, []);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div>
+      {/* ── HERO ── */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden hero-gradient">
+        {[
+          { w: 420, h: 420, top: "10%", left: "5%",  col: "#C9922A" },
+          { w: 320, h: 320, top: "60%", right: "5%", col: "#2D6A4F" },
+          { w: 200, h: 200, top: "35%", left: "55%", col: "#C9922A" },
+        ].map((o, i) => (
+          <motion.div key={i} className="absolute rounded-full pointer-events-none"
+            style={{ width: o.w, height: o.h, top: o.top, left: o.left, right: o.right,
+              background: `radial-gradient(circle, ${o.col}22, transparent 70%)` }}
+            animate={{ scale: [1, 1.12, 1], opacity: [0.6, 1, 0.6] }}
+            transition={{ duration: 5 + i * 1.5, repeat: Infinity, ease: "easeInOut" }}
+          />
+        ))}
+
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center pt-28 pb-20">
+          <motion.div initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 glass-dark">
+            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: "#74C69D" }} />
+            <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#74C69D" }}>
+              Dehrian · Jawalamukhi · Kangra · HP
+            </span>
+          </motion.div>
+
+          <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
+            className="text-5xl sm:text-7xl lg:text-8xl font-bold text-white leading-tight mb-3 font-display">
+            Gram<span className="gold-shimmer">Connect</span>
+          </motion.h1>
+
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-sm tracking-widest mb-4 font-hindi" style={{ color: "rgba(255,255,255,0.45)" }}>
+            ग्रामकनेक्ट — डिजिटल ग्राम पंचायत पोर्टल
+          </motion.p>
+
+          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-10"
+            style={{ color: "rgba(255,255,255,0.62)" }}>
+            Your village&apos;s official digital portal — govt schemes, health services, emergency contacts, and local businesses.
+          </motion.p>
+
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.55 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Link href="/yojnaen"
+              className="flex items-center gap-2.5 px-7 py-4 rounded-2xl font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-2xl pulse w-full sm:w-auto justify-center"
+              style={{ background: "linear-gradient(135deg, #C9922A, #E8B84B)", color: "#1B4332" }}>
+              <FileText size={17} /> Explore Schemes <ArrowRight size={16} />
+            </Link>
+            <Link href="/emergency"
+              className="flex items-center gap-2.5 px-7 py-4 rounded-2xl font-semibold text-base text-white glass-dark transition-all duration-300 hover:scale-105 w-full sm:w-auto justify-center">
+              <Phone size={17} /> Emergency Numbers
+            </Link>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}
+            className="mt-16 flex flex-col items-center gap-1.5 bounce-down" style={{ color: "rgba(255,255,255,0.25)" }}>
+            <span className="text-xs tracking-widest uppercase">Scroll</span>
+            <ChevronDown size={16} />
+          </motion.div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* ── WEATHER ALERT ── */}
+      <div style={{ backgroundColor: "#7f1d1d" }}>
+        <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center gap-3 overflow-hidden">
+          <div className="flex items-center gap-1.5 shrink-0">
+            <AlertTriangle size={13} className="animate-pulse" style={{ color: "#fca5a5" }} />
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "#fca5a5" }}>Alert</span>
+          </div>
+          <div className="w-px h-3.5" style={{ backgroundColor: "#7f2020" }} />
+          <div className="flex items-center gap-2 overflow-hidden min-w-0">
+            <CloudRain size={13} className="shrink-0" style={{ color: "#fca5a5" }} />
+            <p className="text-xs truncate" style={{ color: "rgba(255,200,200,0.85)" }}>
+              IMD: Heavy rain &amp; thunderstorm in Kangra 24–25 Apr. Avoid hilly travel.
+            </p>
+          </div>
         </div>
-      </main>
+      </div>
+
+      {/* ── STATS ── */}
+      <section className="py-12 sm:py-16" style={{ backgroundColor: "var(--bg)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {stats.map((s, i) => (
+              <motion.div key={s.v} {...fadeUp(i * 0.08)} className="card text-center p-5 sm:p-7">
+                <p className="text-3xl sm:text-4xl font-bold mb-1 font-display" style={{ color: "var(--green-mid)" }}>{s.v}</p>
+                <p className="text-sm font-medium" style={{ color: "var(--text-2)" }}>{s.l}</p>
+                <p className="text-xs mt-0.5 font-hindi" style={{ color: "var(--text-3)" }}>{s.hi}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── NOTICE BOARD ── */}
+      <section className="py-12 sm:py-20" style={{ backgroundColor: "var(--bg-alt)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp()} className="flex items-center gap-3 mb-8">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center green-gradient">
+              <Megaphone size={18} color="white" />
+            </div>
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold font-display" style={{ color: "var(--text)" }}>Notice Board</h2>
+              <p className="text-xs font-hindi" style={{ color: "var(--text-3)" }}>सूचना पट्ट</p>
+            </div>
+            <div className="ml-auto flex items-center gap-1.5">
+              <Bell size={13} style={{ color: "var(--gold)" }} />
+              <span className="text-xs font-semibold" style={{ color: "var(--gold)" }}>{notices.length} active</span>
+            </div>
+          </motion.div>
+
+          <div className="flex flex-col gap-3">
+            {notices.map((n, i) => (
+              <motion.div key={n.id} {...fadeUp(i * 0.07)}
+                className="card p-4 sm:p-5"
+                whileHover={{ scale: 1.005 }}
+                style={{
+                  borderLeft: `4px solid ${n.urgent ? "#ef4444" : "var(--green-mid)"}`,
+                  outline: ticker === i ? `2px solid rgba(201,146,42,0.3)` : "none",
+                }}>
+                <div className="flex items-start gap-3.5">
+                  <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ backgroundColor: n.urgent ? "rgba(239,68,68,0.1)" : "rgba(27,67,50,0.08)" }}>
+                    {n.urgent
+                      ? <AlertTriangle size={15} color="#ef4444" />
+                      : <CheckCircle2 size={15} style={{ color: "var(--green-mid)" }} />}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2 mb-1">
+                      <h3 className="font-semibold text-sm sm:text-base" style={{ color: "var(--text)" }}>{n.title}</h3>
+                      {n.urgent && <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-600">URGENT</span>}
+                    </div>
+                    <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "var(--text-2)" }}>{n.body}</p>
+                    <p className="text-xs mt-2" style={{ color: "var(--text-3)" }}>{n.date}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── QUICK ACCESS ── */}
+      <section className="py-12 sm:py-20" style={{ backgroundColor: "var(--bg)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp()} className="text-center mb-10">
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--gold)" }}>Quick Access</p>
+            <h2 className="text-2xl sm:text-4xl font-bold font-display" style={{ color: "var(--text)" }}>
+              Everything Your Village Needs
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+            {quickLinks.map((l, i) => (
+              <motion.div key={l.href} {...fadeUp(i * 0.08)}>
+                <Link href={l.href} className="group block h-full">
+                  <motion.div whileHover={{ y: -4, scale: 1.02 }} whileTap={{ scale: 0.97 }}
+                    className="rounded-2xl p-5 sm:p-7 h-full flex flex-col gap-3"
+                    style={{ background: `linear-gradient(135deg, ${l.from}, ${l.to})` }}>
+                    <div className="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center">
+                      <l.icon size={22} color={l.iconCol} />
+                    </div>
+                    <div>
+                      <p className="text-white font-bold text-base sm:text-lg leading-tight">{l.label}</p>
+                      <p className="text-white/45 text-xs mt-0.5 font-hindi">{l.hi}</p>
+                    </div>
+                    <div className="mt-auto flex items-center gap-1 text-white/40 text-xs group-hover:text-white/70 transition-colors">
+                      Explore <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </motion.div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── REGISTER CTA ── */}
+      <section className="py-14 sm:py-20 green-gradient relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ backgroundImage: "radial-gradient(circle at 25% 50%, rgba(201,146,42,0.18) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(116,198,157,0.12) 0%, transparent 40%)" }} />
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <motion.div {...fadeUp()}>
+            <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center gold-gradient shadow-xl">
+              <Shield size={26} color="#1B4332" />
+            </motion.div>
+            <h2 className="text-2xl sm:text-4xl font-bold text-white mb-3 font-display">Get Panchayat Verified</h2>
+            <p className="max-w-xl mx-auto mb-8 leading-relaxed text-base" style={{ color: "rgba(255,255,255,0.58)" }}>
+              Register your business and earn the <strong style={{ color: "#E8B84B" }}>Panchayat Verified</strong> green badge — trusted by your entire community.
+            </p>
+            <Link href="/register"
+              className="inline-flex items-center gap-2.5 px-7 py-4 rounded-2xl font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              style={{ background: "linear-gradient(135deg, #C9922A, #E8B84B)", color: "#1B4332" }}>
+              Register Your Business <ArrowRight size={17} />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 }

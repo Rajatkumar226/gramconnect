@@ -1,0 +1,93 @@
+{
+  "hospitals": [
+    {
+      "id": 1,
+      "name": "Civil Hospital Jawalamukhi",
+      "type": "Government Hospital",
+      "address": "Near Bus Stand, Jawalamukhi, Kangra — 176031",
+      "phone": "01970-222001",
+      "emergency": "01970-222002",
+      "services": ["OPD", "Emergency", "Surgery", "Maternity", "X-Ray", "Laboratory"],
+      "timing": "24×7 Emergency | OPD: 9AM–2PM",
+      "distance": "3 km from Dehrian"
+    },
+    {
+      "id": 2,
+      "name": "Primary Health Centre (PHC) Dehrian",
+      "type": "PHC",
+      "address": "Village Dehrian, Jawalamukhi Block, Kangra",
+      "phone": "01970-XXXXXX",
+      "emergency": null,
+      "services": ["OPD", "Vaccination", "Maternal Health", "Family Planning", "Basic Diagnostics"],
+      "timing": "Mon–Sat: 9AM–4PM",
+      "distance": "In Village"
+    },
+    {
+      "id": 3,
+      "name": "Zonal Hospital Dharamshala",
+      "type": "Zonal Hospital",
+      "address": "Near Bus Stand, Dharamshala, Kangra — 176215",
+      "phone": "01892-224351",
+      "emergency": "01892-224352",
+      "services": ["All Specialties", "ICU", "Blood Bank", "CT Scan", "MRI", "Dialysis"],
+      "timing": "24×7",
+      "distance": "55 km from Dehrian"
+    },
+    {
+      "id": 4,
+      "name": "IGMC Shimla (Tertiary Referral)",
+      "type": "Medical College Hospital",
+      "address": "Ridge, Shimla — 171001",
+      "phone": "0177-2803073",
+      "emergency": "0177-2658182",
+      "services": ["All Super-Specialties", "Neurology", "Cardiology", "Oncology", "Transplant"],
+      "timing": "24×7",
+      "distance": "200 km from Dehrian"
+    }
+  ],
+  "ashaWorkers": [
+    {
+      "id": 1,
+      "name": "Smt. Sunita Devi",
+      "village": "Dehrian (Ward 1)",
+      "phone": "+91 98XXXXXXXX",
+      "services": ["Maternal & Child Health", "Vaccination Reminder", "Home Visits", "JSSK"]
+    },
+    {
+      "id": 2,
+      "name": "Smt. Rekha Kumari",
+      "village": "Dehrian (Ward 2–3)",
+      "phone": "+91 94XXXXXXXX",
+      "services": ["Family Planning", "TB DOTS", "Immunization", "Anaemia Treatment"]
+    },
+    {
+      "id": 3,
+      "name": "Smt. Manju Sharma",
+      "village": "Dehrian (Ward 4–5)",
+      "phone": "+91 89XXXXXXXX",
+      "services": ["Nutrition Counselling", "Home Delivery Support", "NHM Schemes"]
+    }
+  ],
+  "janAushadhi": [
+    {
+      "id": 1,
+      "name": "Jan Aushadhi Kendra — Jawalamukhi",
+      "address": "Near Civil Hospital, Jawalamukhi",
+      "phone": "01970-XXXXXX",
+      "timing": "9AM–8PM (Mon–Sat)",
+      "note": "Generic medicines up to 90% cheaper than branded"
+    }
+  ],
+  "ambulance": [
+    {
+      "name": "108 — Free Ambulance (HP)",
+      "number": "108",
+      "note": "24×7 free ambulance service across Himachal Pradesh"
+    },
+    {
+      "name": "102 — Maternity Ambulance",
+      "number": "102",
+      "note": "Free transport for pregnant women to hospitals"
+    }
+  ]
+}
