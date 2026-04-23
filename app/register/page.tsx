@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Shield, CheckCircle2, ChevronRight, User, Store, AlertCircle, Check } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const steps = ["Business Info", "Owner Details", "Review"];
 const categories = ["Grocery & Kirana", "Medical & Pharmacy", "Dairy & Milk", "Hardware & Electronics", "Food & Restaurant", "Tailoring & Clothing", "Mobile & Repair", "Agriculture & Nursery", "Automobile & Repair", "Education & Coaching", "Beauty & Salon", "Other"];
@@ -28,10 +29,38 @@ function Field({ label, hi, ph, type = "text", req, val, set }: { label: string;
 }
 
 export default function RegisterPage() {
+  const { user, requireAuth } = useAuth();
   const [step, setStep] = useState(0);
   const [done, setDone] = useState(false);
   const [form, setForm] = useState<Form>(init);
   const set = (k: keyof Form) => (v: string | boolean) => setForm((f) => ({ ...f, [k]: v }));
+
+  useEffect(() => {
+    if (!user) requireAuth("Login first to register your business here");
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (!user) return (
+    <div className="min-h-screen flex items-center justify-center px-4 py-20"
+      style={{ background: "linear-gradient(160deg, #041A0C, #0C2E1A)" }}>
+      <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} className="max-w-sm w-full text-center">
+        <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          className="w-16 h-16 rounded-2xl mx-auto mb-5 flex items-center justify-center"
+          style={{ background: "linear-gradient(135deg, #C9922A, #E8B84B)" }}>
+          <Shield size={28} color="#1B4332" />
+        </motion.div>
+        <h2 className="text-2xl font-bold text-white mb-2 font-display">Login Required</h2>
+        <p className="text-sm mb-6" style={{ color: "rgba(255,255,255,0.5)" }}>
+          Login with your mobile number to register your business on GramConnect.
+        </p>
+        <motion.button whileTap={{ scale: 0.97 }}
+          onClick={() => requireAuth("Login first to register your business here")}
+          className="px-7 py-3.5 rounded-xl font-semibold text-sm"
+          style={{ background: "linear-gradient(135deg, #C9922A, #E8B84B)", color: "#1B4332" }}>
+          <User size={14} className="inline mr-2" />Login with Mobile
+        </motion.button>
+      </motion.div>
+    </div>
+  );
 
   const valid = [
     !!(form.bName && form.category && form.address && form.phone),

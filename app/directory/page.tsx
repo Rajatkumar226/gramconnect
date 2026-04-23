@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Phone, MapPin, Clock, Shield, Star, Filter, ArrowRight, X } from "lucide-react";
 import businesses from "@/data/businesses.json";
+import { useAuth } from "@/contexts/AuthContext";
 
 const categories = ["All", "Grocery & Kirana", "Medical & Pharmacy", "Dairy & Milk", "Hardware & Electronics", "Food & Restaurant", "Tailoring & Clothing", "Mobile & Repair", "Agriculture & Nursery"];
 
@@ -27,9 +28,15 @@ function Stars({ r }: { r: number }) {
 }
 
 export default function DirectoryPage() {
+  const { user, requireAuth } = useAuth();
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("All");
   const [verified, setVerified] = useState(false);
+
+  const handleCall = (phone: string) => {
+    if (!user) { requireAuth("Login to view business contact numbers"); return; }
+    window.location.href = `tel:${phone}`;
+  };
 
   const list = businesses.filter((b) => {
     const matchCat = cat === "All" || b.category === cat;
@@ -157,11 +164,11 @@ export default function DirectoryPage() {
                   <div className="flex items-center gap-2"><Clock size={11} style={{ color: "#b45309" }} /><span>{b.timing}</span></div>
                 </div>
 
-                <motion.a whileTap={{ scale: 0.97 }} href={`tel:${b.phone}`}
+                <motion.button whileTap={{ scale: 0.97 }} onClick={() => handleCall(b.phone)}
                   className="flex items-center justify-center gap-1.5 py-3 rounded-xl text-sm font-semibold text-white mt-auto"
                   style={{ background: "linear-gradient(135deg, #78350f, #b45309)" }}>
-                  <Phone size={14} /> {b.phone}
-                </motion.a>
+                  <Phone size={14} /> {user ? b.phone : "Login to Call"}
+                </motion.button>
 
                 {!b.verified && (
                   <p className="text-center text-xs" style={{ color: "var(--text-3)" }}>Verification pending</p>

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import type { Transition } from "framer-motion";
 import { Phone, MapPin, Clock, Stethoscope, Heart, Pill } from "lucide-react";
 import healthData from "@/data/health.json";
+import { useAuth } from "@/contexts/AuthContext";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -21,6 +22,13 @@ const typeStyle: Record<string, React.CSSProperties> = {
 };
 
 export default function HealthPage() {
+  const { user, requireAuth } = useAuth();
+
+  const handleCall = (phone: string) => {
+    if (!user) { requireAuth("Login to view and call health contacts"); return; }
+    window.location.href = `tel:${phone}`;
+  };
+
   return (
     <div style={{ backgroundColor: "var(--bg)", minHeight: "100vh" }}>
       {/* Header */}
@@ -57,16 +65,16 @@ export default function HealthPage() {
             </p>
             <div className="flex flex-wrap gap-3 justify-center">
               {healthData.ambulance.map((a) => (
-                <motion.a key={a.number} href={`tel:${a.number}`}
+                <motion.button key={a.number} onClick={() => handleCall(a.number)}
                   whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                   className="flex items-center gap-3 px-5 py-3.5 rounded-xl"
                   style={{ backgroundColor: "rgba(255,255,255,0.12)" }}>
                   <span className="text-2xl">🚑</span>
-                  <div>
+                  <div className="text-left">
                     <p className="text-white font-black text-2xl leading-none">{a.number}</p>
                     <p className="text-xs" style={{ color: "rgba(255,180,180,0.8)" }}>{a.name}</p>
                   </div>
-                </motion.a>
+                </motion.button>
               ))}
             </div>
           </div>
@@ -122,16 +130,16 @@ export default function HealthPage() {
                 </div>
 
                 <div className="mt-auto flex flex-wrap gap-2">
-                  <motion.a whileTap={{ scale: 0.96 }} href={`tel:${h.phone}`}
+                  <motion.button whileTap={{ scale: 0.96 }} onClick={() => handleCall(h.phone)}
                     className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-white green-gradient flex-1 justify-center">
-                    <Phone size={12} /> OPD
-                  </motion.a>
+                    <Phone size={12} /> {user ? "OPD" : "Login to Call"}
+                  </motion.button>
                   {h.emergency && (
-                    <motion.a whileTap={{ scale: 0.96 }} href={`tel:${h.emergency}`}
+                    <motion.button whileTap={{ scale: 0.96 }} onClick={() => handleCall(h.emergency!)}
                       className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-white flex-1 justify-center"
                       style={{ backgroundColor: "#dc2626" }}>
                       <Phone size={12} /> Emergency
-                    </motion.a>
+                    </motion.button>
                   )}
                 </div>
               </motion.div>
@@ -163,11 +171,11 @@ export default function HealthPage() {
                     <span key={s} className="px-2 py-0.5 rounded-full text-xs" style={{ backgroundColor: "rgba(219,39,119,0.1)", color: "#db2777" }}>{s}</span>
                   ))}
                 </div>
-                <motion.a whileTap={{ scale: 0.96 }} href={`tel:${a.phone}`}
+                <motion.button whileTap={{ scale: 0.96 }} onClick={() => handleCall(a.phone)}
                   className="w-full flex items-center justify-center gap-1.5 py-3 rounded-xl text-sm font-semibold text-white"
                   style={{ background: "linear-gradient(135deg, #9d174d, #db2777)" }}>
-                  <Phone size={13} /> Call ASHA
-                </motion.a>
+                  <Phone size={13} /> {user ? "Call ASHA" : "Login to Call"}
+                </motion.button>
               </motion.div>
             ))}
           </div>
