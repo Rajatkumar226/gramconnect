@@ -115,7 +115,7 @@ export default function RegisterPage() {
   return (
     <div style={{ backgroundColor: "var(--bg)", minHeight: "100vh" }}>
       {/* Header */}
-      <div className="relative py-20 sm:py-24 overflow-hidden"
+      <div className="relative pt-28 pb-12 sm:pt-36 sm:pb-16 overflow-hidden"
         style={{ background: "linear-gradient(160deg, #041A0C, #1B4332, #2D6A4F)" }}>
         <div className="absolute inset-0 opacity-10 pointer-events-none"
           style={{ backgroundImage: "radial-gradient(circle at 70% 50%, #C9922A, transparent 50%)" }} />

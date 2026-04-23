@@ -33,7 +33,7 @@ export default function EmergencyPage() {
   return (
     <div style={{ backgroundColor: "#060808", minHeight: "100vh" }}>
       {/* Header */}
-      <div className="relative py-20 sm:py-28 overflow-hidden"
+      <div className="relative pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden"
         style={{ background: "linear-gradient(160deg, #1a0000 0%, #7f1d1d 50%, #991b1b 100%)" }}>
         <motion.div className="absolute inset-0 pointer-events-none"
           style={{ backgroundImage: "radial-gradient(circle at 50% 50%, rgba(239,68,68,0.25), transparent 60%)" }}

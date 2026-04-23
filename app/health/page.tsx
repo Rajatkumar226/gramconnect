@@ -32,7 +32,7 @@ export default function HealthPage() {
   return (
     <div style={{ backgroundColor: "var(--bg)", minHeight: "100vh" }}>
       {/* Header */}
-      <div className="relative py-20 sm:py-28 overflow-hidden"
+      <div className="relative pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden"
         style={{ background: "linear-gradient(160deg, #0d1f3c 0%, #1e3a5f 50%, #2d5986 100%)" }}>
         <motion.div className="absolute inset-0 pointer-events-none"
           style={{ backgroundImage: "radial-gradient(circle at 70% 50%, rgba(122,179,224,0.2), transparent 55%)" }}

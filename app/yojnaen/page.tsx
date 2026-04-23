@@ -37,7 +37,7 @@ export default function YojnaenPage() {
   return (
     <div style={{ backgroundColor: "var(--bg)", minHeight: "100vh" }}>
       {/* Header */}
-      <div className="relative py-20 sm:py-28 overflow-hidden" style={{ background: "linear-gradient(160deg, #041A0C 0%, #0C2E1A 45%, #163A24 100%)" }}>
+      <div className="relative pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden" style={{ background: "linear-gradient(160deg, #041A0C 0%, #0C2E1A 45%, #163A24 100%)" }}>
         <motion.div
           className="absolute inset-0 pointer-events-none"
           style={{ backgroundImage: "radial-gradient(circle at 75% 50%, rgba(201,146,42,0.18), transparent 55%)" }}
