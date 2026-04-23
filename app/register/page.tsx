@@ -2,19 +2,18 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, CheckCircle2, Upload, ChevronRight, User, Store, FileText, AlertCircle, Check } from "lucide-react";
+import { Shield, CheckCircle2, ChevronRight, User, Store, AlertCircle, Check } from "lucide-react";
 
-const steps = ["Business Info", "Owner Details", "Documents", "Review"];
+const steps = ["Business Info", "Owner Details", "Review"];
 const categories = ["Grocery & Kirana", "Medical & Pharmacy", "Dairy & Milk", "Hardware & Electronics", "Food & Restaurant", "Tailoring & Clothing", "Mobile & Repair", "Agriculture & Nursery", "Automobile & Repair", "Education & Coaching", "Beauty & Salon", "Other"];
 
 type Form = {
   bName: string; bNameHi: string; category: string; address: string; phone: string; timing: string; desc: string;
   oName: string; oPhone: string; aadhaar: string; email: string;
-  docAadhaar: boolean; docResidence: boolean; docCharacter: boolean;
   agree: boolean;
 };
 
-const init: Form = { bName: "", bNameHi: "", category: "", address: "", phone: "", timing: "", desc: "", oName: "", oPhone: "", aadhaar: "", email: "", docAadhaar: false, docResidence: false, docCharacter: false, agree: false };
+const init: Form = { bName: "", bNameHi: "", category: "", address: "", phone: "", timing: "", desc: "", oName: "", oPhone: "", aadhaar: "", email: "", agree: false };
 
 function Field({ label, hi, ph, type = "text", req, val, set }: { label: string; hi?: string; ph: string; type?: string; req?: boolean; val: string; set: (v: string) => void }) {
   return (
@@ -28,34 +27,6 @@ function Field({ label, hi, ph, type = "text", req, val, set }: { label: string;
   );
 }
 
-function DocUpload({ label, hi, note, done, toggle }: { label: string; hi: string; note: string; done: boolean; toggle: () => void }) {
-  return (
-    <motion.div whileTap={{ scale: 0.99 }}
-      className="rounded-2xl p-4 sm:p-5 cursor-pointer transition-all"
-      style={{
-        border: `2px dashed ${done ? "var(--green-mid)" : "var(--border)"}`,
-        backgroundColor: done ? "rgba(45,106,79,0.06)" : "var(--bg-alt, var(--bg))",
-      }}
-      onClick={toggle}
-    >
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>
-            {label} <span className="text-red-500">*</span>
-          </p>
-          <p className="text-xs font-hindi mb-0.5" style={{ color: "var(--text-3)" }}>{hi}</p>
-          <p className="text-xs" style={{ color: "var(--text-3)" }}>{note}</p>
-        </div>
-        <motion.div whileTap={{ scale: 0.9 }}
-          className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-sm font-semibold shrink-0 text-white"
-          style={{ background: done ? "#16a34a" : "linear-gradient(135deg, var(--green), var(--green-mid))" }}>
-          {done ? <><Check size={14} /> Uploaded</> : <><Upload size={14} /> Upload</>}
-        </motion.div>
-      </div>
-    </motion.div>
-  );
-}
-
 export default function RegisterPage() {
   const [step, setStep] = useState(0);
   const [done, setDone] = useState(false);
@@ -64,13 +35,12 @@ export default function RegisterPage() {
 
   const valid = [
     !!(form.bName && form.category && form.address && form.phone),
-    !!(form.oName && form.oPhone && form.aadhaar),
-    !!(form.docAadhaar && form.docResidence && form.docCharacter),
+    !!(form.oName && form.oPhone && form.aadhaar && form.aadhaar.replace(/\s/g, "").length === 12),
     form.agree,
   ];
 
   const submit = () => {
-    if (!valid[3]) return;
+    if (!valid[2]) return;
     const reg = { ...form, id: Date.now(), status: "pending", at: new Date().toISOString() };
     const prev = JSON.parse(localStorage.getItem("gc_regs") || "[]");
     localStorage.setItem("gc_regs", JSON.stringify([...prev, reg]));
@@ -91,9 +61,14 @@ export default function RegisterPage() {
         </p>
         <div className="glass-dark rounded-2xl p-4 text-left mb-6 space-y-2.5">
           <p className="text-sm font-semibold" style={{ color: "#74C69D" }}>What happens next?</p>
-          {["Panchayat office receives your application", "Documents verified — Aadhaar & residence", "Gram Pradhan approves character certificate", "Business listed with 'Panchayat Verified' badge"].map((s, i) => (
+          {[
+            "Panchayat office receives your application",
+            "Your Aadhaar is matched against panchayat records",
+            "Gram Pradhan verifies residency & character",
+            "Business listed with 'Panchayat Verified' badge",
+          ].map((s, i) => (
             <div key={i} className="flex items-start gap-2.5 text-sm" style={{ color: "rgba(255,255,255,0.55)" }}>
-              <span className="w-5 h-5 rounded-full bg-[#2D6A4F] text-white text-xs flex items-center justify-center shrink-0 mt-0.5">{i+1}</span>
+              <span className="w-5 h-5 rounded-full bg-[#2D6A4F] text-white text-xs flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
               {s}
             </div>
           ))}
@@ -132,7 +107,7 @@ export default function RegisterPage() {
           <div className="flex items-center gap-1.5">
             {steps.map((s, i) => (
               <div key={s} className="flex items-center gap-1.5 flex-1">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-all duration-300`}
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-all duration-300"
                   style={i < step ? { background: "linear-gradient(135deg, var(--green), var(--green-mid))", color: "white" }
                     : i === step ? { background: "linear-gradient(135deg, var(--green), var(--green-mid))", color: "white", boxShadow: "0 0 0 4px rgba(45,106,79,0.2)" }
                     : { backgroundColor: "var(--bg-alt, var(--bg))", color: "var(--text-3)", border: "1px solid var(--border)" }}>
@@ -153,7 +128,7 @@ export default function RegisterPage() {
             exit={{ opacity: 0, x: -24 }} transition={{ duration: 0.3 }}
             className="card p-5 sm:p-7"
           >
-            {/* STEP 0 */}
+            {/* STEP 0 — Business Info */}
             {step === 0 && (
               <div className="space-y-4">
                 <SectionHead icon={<Store size={15} color="white" />} title="Business Info" hi="व्यापार की जानकारी" />
@@ -177,45 +152,81 @@ export default function RegisterPage() {
               </div>
             )}
 
-            {/* STEP 1 */}
+            {/* STEP 1 — Owner Details */}
             {step === 1 && (
               <div className="space-y-4">
                 <SectionHead icon={<User size={15} color="white" />} title="Owner Details" hi="मालिक की जानकारी" />
                 <Field label="Full Name" hi="पूरा नाम" ph="As on Aadhaar" req val={form.oName} set={set("oName")} />
                 <Field label="Mobile" hi="मोबाइल" ph="+91 XXXXXXXXXX" type="tel" req val={form.oPhone} set={set("oPhone")} />
-                <Field label="Email" ph="example@email.com" type="email" val={form.email} set={set("email")} />
-                <Field label="Aadhaar Number" hi="आधार नंबर" ph="XXXX XXXX XXXX" req val={form.aadhaar} set={set("aadhaar")} />
-                <div className="flex items-start gap-2.5 p-3.5 rounded-xl" style={{ backgroundColor: "rgba(234,179,8,0.08)", border: "1px solid rgba(234,179,8,0.2)" }}>
-                  <AlertCircle size={14} className="shrink-0 mt-0.5" style={{ color: "#ca8a04" }} />
-                  <p className="text-xs" style={{ color: "var(--text-2)" }}>Aadhaar is collected only for Panchayat identity verification and will not be shown publicly.</p>
+                <Field label="Email" ph="example@email.com (optional)" type="email" val={form.email} set={set("email")} />
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-medium" style={{ color: "var(--text)" }}>
+                    Aadhaar Number <span className="text-xs font-hindi" style={{ color: "var(--text-3)" }}>(आधार नंबर)</span>
+                    <span className="text-red-500 ml-0.5">*</span>
+                  </label>
+                  <input
+                    type="text" inputMode="numeric" maxLength={14}
+                    placeholder="XXXX XXXX XXXX"
+                    value={form.aadhaar}
+                    onChange={(e) => {
+                      const digits = e.target.value.replace(/\D/g, "").slice(0, 12);
+                      const formatted = digits.replace(/(\d{4})(\d{0,4})(\d{0,4})/, (_, a, b, c) => [a, b, c].filter(Boolean).join(" "));
+                      set("aadhaar")(formatted);
+                    }}
+                    className="input"
+                  />
+                </div>
+
+                {/* Info box */}
+                <div className="rounded-xl p-4 space-y-2" style={{ backgroundColor: "rgba(27,67,50,0.07)", border: "1px solid rgba(27,67,50,0.15)" }}>
+                  <div className="flex items-center gap-2">
+                    <AlertCircle size={14} style={{ color: "var(--green-mid)" }} />
+                    <p className="text-xs font-semibold" style={{ color: "var(--green-mid)" }}>No documents needed</p>
+                  </div>
+                  <p className="text-xs leading-relaxed" style={{ color: "var(--text-2)" }}>
+                    Dehrian Panchayat already has your records. Your Aadhaar will be used to verify your identity, residency, and character directly from panchayat records — no paperwork required.
+                  </p>
                 </div>
               </div>
             )}
 
-            {/* STEP 2 */}
+            {/* STEP 2 — Review */}
             {step === 2 && (
               <div className="space-y-4">
-                <SectionHead icon={<FileText size={15} color="white" />} title="Upload Documents" hi="दस्तावेज़ अपलोड" />
-                <p className="text-sm" style={{ color: "var(--text-2)" }}>Upload clear photos or scans (JPG, PNG, PDF). All 3 required.</p>
-                <DocUpload label="Aadhaar Card" hi="आधार कार्ड" note="Owner's Aadhaar — both sides" done={form.docAadhaar} toggle={() => set("docAadhaar")(!form.docAadhaar)} />
-                <DocUpload label="Residence Proof" hi="निवास प्रमाण" note="Ration card, Voter ID, or HP domicile" done={form.docResidence} toggle={() => set("docResidence")(!form.docResidence)} />
-                <DocUpload label="Character Certificate" hi="चरित्र प्रमाण पत्र" note="Issued by Gram Pradhan, Dehrian Panchayat" done={form.docCharacter} toggle={() => set("docCharacter")(!form.docCharacter)} />
-              </div>
-            )}
-
-            {/* STEP 3 */}
-            {step === 3 && (
-              <div className="space-y-4">
-                <SectionHead icon={<Shield size={15} color="#1B4332" style={{ color: "#1B4332" }} />} title="Review & Submit" hi="समीक्षा करें" gold />
+                <SectionHead icon={<Shield size={15} color="#1B4332" />} title="Review & Submit" hi="समीक्षा करें" gold />
                 <div className="rounded-xl p-4 space-y-2.5 text-sm" style={{ backgroundColor: "var(--bg-alt, var(--bg))", border: "1px solid var(--border)" }}>
-                  {[["Business", form.bName], ["Category", form.category], ["Address", form.address], ["Phone", form.phone],
-                    ["Owner", form.oName], ["Aadhaar", "XXXX XXXX " + form.aadhaar.slice(-4)]].map(([k, v]) => v && (
+                  {[
+                    ["Business", form.bName],
+                    ["Category", form.category],
+                    ["Address", form.address],
+                    ["Phone", form.phone],
+                    ["Owner", form.oName],
+                    ["Aadhaar", form.aadhaar ? "XXXX XXXX " + form.aadhaar.replace(/\s/g, "").slice(-4) : ""],
+                  ].map(([k, v]) => v && (
                     <div key={k} className="flex gap-2">
                       <span className="shrink-0 w-24" style={{ color: "var(--text-3)" }}>{k}:</span>
                       <span className="font-medium" style={{ color: "var(--text)" }}>{v}</span>
                     </div>
                   ))}
                 </div>
+
+                {/* How verification works */}
+                <div className="rounded-xl p-4 space-y-2.5" style={{ backgroundColor: "rgba(201,146,42,0.06)", border: "1px solid rgba(201,146,42,0.18)" }}>
+                  <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--gold)" }}>Verification Process</p>
+                  {[
+                    "Panchayat matches your Aadhaar with village records",
+                    "Gram Pradhan confirms residency & good character",
+                    "Approved listings get the Panchayat Verified badge",
+                  ].map((s, i) => (
+                    <div key={i} className="flex items-start gap-2.5 text-xs" style={{ color: "var(--text-2)" }}>
+                      <span className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold text-white mt-0.5"
+                        style={{ backgroundColor: "var(--gold)" }}>{i + 1}</span>
+                      {s}
+                    </div>
+                  ))}
+                </div>
+
                 <motion.div whileTap={{ scale: 0.99 }}
                   className="flex items-start gap-3 p-4 rounded-xl cursor-pointer"
                   style={{ backgroundColor: "var(--bg-alt, var(--bg))" }}
@@ -225,7 +236,7 @@ export default function RegisterPage() {
                     {form.agree && <Check size={11} color="white" />}
                   </div>
                   <p className="text-sm leading-relaxed" style={{ color: "var(--text-2)" }}>
-                    I declare all submitted information and documents are genuine. I am a bona fide resident of Dehrian Panchayat.
+                    I declare that all information provided is correct and I am a bona fide resident of Dehrian Panchayat.
                   </p>
                 </motion.div>
               </div>
@@ -241,7 +252,7 @@ export default function RegisterPage() {
                 </motion.button>
               ) : <div />}
 
-              {step < 3 ? (
+              {step < 2 ? (
                 <motion.button whileTap={{ scale: 0.97 }}
                   onClick={() => { if (valid[step]) setStep((s) => s + 1); }}
                   className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold text-white transition-all"
@@ -257,10 +268,10 @@ export default function RegisterPage() {
                 <motion.button whileTap={{ scale: 0.97 }} onClick={submit}
                   className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold transition-all"
                   style={{
-                    background: valid[3] ? "linear-gradient(135deg, #C9922A, #E8B84B)" : "var(--bg-alt)",
-                    color: valid[3] ? "#1B4332" : "var(--text-3)",
-                    opacity: valid[3] ? 1 : 0.5,
-                    cursor: valid[3] ? "pointer" : "not-allowed",
+                    background: valid[2] ? "linear-gradient(135deg, #C9922A, #E8B84B)" : "var(--bg-alt)",
+                    color: valid[2] ? "#1B4332" : "var(--text-3)",
+                    opacity: valid[2] ? 1 : 0.5,
+                    cursor: valid[2] ? "pointer" : "not-allowed",
                   }}>
                   <Shield size={14} /> Submit for Verification
                 </motion.button>
