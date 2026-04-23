@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Leaf, Share2, ArrowDown } from "lucide-react";
+import { Leaf, Share2, ArrowDown } from "lucide-react";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -16,8 +16,7 @@ export default function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false);
 
   useEffect(() => {
-    // Don't show if already dismissed or running as installed PWA
-    if (localStorage.getItem("gc_pwa_dismissed") === "1") return;
+    // Hide only if already running as installed PWA
     if (window.matchMedia("(display-mode: standalone)").matches) return;
 
     const ios = /iphone|ipad|ipod/i.test(navigator.userAgent.toLowerCase());
@@ -28,13 +27,10 @@ export default function InstallPrompt() {
       setDeferredPrompt(e as BeforeInstallPromptEvent);
     };
     window.addEventListener("beforeinstallprompt", handler);
-    window.addEventListener("appinstalled", () => {
-      setShow(false);
-      localStorage.setItem("gc_pwa_dismissed", "1");
-    });
+    window.addEventListener("appinstalled", () => setShow(false));
 
-    // Always show after 3 seconds — don't wait for browser event
-    const t = setTimeout(() => setShow(true), 3000);
+    // Always show after 2 seconds
+    const t = setTimeout(() => setShow(true), 2000);
 
     return () => {
       window.removeEventListener("beforeinstallprompt", handler);
@@ -46,18 +42,10 @@ export default function InstallPrompt() {
     if (deferredPrompt) {
       await deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === "accepted") {
-        setShow(false);
-        localStorage.setItem("gc_pwa_dismissed", "1");
-      }
+      if (outcome === "accepted") setShow(false);
     } else {
       setShowGuide(true);
     }
-  };
-
-  const dismiss = () => {
-    setShow(false);
-    localStorage.setItem("gc_pwa_dismissed", "1");
   };
 
   return (
@@ -73,16 +61,6 @@ export default function InstallPrompt() {
             transition={{ type: "spring", damping: 18, stiffness: 260 }}
             className="fixed bottom-24 right-4 z-40 md:bottom-8 flex flex-col items-center gap-1.5"
           >
-            {/* Dismiss */}
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              onClick={dismiss}
-              className="w-5 h-5 rounded-full flex items-center justify-center self-end mr-0.5"
-              style={{ backgroundColor: "rgba(0,0,0,0.35)", color: "white" }}
-            >
-              <X size={10} />
-            </motion.button>
-
             {/* Main FAB */}
             <motion.button
               onClick={handleInstall}
@@ -190,7 +168,7 @@ export default function InstallPrompt() {
                 </div>
               )}
 
-              <button onClick={() => { setShowGuide(false); dismiss(); }}
+              <button onClick={() => setShowGuide(false)}
                 className="w-full py-3.5 rounded-xl font-semibold text-sm text-white"
                 style={{ background: "linear-gradient(135deg, var(--green), var(--green-mid))" }}>
                 Got it! / समझ गया
