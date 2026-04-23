@@ -115,7 +115,7 @@ export default function RegisterPage() {
   return (
     <div style={{ backgroundColor: "var(--bg)", minHeight: "100vh" }}>
       {/* Header */}
-      <div className="relative pt-28 pb-12 sm:pt-36 sm:pb-16 overflow-hidden"
+      <div className="relative pt-28 pb-10 sm:pt-36 sm:pb-12 overflow-hidden"
         style={{ background: "linear-gradient(160deg, #041A0C, #1B4332, #2D6A4F)" }}>
         <div className="absolute inset-0 opacity-10 pointer-events-none"
           style={{ backgroundImage: "radial-gradient(circle at 70% 50%, #C9922A, transparent 50%)" }} />
@@ -132,7 +132,7 @@ export default function RegisterPage() {
       <div className="max-w-xl mx-auto px-4 sm:px-6 pb-8 sm:pb-20">
         {/* Step indicator */}
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-          className="-mt-5 mb-5 card p-4 sm:p-5">
+          className="mt-8 mb-5 card p-4 sm:p-5">
           <div className="flex items-center gap-1.5">
             {steps.map((s, i) => (
               <div key={s} className="flex items-center gap-1.5 flex-1">

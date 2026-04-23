@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import Navbar from "@/components/Navbar";
 import BottomNav from "@/components/BottomNav";
 import Footer from "@/components/Footer";
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="hi" className={`${jakarta.variable} ${playfair.variable}`}>
       <body style={{ fontFamily: "'Plus Jakarta Sans', 'Noto Sans Devanagari', sans-serif" }}>
         <ThemeProvider>
+          <LanguageProvider>
           <AuthProvider>
             <Navbar />
             <LoginModal />
@@ -49,6 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <BottomNav />
             <InstallPrompt />
           </AuthProvider>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

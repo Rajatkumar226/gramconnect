@@ -32,7 +32,7 @@ export default function HealthPage() {
   return (
     <div style={{ backgroundColor: "var(--bg)", minHeight: "100vh" }}>
       {/* Header */}
-      <div className="relative pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden"
+      <div className="relative pt-28 pb-10 sm:pt-36 sm:pb-14 overflow-hidden"
         style={{ background: "linear-gradient(160deg, #0d1f3c 0%, #1e3a5f 50%, #2d5986 100%)" }}>
         <motion.div className="absolute inset-0 pointer-events-none"
           style={{ backgroundImage: "radial-gradient(circle at 70% 50%, rgba(122,179,224,0.2), transparent 55%)" }}
@@ -58,7 +58,7 @@ export default function HealthPage() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-8 sm:pb-20 space-y-10 sm:space-y-14">
         {/* Ambulance strip */}
-        <motion.div {...fadeUp()} className="-mt-5">
+        <motion.div {...fadeUp()} className="mt-8">
           <div className="rounded-2xl p-4 sm:p-5" style={{ background: "linear-gradient(135deg, #7f1d1d, #b91c1c)" }}>
             <p className="text-center text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "rgba(255,200,200,0.7)" }}>
               Tap to Call — Free Ambulance Services

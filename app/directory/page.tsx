@@ -51,7 +51,7 @@ export default function DirectoryPage() {
   return (
     <div style={{ backgroundColor: "var(--bg)", minHeight: "100vh" }}>
       {/* Header */}
-      <div className="relative pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden"
+      <div className="relative pt-28 pb-10 sm:pt-36 sm:pb-14 overflow-hidden"
         style={{ background: "linear-gradient(160deg, #2a1500 0%, #78350f 50%, #b45309 100%)" }}>
         <motion.div className="absolute inset-0 pointer-events-none"
           style={{ backgroundImage: "radial-gradient(circle at 70% 50%, rgba(252,211,77,0.18), transparent 50%)" }}
@@ -76,11 +76,11 @@ export default function DirectoryPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-8 sm:pb-20">
         {/* Search + filter */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-          className="-mt-5 mb-5 card p-4 flex flex-col gap-3">
+          className="mt-8 mb-5 card p-4 flex flex-col gap-3">
           <div className="relative">
             <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2" style={{ color: "var(--text-3)" }} />
             <input type="text" value={q} onChange={(e) => setQ(e.target.value)}
-              placeholder="Search businesses, categories…" className="input pl-10" />
+              placeholder="Search businesses, categories…" className="input" style={{ paddingLeft: "2.75rem" }} />
             {q && (
               <button onClick={() => setQ("")} className="absolute right-3.5 top-1/2 -translate-y-1/2">
                 <X size={14} style={{ color: "var(--text-3)" }} />

@@ -2,14 +2,14 @@
 
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
 
-type User = { phone: string };
+type User = { phone: string; name: string };
 type ModalState = { message: string; onSuccess?: () => void } | null;
 
 type AuthCtx = {
   user: User | null;
   modalState: ModalState;
   requireAuth: (message: string, onSuccess?: () => void) => void;
-  login: (phone: string) => void;
+  login: (phone: string, name: string) => void;
   logout: () => void;
   closeModal: () => void;
 };
@@ -25,8 +25,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (saved) setUser(JSON.parse(saved));
   }, []);
 
-  const login = useCallback((phone: string) => {
-    const u = { phone };
+  const login = useCallback((phone: string, name: string) => {
+    const u = { phone, name };
     setUser(u);
     localStorage.setItem("gc_user", JSON.stringify(u));
     setModalState((prev) => {
