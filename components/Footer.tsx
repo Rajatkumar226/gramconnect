@@ -1,8 +1,13 @@
 "use client";
 import Link from "next/link";
 import { Leaf, Phone, MapPin, Mail } from "lucide-react";
+import { useLang } from "@/contexts/LanguageContext";
+import { T } from "@/data/translations";
 
 export default function Footer() {
+  const { lang } = useLang();
+  const tx = T[lang].footer;
+
   return (
     <footer className="hidden md:block" style={{ backgroundColor: "#041A0C", color: "white" }}>
       <div className="divider-gold" />
@@ -20,24 +25,17 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-sm leading-relaxed max-w-xs" style={{ color: "rgba(255,255,255,0.45)" }}>
-              Connecting Dehrian with government services, local businesses, and emergency support — digitally.
+              {tx.tagline}
             </p>
             <p className="mt-3 text-xs font-hindi" style={{ color: "rgba(255,255,255,0.3)" }}>
-              डेहरियाँ ग्राम पंचायत · जवालामुखी · कांगड़ा · हिमाचल प्रदेश
+              {tx.hindiLine}
             </p>
           </div>
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#C9922A" }}>Quick Links</p>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#C9922A" }}>{tx.quickLinks}</p>
             <ul className="space-y-2.5">
-              {[
-                ["/yojnaen","Sarkari Yojnaen"],
-                ["/health","Health Directory"],
-                ["/emergency","Emergency Contacts"],
-                ["/directory","Business Directory"],
-                ["/register","Register Business"],
-                ["/admin","Admin Panel"],
-              ].map(([href,label]) => (
+              {tx.links.map(([href, label]) => (
                 <li key={href}>
                   <Link href={href} className="text-sm transition-colors duration-200"
                     style={{ color: "rgba(255,255,255,0.45)" }}
@@ -50,15 +48,15 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#C9922A" }}>Contact</p>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#C9922A" }}>{tx.contact}</p>
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5 text-sm" style={{ color: "rgba(255,255,255,0.45)" }}>
                 <MapPin size={14} className="mt-0.5 shrink-0" style={{ color: "var(--sage)" }} />
-                GP Dehrian, Jawalamukhi, Kangra, HP — 176031
+                {tx.address}
               </li>
               <li className="flex items-center gap-2.5 text-sm" style={{ color: "rgba(255,255,255,0.45)" }}>
                 <Phone size={14} className="shrink-0" style={{ color: "var(--sage)" }} />
-                Panchayat Office
+                {tx.panchayatOffice}
               </li>
               <li className="flex items-center gap-2.5 text-sm" style={{ color: "rgba(255,255,255,0.45)" }}>
                 <Mail size={14} className="shrink-0" style={{ color: "var(--sage)" }} />
@@ -70,8 +68,8 @@ export default function Footer() {
 
         <div className="divider-gold mt-10 mb-6" />
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs" style={{ color: "rgba(255,255,255,0.28)" }}>
-          <p>© 2025 GramConnect · Dehrian Panchayat. All rights reserved.</p>
-          <p>Powered by Digital India · NIC Himachal Pradesh</p>
+          <p>{tx.copyright}</p>
+          <p>{tx.poweredBy}</p>
         </div>
       </div>
     </footer>

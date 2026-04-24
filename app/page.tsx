@@ -9,6 +9,8 @@ import {
   ArrowRight, Bell, AlertTriangle, CloudRain,
   CheckCircle2, Megaphone, Shield, ChevronDown,
 } from "lucide-react";
+import { useLang } from "@/contexts/LanguageContext";
+import { T } from "@/data/translations";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 32 },
@@ -17,33 +19,31 @@ const fadeUp = (delay = 0) => ({
   transition: { duration: 0.65, ease: "easeOut" as const, delay } as Transition,
 });
 
-const notices = [
-  { id: 1, date: "22 Apr 2025", title: "Gram Sabha — 28 April 2025", body: "Monthly Gram Sabha at Panchayat Bhawan, 11:00 AM. Agenda: PMAY housing list, road repair tender.", urgent: true },
-  { id: 2, date: "20 Apr 2025", title: "PM-KISAN 17th Instalment Released", body: "₹2,000 credited to eligible farmers. Check your passbook or call 155261.", urgent: false },
-  { id: 3, date: "18 Apr 2025", title: "Free Eye Check-up Camp — 25 April", body: "Eye check + free spectacles at PHC Dehrian. Bring Aadhaar. HP Health Dept.", urgent: false },
-  { id: 4, date: "15 Apr 2025", title: "Panchayat Holiday — 14 Apr", body: "Office closed on Ambedkar Jayanti (14 Apr). Work resumed 15 April.", urgent: false },
-];
-
-const quickLinks = [
-  { icon: FileText,    label: "Sarkari Yojnaen",   hi: "सरकारी योजनाएँ",  href: "/yojnaen",   from: "#1B4332", to: "#2D6A4F", iconCol: "#74C69D" },
-  { icon: Stethoscope, label: "Health Directory",   hi: "स्वास्थ्य सेवाएँ", href: "/health",    from: "#1e3a5f", to: "#2d5986", iconCol: "#7ab3e0" },
-  { icon: Phone,       label: "Emergency",          hi: "आपातकाल",        href: "/emergency", from: "#7f1d1d", to: "#b91c1c", iconCol: "#fca5a5" },
-  { icon: Store,       label: "Business Directory", hi: "स्थानीय व्यापार",  href: "/directory", from: "#78350f", to: "#b45309", iconCol: "#fde68a" },
-];
-
-const stats = [
-  { v: "847", l: "Villagers",   hi: "ग्रामीण" },
-  { v: "32+", l: "Businesses",  hi: "व्यापार" },
-  { v: "16+", l: "Schemes",     hi: "योजनाएँ" },
-  { v: "6",   l: "Emergency #", hi: "आपातकाल" },
+const quickLinkDefs = [
+  { icon: FileText,    href: "/yojnaen",   from: "#1B4332", to: "#2D6A4F", iconCol: "#74C69D" },
+  { icon: Stethoscope, href: "/health",    from: "#1e3a5f", to: "#2d5986", iconCol: "#7ab3e0" },
+  { icon: Phone,       href: "/emergency", from: "#7f1d1d", to: "#b91c1c", iconCol: "#fca5a5" },
+  { icon: Store,       href: "/directory", from: "#78350f", to: "#b45309", iconCol: "#fde68a" },
 ];
 
 export default function HomePage() {
+  const { lang } = useLang();
+  const tx = T[lang].home;
+
+  const notices = tx.notices;
   const [ticker, setTicker] = useState(0);
+
   useEffect(() => {
     const t = setInterval(() => setTicker((p) => (p + 1) % notices.length), 5000);
     return () => clearInterval(t);
-  }, []);
+  }, [notices.length]);
+
+  const stats = [
+    { v: "847", l: tx.statsV,  hi: tx.statsVHi },
+    { v: "32+", l: tx.statsB,  hi: tx.statsBHi },
+    { v: "16+", l: tx.statsS,  hi: tx.statsSHi },
+    { v: "6",   l: tx.statsE,  hi: tx.statsEHi },
+  ];
 
   return (
     <div>
@@ -55,11 +55,10 @@ export default function HomePage() {
           { w: 200, h: 200, top: "35%", left: "55%", col: "#C9922A" },
         ].map((o, i) => (
           <motion.div key={i} className="absolute rounded-full pointer-events-none"
-            style={{ width: o.w, height: o.h, top: o.top, left: o.left, right: o.right,
+            style={{ width: o.w, height: o.h, top: o.top, left: o.left, right: (o as { right?: string }).right,
               background: `radial-gradient(circle, ${o.col}22, transparent 70%)` }}
             animate={{ scale: [1, 1.12, 1], opacity: [0.6, 1, 0.6] }}
-            transition={{ duration: 5 + i * 1.5, repeat: Infinity, ease: "easeInOut" }}
-          />
+            transition={{ duration: 5 + i * 1.5, repeat: Infinity, ease: "easeInOut" }} />
         ))}
 
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center pt-28 pb-20">
@@ -67,7 +66,7 @@ export default function HomePage() {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 glass-dark">
             <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: "#74C69D" }} />
             <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#74C69D" }}>
-              Dehrian · Jawalamukhi · Kangra · HP
+              {tx.badge}
             </span>
           </motion.div>
 
@@ -79,14 +78,14 @@ export default function HomePage() {
 
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.3 }}
             className="text-sm tracking-widest mb-4 font-hindi" style={{ color: "rgba(255,255,255,0.45)" }}>
-            ग्रामकनेक्ट — डिजिटल ग्राम पंचायत पोर्टल
+            {tx.heroSub}
           </motion.p>
 
           <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-10"
             style={{ color: "rgba(255,255,255,0.62)" }}>
-            Your village&apos;s official digital portal — govt schemes, health services, emergency contacts, and local businesses.
+            {tx.heroDesc}
           </motion.p>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -95,17 +94,17 @@ export default function HomePage() {
             <Link href="/yojnaen"
               className="flex items-center gap-2.5 px-7 py-4 rounded-2xl font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-2xl pulse w-full sm:w-auto justify-center"
               style={{ background: "linear-gradient(135deg, #C9922A, #E8B84B)", color: "#1B4332" }}>
-              <FileText size={17} /> Explore Schemes <ArrowRight size={16} />
+              <FileText size={17} /> {tx.ctaSchemes} <ArrowRight size={16} />
             </Link>
             <Link href="/emergency"
               className="flex items-center gap-2.5 px-7 py-4 rounded-2xl font-semibold text-base text-white glass-dark transition-all duration-300 hover:scale-105 w-full sm:w-auto justify-center">
-              <Phone size={17} /> Emergency Numbers
+              <Phone size={17} /> {tx.ctaEmergency}
             </Link>
           </motion.div>
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}
             className="mt-16 flex flex-col items-center gap-1.5 bounce-down" style={{ color: "rgba(255,255,255,0.25)" }}>
-            <span className="text-xs tracking-widest uppercase">Scroll</span>
+            <span className="text-xs tracking-widest uppercase">{tx.scroll}</span>
             <ChevronDown size={16} />
           </motion.div>
         </div>
@@ -121,9 +120,7 @@ export default function HomePage() {
           <div className="w-px h-3.5" style={{ backgroundColor: "#7f2020" }} />
           <div className="flex items-center gap-2 overflow-hidden min-w-0">
             <CloudRain size={13} className="shrink-0" style={{ color: "#fca5a5" }} />
-            <p className="text-xs truncate" style={{ color: "rgba(255,200,200,0.85)" }}>
-              IMD: Heavy rain &amp; thunderstorm in Kangra 24–25 Apr. Avoid hilly travel.
-            </p>
+            <p className="text-xs truncate" style={{ color: "rgba(255,200,200,0.85)" }}>{tx.alert}</p>
           </div>
         </div>
       </div>
@@ -151,20 +148,19 @@ export default function HomePage() {
               <Megaphone size={18} color="white" />
             </div>
             <div>
-              <h2 className="text-xl sm:text-2xl font-bold font-display" style={{ color: "var(--text)" }}>Notice Board</h2>
-              <p className="text-xs font-hindi" style={{ color: "var(--text-3)" }}>सूचना पट्ट</p>
+              <h2 className="text-xl sm:text-2xl font-bold font-display" style={{ color: "var(--text)" }}>{tx.noticeBoard}</h2>
+              <p className="text-xs font-hindi" style={{ color: "var(--text-3)" }}>{tx.noticeBoardHi}</p>
             </div>
             <div className="ml-auto flex items-center gap-1.5">
               <Bell size={13} style={{ color: "var(--gold)" }} />
-              <span className="text-xs font-semibold" style={{ color: "var(--gold)" }}>{notices.length} active</span>
+              <span className="text-xs font-semibold" style={{ color: "var(--gold)" }}>{notices.length} {tx.active}</span>
             </div>
           </motion.div>
 
           <div className="flex flex-col gap-3">
             {notices.map((n, i) => (
-              <motion.div key={n.id} {...fadeUp(i * 0.07)}
-                className="card p-4 sm:p-5"
-                whileHover={{ scale: 1.005 }}
+              <motion.div key={i} {...fadeUp(i * 0.07)}
+                className="card p-4 sm:p-5" whileHover={{ scale: 1.005 }}
                 style={{
                   borderLeft: `4px solid ${n.urgent ? "#ef4444" : "var(--green-mid)"}`,
                   outline: ticker === i ? `2px solid rgba(201,146,42,0.3)` : "none",
@@ -195,14 +191,14 @@ export default function HomePage() {
       <section className="py-12 sm:py-20" style={{ backgroundColor: "var(--bg)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp()} className="text-center mb-10">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--gold)" }}>Quick Access</p>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--gold)" }}>{tx.quickAccess}</p>
             <h2 className="text-2xl sm:text-4xl font-bold font-display" style={{ color: "var(--text)" }}>
-              Everything Your Village Needs
+              {tx.quickTitle}
             </h2>
           </motion.div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
-            {quickLinks.map((l, i) => (
+            {quickLinkDefs.map((l, i) => (
               <motion.div key={l.href} {...fadeUp(i * 0.08)}>
                 <Link href={l.href} className="group block h-full">
                   <motion.div whileHover={{ y: -4, scale: 1.02 }} whileTap={{ scale: 0.97 }}
@@ -212,11 +208,11 @@ export default function HomePage() {
                       <l.icon size={22} color={l.iconCol} />
                     </div>
                     <div>
-                      <p className="text-white font-bold text-base sm:text-lg leading-tight">{l.label}</p>
-                      <p className="text-white/45 text-xs mt-0.5 font-hindi">{l.hi}</p>
+                      <p className="text-white font-bold text-base sm:text-lg leading-tight">{tx.quickLinks[i].label}</p>
+                      <p className="text-white/45 text-xs mt-0.5 font-hindi">{tx.quickLinks[i].hi}</p>
                     </div>
                     <div className="mt-auto flex items-center gap-1 text-white/40 text-xs group-hover:text-white/70 transition-colors">
-                      Explore <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
+                      {lang === "en" ? "Explore" : "देखें"} <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
                     </div>
                   </motion.div>
                 </Link>
@@ -236,14 +232,14 @@ export default function HomePage() {
               className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center gold-gradient shadow-xl">
               <Shield size={26} color="#1B4332" />
             </motion.div>
-            <h2 className="text-2xl sm:text-4xl font-bold text-white mb-3 font-display">Get Panchayat Verified</h2>
+            <h2 className="text-2xl sm:text-4xl font-bold text-white mb-3 font-display">{tx.verifiedTitle}</h2>
             <p className="max-w-xl mx-auto mb-8 leading-relaxed text-base" style={{ color: "rgba(255,255,255,0.58)" }}>
-              Register your business and earn the <strong style={{ color: "#E8B84B" }}>Panchayat Verified</strong> green badge — trusted by your entire community.
+              {tx.verifiedDesc}
             </p>
             <Link href="/register"
               className="inline-flex items-center gap-2.5 px-7 py-4 rounded-2xl font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-2xl"
               style={{ background: "linear-gradient(135deg, #C9922A, #E8B84B)", color: "#1B4332" }}>
-              Register Your Business <ArrowRight size={17} />
+              {tx.verifiedCTA} <ArrowRight size={17} />
             </Link>
           </motion.div>
         </div>
