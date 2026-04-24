@@ -2,7 +2,7 @@ export const T = {
   en: {
     nav: {
       home: "Home", yojnaen: "Yojnaen", health: "Health",
-      emergency: "Emergency", directory: "Directory",
+      emergency: "Emergency", directory: "Directory", panchayat: "Panchayat",
       login: "Login", register: "Register", logout: "Logout",
       loginMobile: "Login with Mobile", registerBusiness: "Register Your Business",
     },
@@ -26,6 +26,7 @@ export const T = {
         { label: "Health Directory", hi: "स्वास्थ्य सेवाएँ" },
         { label: "Emergency", hi: "आपातकाल" },
         { label: "Business Directory", hi: "स्थानीय व्यापार" },
+        { label: "Panchayat", hi: "पंचायत सदस्य" },
       ],
       notices: [
         { title: "Gram Sabha — 28 April 2025", body: "Monthly Gram Sabha at Panchayat Bhawan, 11:00 AM. Agenda: PMAY housing list, road repair tender.", urgent: true, date: "22 Apr 2025" },
@@ -87,6 +88,19 @@ export const T = {
       noDocsNeeded: "No documents needed",
       noDocsDesc: "Dehrian Panchayat already has your records. Your Aadhaar will be used to verify your identity, residency, and character directly from panchayat records — no paperwork required.",
     },
+    panchayat: {
+      badge: "Gram Panchayat", title: "Panchayat", titleGold: "Members",
+      sub: "ग्राम पंचायत डेहरियाँ — जवालामुखी",
+      desc: "Elected representatives and staff serving Dehrian Gram Panchayat.",
+      pradhan: "Gram Pradhan", upPradhan: "Up-Pradhan", sachiv: "Gram Sachiv",
+      sewak: "Gram Sewak", wardPanch: "Ward Panch",
+      ward: "Ward", phone: "Phone", loginToCall: "Login to Call",
+      wardMembers: "Ward Members", wardMembersHi: "वार्ड पंच",
+      staffTitle: "Panchayat Staff", staffHi: "पंचायत स्टाफ",
+      officeTitle: "Office Information", officeHi: "कार्यालय विवरण",
+      address: "Address", email: "Email", officeHours: "Office Hours",
+      officeHoursVal: "Mon–Sat, 10 AM – 5 PM",
+    },
     login: {
       message: "Login to access all features",
       title: "Enter Mobile Number", sub: "We'll send an OTP to verify you",
@@ -105,6 +119,7 @@ export const T = {
         ["/health", "Health Directory"],
         ["/emergency", "Emergency Contacts"],
         ["/directory", "Business Directory"],
+        ["/panchayat", "Panchayat Members"],
         ["/register", "Register Business"],
         ["/admin", "Admin Panel"],
       ],
@@ -119,7 +134,7 @@ export const T = {
   hi: {
     nav: {
       home: "होम", yojnaen: "योजनाएँ", health: "स्वास्थ्य",
-      emergency: "आपातकाल", directory: "डायरेक्टरी",
+      emergency: "आपातकाल", directory: "डायरेक्टरी", panchayat: "पंचायत",
       login: "लॉगिन", register: "रजिस्टर", logout: "लॉगआउट",
       loginMobile: "मोबाइल से लॉगिन", registerBusiness: "व्यापार रजिस्टर करें",
     },
@@ -143,6 +158,7 @@ export const T = {
         { label: "स्वास्थ्य सेवाएँ", hi: "Health Directory" },
         { label: "आपातकाल", hi: "Emergency" },
         { label: "स्थानीय व्यापार", hi: "Business Directory" },
+        { label: "पंचायत", hi: "Panchayat Members" },
       ],
       notices: [
         { title: "ग्राम सभा — 28 अप्रैल 2025", body: "पंचायत भवन में मासिक ग्राम सभा, सुबह 11 बजे। एजेंडा: PMAY आवास सूची, सड़क मरम्मत टेंडर।", urgent: true, date: "22 अप्रैल 2025" },
@@ -204,6 +220,19 @@ export const T = {
       noDocsNeeded: "कोई दस्तावेज़ नहीं चाहिए",
       noDocsDesc: "डेहरियाँ पंचायत के पास पहले से आपके रिकॉर्ड हैं। आपका आधार नंबर से सत्यापन होगा — कोई कागज़ात नहीं।",
     },
+    panchayat: {
+      badge: "ग्राम पंचायत", title: "पंचायत", titleGold: "सदस्य",
+      sub: "Gram Panchayat Dehrian — Jawalamukhi",
+      desc: "डेहरियाँ ग्राम पंचायत के निर्वाचित प्रतिनिधि और कर्मचारी।",
+      pradhan: "ग्राम प्रधान", upPradhan: "उप-प्रधान", sachiv: "ग्राम सचिव",
+      sewak: "ग्राम सेवक", wardPanch: "वार्ड पंच",
+      ward: "वार्ड", phone: "फ़ोन", loginToCall: "कॉल के लिए लॉगिन",
+      wardMembers: "वार्ड सदस्य", wardMembersHi: "Ward Members",
+      staffTitle: "पंचायत स्टाफ", staffHi: "Panchayat Staff",
+      officeTitle: "कार्यालय विवरण", officeHi: "Office Information",
+      address: "पता", email: "ईमेल", officeHours: "कार्यालय समय",
+      officeHoursVal: "सोम–शनि, सुबह 10 – शाम 5",
+    },
     login: {
       message: "सभी सुविधाओं के लिए लॉगिन करें",
       title: "मोबाइल नंबर दर्ज करें", sub: "हम OTP भेजकर आपकी पहचान सत्यापित करेंगे",
@@ -222,6 +251,7 @@ export const T = {
         ["/health", "स्वास्थ्य डायरेक्टरी"],
         ["/emergency", "आपातकालीन नंबर"],
         ["/directory", "व्यापार डायरेक्टरी"],
+        ["/panchayat", "पंचायत सदस्य"],
         ["/register", "व्यापार रजिस्टर करें"],
         ["/admin", "एडमिन पैनल"],
       ],

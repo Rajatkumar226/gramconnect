@@ -12,7 +12,7 @@ import {
 import { useData } from "@/contexts/DataContext";
 import type {
   Notice, Business, Registration, Hospital, ASHAWorker, JanAushadhi,
-  PanchayatInfo, VillageStats,
+  PanchayatInfo, VillageStats, PanchayatMember,
 } from "@/contexts/DataContext";
 
 // ── Constants ──────────────────────────────────────────────────────────────────
@@ -23,7 +23,7 @@ const BIZ_CATS = ["Grocery & Kirana","Medical & Pharmacy","Dairy & Milk","Hardwa
 const HOSP_TYPES = ["Government Hospital","PHC","Zonal Hospital","Medical College Hospital","Private Hospital","Clinic"];
 const CAT_ICONS: Record<string,string> = { "Grocery & Kirana":"🛒","Medical & Pharmacy":"💊","Dairy & Milk":"🥛","Hardware & Electronics":"🔧","Food & Restaurant":"🍽️","Tailoring & Clothing":"🧵","Mobile & Repair":"📱","Agriculture & Nursery":"🌱","Automobile & Repair":"🚗","Education & Coaching":"📚","Beauty & Salon":"💇","Other":"🏪" };
 
-type Tab = "overview"|"registrations"|"businesses"|"health"|"notices"|"settings";
+type Tab = "overview"|"registrations"|"businesses"|"health"|"notices"|"members"|"settings";
 type HealthTab = "hospitals"|"asha"|"jan";
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -196,7 +196,7 @@ function OverviewSection({ setTab }: { setTab:(t:Tab)=>void }) {
             { label:"Add Business",  icon:Store,     tab:"businesses"    as Tab, col:"#3b82f6" },
             { label:"Add Notice",    icon:Megaphone, tab:"notices"       as Tab, col:"#8b5cf6" },
             { label:"Add Hospital",  icon:HeartPulse,tab:"health"        as Tab, col:"#ef4444" },
-            { label:"Edit Stats",    icon:RefreshCw, tab:"settings"      as Tab, col:"#f59e0b" },
+            { label:"Members",       icon:Users,     tab:"members"       as Tab, col:"#7c3aed" },
             { label:"Pending",       icon:Clock,     tab:"registrations" as Tab, col:"#10b981" },
             { label:"Settings",      icon:Settings,  tab:"settings"      as Tab, col:"#6b7280" },
           ].map((a)=>(
@@ -1077,6 +1077,118 @@ function SettingsSection() {
   );
 }
 
+// ── MEMBERS SECTION ───────────────────────────────────────────────────────────
+
+const DESIGNATIONS = ["Gram Pradhan","Up-Pradhan","Gram Sachiv","Gram Sewak","Ward Panch"];
+const DESIG_EMOJI: Record<string,string> = { "Gram Pradhan":"🏛️","Up-Pradhan":"⭐","Gram Sachiv":"📋","Gram Sewak":"🌾","Ward Panch":"🏘️" };
+
+function MembersSection() {
+  const { members, saveMembers } = useData();
+  const emptyForm = { name:"", nameHi:"", designation:"Ward Panch", ward:"", phone:"" };
+  const [form, setForm] = useState(emptyForm);
+  const [editId, setEditId] = useState<string|null>(null);
+  const [saved, setSaved] = useState(false);
+
+  const flash = () => { setSaved(true); setTimeout(()=>setSaved(false), 2000); };
+
+  const submit = () => {
+    if (!form.name.trim()) return;
+    if (editId) {
+      saveMembers(members.map(m => m.id===editId ? { ...m, ...form } : m));
+    } else {
+      saveMembers([...members, { id: uid(), ...form }]);
+    }
+    setForm(emptyForm); setEditId(null); flash();
+  };
+
+  const remove = (id: string) => saveMembers(members.filter(m=>m.id!==id));
+  const startEdit = (m: PanchayatMember) => { setForm({ name:m.name, nameHi:m.nameHi, designation:m.designation, ward:m.ward, phone:m.phone }); setEditId(m.id); };
+  const cancel = () => { setForm(emptyForm); setEditId(null); };
+
+  const groups = DESIGNATIONS.map(d => ({ d, items: members.filter(m=>m.designation===d) })).filter(g=>g.items.length>0);
+
+  return (
+    <div className="space-y-6">
+      {/* Form */}
+      <div className="card p-5">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-bold" style={{color:"var(--text)"}}>{editId ? "Edit Member" : "Add Panchayat Member"}</h3>
+          {saved && <span className="text-xs font-semibold text-green-500 flex items-center gap-1"><Check size={12}/> Saved</span>}
+        </div>
+        <div className="grid sm:grid-cols-2 gap-4 mb-4">
+          <FField label="Name (English)" req value={form.name} onChange={v=>setForm(p=>({...p,name:v}))} ph="Full name"/>
+          <FField label="नाम (हिंदी)" value={form.nameHi} onChange={v=>setForm(p=>({...p,nameHi:v}))} ph="हिंदी में नाम"/>
+          <div>
+            <label className="block text-xs font-semibold mb-1.5" style={{color:"var(--text-2)"}}>Designation <span className="text-red-500">*</span></label>
+            <select value={form.designation} onChange={e=>setForm(p=>({...p,designation:e.target.value}))}
+              className="w-full px-3 py-2.5 rounded-xl text-sm border outline-none"
+              style={{backgroundColor:"var(--bg)",border:"1px solid var(--border)",color:"var(--text)"}}>
+              {DESIGNATIONS.map(d=><option key={d} value={d}>{d}</option>)}
+            </select>
+          </div>
+          {form.designation === "Ward Panch" && (
+            <FField label="Ward" value={form.ward} onChange={v=>setForm(p=>({...p,ward:v}))} ph="e.g. Ward 1"/>
+          )}
+          <FField label="Phone Number" value={form.phone} onChange={v=>setForm(p=>({...p,phone:v}))} ph="+91 XXXXX XXXXX" type="tel"/>
+        </div>
+        <div className="flex gap-2">
+          <motion.button whileTap={{scale:0.97}} onClick={submit}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
+            style={{background:"linear-gradient(135deg,#1B4332,#2D6A4F)"}}>
+            <Save size={14}/> {editId ? "Update Member" : "Add Member"}
+          </motion.button>
+          {editId && (
+            <button onClick={cancel} className="px-4 py-2.5 rounded-xl text-sm font-medium border"
+              style={{color:"var(--text-2)",borderColor:"var(--border)"}}>Cancel</button>
+          )}
+        </div>
+      </div>
+
+      {/* Members list by designation */}
+      {groups.map(({d, items}) => (
+        <div key={d} className="card p-5">
+          <h3 className="font-bold mb-4 flex items-center gap-2" style={{color:"var(--text)"}}>
+            <span className="text-xl">{DESIG_EMOJI[d]||"👤"}</span> {d}
+            <span className="ml-auto text-xs font-normal px-2 py-0.5 rounded-full" style={{backgroundColor:"rgba(27,67,50,0.1)",color:"var(--green)"}}>{items.length}</span>
+          </h3>
+          <div className="space-y-3">
+            {items.map(m => (
+              <div key={m.id} className="flex items-center gap-3 p-3 rounded-xl border" style={{borderColor:"var(--border)"}}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0"
+                  style={{backgroundColor:"rgba(27,67,50,0.06)"}}>
+                  {DESIG_EMOJI[m.designation]||"👤"}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-sm truncate" style={{color:"var(--text)"}}>{m.name}</p>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {m.nameHi && <p className="text-xs font-hindi" style={{color:"var(--text-3)"}}>{m.nameHi}</p>}
+                    {m.ward && <span className="text-xs px-1.5 py-0.5 rounded-full" style={{backgroundColor:"rgba(124,58,237,0.1)",color:"#7c3aed"}}>{m.ward}</span>}
+                    {m.phone && <span className="text-xs flex items-center gap-1" style={{color:"var(--text-3)"}}><Phone size={10}/>{m.phone}</span>}
+                  </div>
+                </div>
+                <div className="flex gap-1.5 shrink-0">
+                  <button onClick={()=>startEdit(m)} className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:bg-blue-50"
+                    style={{color:"#3b82f6"}}><Pencil size={13}/></button>
+                  <button onClick={()=>remove(m.id)} className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:bg-red-50"
+                    style={{color:"#dc2626"}}><Trash2 size={13}/></button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      {members.length === 0 && (
+        <div className="card p-12 text-center">
+          <p className="text-4xl mb-3">👥</p>
+          <p className="font-semibold" style={{color:"var(--text)"}}>No members added yet</p>
+          <p className="text-sm mt-1" style={{color:"var(--text-3)"}}>Add Pradhan, Up-Pradhan, Sachiv and Ward Panchs above</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── MAIN ADMIN PAGE ────────────────────────────────────────────────────────────
 
 export default function AdminPage() {
@@ -1096,18 +1208,19 @@ export default function AdminPage() {
   };
 
   const navItems: { key: Tab; label: string; icon: React.ReactNode; badge?: number }[] = [
-    { key:"overview",       label:"Overview",      icon:<LayoutDashboard size={17}/> },
-    { key:"registrations",  label:"Registrations", icon:<ClipboardList size={17}/>,  badge:pending },
-    { key:"businesses",     label:"Businesses",    icon:<Store size={17}/> },
-    { key:"health",         label:"Health",        icon:<HeartPulse size={17}/> },
-    { key:"notices",        label:"Notices",       icon:<Megaphone size={17}/> },
-    { key:"settings",       label:"Settings",      icon:<Settings size={17}/> },
+    { key:"overview",       label:"Overview",        icon:<LayoutDashboard size={17}/> },
+    { key:"registrations",  label:"Registrations",   icon:<ClipboardList size={17}/>,  badge:pending },
+    { key:"businesses",     label:"Businesses",      icon:<Store size={17}/> },
+    { key:"health",         label:"Health",          icon:<HeartPulse size={17}/> },
+    { key:"notices",        label:"Notices",         icon:<Megaphone size={17}/> },
+    { key:"members",        label:"Members",         icon:<Users size={17}/> },
+    { key:"settings",       label:"Settings",        icon:<Settings size={17}/> },
   ];
 
   const tabTitles: Record<Tab,string> = {
     overview:"Dashboard Overview", registrations:"Business Registrations",
     businesses:"Business Directory", health:"Health Directory",
-    notices:"Notice Board", settings:"Settings",
+    notices:"Notice Board", members:"Panchayat Members", settings:"Settings",
   };
 
   // ── Login screen ──
@@ -1278,6 +1391,7 @@ export default function AdminPage() {
               {tab==="businesses"     && <BusinessesSection/>}
               {tab==="health"         && <HealthSection/>}
               {tab==="notices"        && <NoticesSection/>}
+              {tab==="members"        && <MembersSection/>}
               {tab==="settings"       && <SettingsSection/>}
             </motion.div>
           </AnimatePresence>

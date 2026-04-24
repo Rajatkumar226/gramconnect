@@ -12,12 +12,13 @@ export type Hospital = { id: string; name: string; type: string; address: string
 export type ASHAWorker = { id: string; name: string; village: string; phone: string; services: string[]; };
 export type JanAushadhi = { id: string; name: string; address: string; timing: string; note: string; phone: string; };
 export type PanchayatInfo = { address: string; phone: string; email: string; pradhan: string; secretary: string; };
+export type PanchayatMember = { id: string; name: string; nameHi: string; designation: string; ward: string; phone: string; };
 export type VillageStats = { villagers: string; businesses: string; schemes: string; emergency: string; };
 
 type DataCtx = {
   notices: Notice[]; businesses: Business[]; registrations: Registration[];
   hospitals: Hospital[]; ashaWorkers: ASHAWorker[]; janAushadhi: JanAushadhi[];
-  panchayatInfo: PanchayatInfo; villageStats: VillageStats;
+  panchayatInfo: PanchayatInfo; villageStats: VillageStats; members: PanchayatMember[];
   saveNotices: (n: Notice[]) => void;
   saveBusinesses: (b: Business[]) => void;
   saveRegistrations: (r: Registration[]) => void;
@@ -26,6 +27,7 @@ type DataCtx = {
   saveJanAushadhi: (j: JanAushadhi[]) => void;
   savePanchayatInfo: (p: PanchayatInfo) => void;
   saveVillageStats: (v: VillageStats) => void;
+  saveMembers: (m: PanchayatMember[]) => void;
   approveRegistration: (id: string, note?: string) => void;
   rejectRegistration: (id: string, note?: string) => void;
 };
@@ -66,6 +68,18 @@ const seedPanchayatInfo: PanchayatInfo = {
 
 const seedVillageStats: VillageStats = { villagers: "847", businesses: "32+", schemes: "16+", emergency: "6" };
 
+const seedMembers: PanchayatMember[] = [
+  { id:"m1", name:"(Pradhan Name)", nameHi:"(प्रधान नाम)", designation:"Gram Pradhan", ward:"", phone:"" },
+  { id:"m2", name:"(Up-Pradhan Name)", nameHi:"(उप-प्रधान नाम)", designation:"Up-Pradhan", ward:"", phone:"" },
+  { id:"m3", name:"(Secretary Name)", nameHi:"(सचिव नाम)", designation:"Gram Sachiv", ward:"", phone:"" },
+  { id:"m4", name:"(Gram Sewak Name)", nameHi:"(ग्राम सेवक)", designation:"Gram Sewak", ward:"", phone:"" },
+  { id:"m5", name:"(Ward Panch)", nameHi:"", designation:"Ward Panch", ward:"Ward 1", phone:"" },
+  { id:"m6", name:"(Ward Panch)", nameHi:"", designation:"Ward Panch", ward:"Ward 2", phone:"" },
+  { id:"m7", name:"(Ward Panch)", nameHi:"", designation:"Ward Panch", ward:"Ward 3", phone:"" },
+  { id:"m8", name:"(Ward Panch)", nameHi:"", designation:"Ward Panch", ward:"Ward 4", phone:"" },
+  { id:"m9", name:"(Ward Panch)", nameHi:"", designation:"Ward Panch", ward:"Ward 5", phone:"" },
+];
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function load<T>(key: string, fallback: T): T {
@@ -92,6 +106,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [janAushadhi,   setJanAushadhi]   = useState<JanAushadhi[]>(seedJanAushadhi);
   const [panchayatInfo, setPanchayatInfo] = useState<PanchayatInfo>(seedPanchayatInfo);
   const [villageStats,  setVillageStats]  = useState<VillageStats>(seedVillageStats);
+  const [members,       setMembers]       = useState<PanchayatMember[]>(seedMembers);
 
   useEffect(() => {
     setNotices(load("gc_notices", seedNotices));
@@ -104,6 +119,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     setJanAushadhi(load("gc_jan", seedJanAushadhi));
     setPanchayatInfo(load("gc_info", seedPanchayatInfo));
     setVillageStats(load("gc_stats", seedVillageStats));
+    setMembers(load("gc_members", seedMembers));
   }, []);
 
   const saveNotices       = useCallback((n: Notice[])       => { setNotices(n);       persist("gc_notices",   n); }, []);
@@ -114,6 +130,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const saveJanAushadhi   = useCallback((j: JanAushadhi[])  => { setJanAushadhi(j);   persist("gc_jan",       j); }, []);
   const savePanchayatInfo = useCallback((p: PanchayatInfo)  => { setPanchayatInfo(p); persist("gc_info",      p); }, []);
   const saveVillageStats  = useCallback((v: VillageStats)   => { setVillageStats(v);  persist("gc_stats",     v); }, []);
+  const saveMembers       = useCallback((m: PanchayatMember[]) => { setMembers(m);    persist("gc_members",   m); }, []);
 
   const approveRegistration = useCallback((id: string, note?: string) => {
     setRegistrations((prev) => {
@@ -143,10 +160,10 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   return (
     <DataContext.Provider value={{
       notices, businesses, registrations, hospitals, ashaWorkers, janAushadhi,
-      panchayatInfo, villageStats,
+      panchayatInfo, villageStats, members,
       saveNotices, saveBusinesses, saveRegistrations, saveHospitals,
       saveAshaWorkers, saveJanAushadhi, savePanchayatInfo, saveVillageStats,
-      approveRegistration, rejectRegistration,
+      saveMembers, approveRegistration, rejectRegistration,
     }}>
       {children}
     </DataContext.Provider>
