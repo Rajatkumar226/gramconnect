@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Search, Phone, MapPin, Clock, Shield, Star, Filter, ArrowRight, X } from "lucide-react";
 import businesses from "@/data/businesses.json";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLang } from "@/contexts/LanguageContext";
+import { T } from "@/data/translations";
 
 const categories = ["All", "Grocery & Kirana", "Medical & Pharmacy", "Dairy & Milk", "Hardware & Electronics", "Food & Restaurant", "Tailoring & Clothing", "Mobile & Repair", "Agriculture & Nursery"];
 
@@ -29,12 +31,14 @@ function Stars({ r }: { r: number }) {
 
 export default function DirectoryPage() {
   const { user, requireAuth } = useAuth();
+  const { lang } = useLang();
+  const tx = T[lang].directory;
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("All");
   const [verified, setVerified] = useState(false);
 
   const handleCall = (phone: string) => {
-    if (!user) { requireAuth("Login to view business contact numbers"); return; }
+    if (!user) { requireAuth(lang === "en" ? "Login to view business contact numbers" : "व्यापार नंबर देखने के लिए लॉगिन करें"); return; }
     window.location.href = `tel:${phone}`;
   };
 
@@ -60,15 +64,16 @@ export default function DirectoryPage() {
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6 glass-dark">
             <Shield size={12} style={{ color: "#fde68a" }} />
-            <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#fde68a" }}>Business Directory</span>
+            <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#fde68a" }}>{tx.badge}</span>
           </motion.div>
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
             className="text-4xl sm:text-6xl font-bold text-white mb-2 font-display">
-            Local <span style={{ background: "linear-gradient(90deg, #fde68a, #fbbf24)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Directory</span>
+            {tx.title} <span style={{ background: "linear-gradient(90deg, #fde68a, #fbbf24)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>{tx.titleGold}</span>
           </motion.h1>
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
             className="text-base max-w-lg mx-auto" style={{ color: "rgba(255,220,150,0.6)" }}>
-            Discover local businesses of Dehrian. <strong style={{ color: "#fde68a" }}>{verCount} listings</strong> are Panchayat Verified.
+            {lang === "en" ? "Discover local businesses of Dehrian." : "डेहरियाँ के स्थानीय व्यापार खोजें।"}{" "}
+            <strong style={{ color: "#fde68a" }}>{verCount}{tx.desc}</strong>
           </motion.p>
         </div>
       </div>
@@ -80,7 +85,7 @@ export default function DirectoryPage() {
           <div className="relative">
             <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2" style={{ color: "var(--text-3)" }} />
             <input type="text" value={q} onChange={(e) => setQ(e.target.value)}
-              placeholder="Search businesses, categories…" className="input" style={{ paddingLeft: "2.75rem" }} />
+              placeholder={tx.search} className="input" style={{ paddingLeft: "2.75rem" }} />
             {q && (
               <button onClick={() => setQ("")} className="absolute right-3.5 top-1/2 -translate-y-1/2">
                 <X size={14} style={{ color: "var(--text-3)" }} />
@@ -96,7 +101,7 @@ export default function DirectoryPage() {
                 color: verified ? "white" : "var(--text-2)",
                 border: `1px solid ${verified ? "transparent" : "var(--border)"}`,
               }}>
-              <Shield size={11} /> Verified Only
+              <Shield size={11} /> {tx.verifiedOnly}
             </motion.button>
           </div>
         </motion.div>
@@ -119,8 +124,8 @@ export default function DirectoryPage() {
         </motion.div>
 
         <p className="text-sm mb-5" style={{ color: "var(--text-3)" }}>
-          <strong style={{ color: "var(--gold)" }}>{list.length}</strong> listing{list.length !== 1 ? "s" : ""}
-          {verified && " · Verified only"}
+          <strong style={{ color: "var(--gold)" }}>{list.length}</strong> {list.length !== 1 ? tx.listings : tx.listing}
+          {verified && ` · ${tx.verifiedFilter}`}
         </p>
 
         {/* Cards */}
@@ -167,7 +172,7 @@ export default function DirectoryPage() {
                 <motion.button whileTap={{ scale: 0.97 }} onClick={() => handleCall(b.phone)}
                   className="flex items-center justify-center gap-1.5 py-3 rounded-xl text-sm font-semibold text-white mt-auto"
                   style={{ background: "linear-gradient(135deg, #78350f, #b45309)" }}>
-                  <Phone size={14} /> {user ? b.phone : "Login to Call"}
+                  <Phone size={14} /> {user ? b.phone : tx.loginToCall}
                 </motion.button>
 
                 {!b.verified && (
@@ -188,12 +193,12 @@ export default function DirectoryPage() {
         {/* Register CTA */}
         <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="mt-10 rounded-2xl p-5 sm:p-6 text-center green-gradient">
-          <h3 className="text-lg sm:text-xl font-bold text-white mb-2 font-display">Own a local business?</h3>
-          <p className="text-sm mb-4" style={{ color: "rgba(255,255,255,0.6)" }}>Get listed with a Panchayat Verified badge.</p>
+          <h3 className="text-lg sm:text-xl font-bold text-white mb-2 font-display">{tx.own}</h3>
+          <p className="text-sm mb-4" style={{ color: "rgba(255,255,255,0.6)" }}>{tx.ownDesc}</p>
           <Link href="/register"
             className="inline-flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm transition-all hover:scale-105"
             style={{ background: "linear-gradient(135deg, #C9922A, #E8B84B)", color: "#1B4332" }}>
-            Register Now <ArrowRight size={14} />
+            {tx.registerNow} <ArrowRight size={14} />
           </Link>
         </motion.div>
       </div>

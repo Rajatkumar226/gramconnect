@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, AlertTriangle, Info, Check } from "lucide-react";
+import { useLang } from "@/contexts/LanguageContext";
+import { T } from "@/data/translations";
 
 const main = [
   { n: "108",  l: "Ambulance",       hi: "एम्बुलेंस",       d: "Free 24×7 ambulance — HP",      icon: "🚑", from: "#7f1d1d", to: "#dc2626" },
@@ -23,6 +25,8 @@ const others = [
 ];
 
 export default function EmergencyPage() {
+  const { lang } = useLang();
+  const tx = T[lang].emergency;
   const [called, setCalled] = useState<string | null>(null);
 
   const handleCall = (n: string) => {
@@ -42,15 +46,15 @@ export default function EmergencyPage() {
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6 glass-dark">
             <AlertTriangle size={12} className="animate-pulse" style={{ color: "#fca5a5" }} />
-            <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#fca5a5" }}>Emergency Contacts</span>
+            <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#fca5a5" }}>{tx.badge}</span>
           </motion.div>
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
             className="text-4xl sm:text-6xl font-bold text-white mb-2 font-display">
-            आपातकालीन <span style={{ background: "linear-gradient(90deg, #fca5a5, #f87171)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>नंबर</span>
+            {tx.title} <span style={{ background: "linear-gradient(90deg, #fca5a5, #f87171)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>{tx.titleRed}</span>
           </motion.h1>
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
             className="text-base max-w-sm mx-auto" style={{ color: "rgba(255,200,200,0.6)" }}>
-            Tap any number to call instantly. Save these in your phone.
+            {tx.desc}
           </motion.p>
         </div>
       </div>
@@ -59,7 +63,7 @@ export default function EmergencyPage() {
         {/* Main 6 numbers */}
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
           className="text-center text-xs uppercase tracking-widest mt-4 mb-5" style={{ color: "rgba(255,255,255,0.3)" }}>
-          Tap to Call Instantly
+          {lang === "en" ? "Tap to Call Instantly" : "तुरंत कॉल करने के लिए टैप करें"}
         </motion.p>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-10">
@@ -83,7 +87,7 @@ export default function EmergencyPage() {
                   <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
                     <Check size={18} color="white" />
                   </div>
-                  <p className="text-white text-sm font-semibold">Calling…</p>
+                  <p className="text-white text-sm font-semibold">{lang === "en" ? "Calling…" : "कॉल हो रहा है…"}</p>
                 </div>
               ) : (
                 <>
@@ -114,8 +118,8 @@ export default function EmergencyPage() {
             <Info size={14} style={{ color: "#E8B84B" }} />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-white font-display">Other Helplines</h2>
-            <p className="text-xs font-hindi" style={{ color: "rgba(255,255,255,0.35)" }}>अन्य सहायता नंबर</p>
+            <h2 className="text-lg font-bold text-white font-display">{tx.others}</h2>
+            <p className="text-xs font-hindi" style={{ color: "rgba(255,255,255,0.35)" }}>{lang === "en" ? "अन्य सहायता नंबर" : "Other Helplines"}</p>
           </div>
         </motion.div>
 

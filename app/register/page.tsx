@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Shield, CheckCircle2, ChevronRight, User, Store, AlertCircle, Check } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLang } from "@/contexts/LanguageContext";
+import { T } from "@/data/translations";
 
-const steps = ["Business Info", "Owner Details", "Review"];
 const categories = ["Grocery & Kirana", "Medical & Pharmacy", "Dairy & Milk", "Hardware & Electronics", "Food & Restaurant", "Tailoring & Clothing", "Mobile & Repair", "Agriculture & Nursery", "Automobile & Repair", "Education & Coaching", "Beauty & Salon", "Other"];
 
 type Form = {
@@ -30,13 +31,15 @@ function Field({ label, hi, ph, type = "text", req, val, set }: { label: string;
 
 export default function RegisterPage() {
   const { user, requireAuth } = useAuth();
+  const { lang } = useLang();
+  const tx = T[lang].register;
   const [step, setStep] = useState(0);
   const [done, setDone] = useState(false);
   const [form, setForm] = useState<Form>(init);
   const set = (k: keyof Form) => (v: string | boolean) => setForm((f) => ({ ...f, [k]: v }));
 
   useEffect(() => {
-    if (!user) requireAuth("Login first to register your business here");
+    if (!user) requireAuth(tx.loginDesc);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) return (
@@ -48,15 +51,13 @@ export default function RegisterPage() {
           style={{ background: "linear-gradient(135deg, #C9922A, #E8B84B)" }}>
           <Shield size={28} color="#1B4332" />
         </motion.div>
-        <h2 className="text-2xl font-bold text-white mb-2 font-display">Login Required</h2>
-        <p className="text-sm mb-6" style={{ color: "rgba(255,255,255,0.5)" }}>
-          Login with your mobile number to register your business on GramConnect.
-        </p>
+        <h2 className="text-2xl font-bold text-white mb-2 font-display">{tx.loginRequired}</h2>
+        <p className="text-sm mb-6" style={{ color: "rgba(255,255,255,0.5)" }}>{tx.loginDesc}</p>
         <motion.button whileTap={{ scale: 0.97 }}
-          onClick={() => requireAuth("Login first to register your business here")}
+          onClick={() => requireAuth(tx.loginDesc)}
           className="px-7 py-3.5 rounded-xl font-semibold text-sm"
           style={{ background: "linear-gradient(135deg, #C9922A, #E8B84B)", color: "#1B4332" }}>
-          <User size={14} className="inline mr-2" />Login with Mobile
+          <User size={14} className="inline mr-2" />{tx.loginBtn}
         </motion.button>
       </motion.div>
     </div>
@@ -84,18 +85,11 @@ export default function RegisterPage() {
           className="w-20 h-20 rounded-2xl mx-auto mb-6 flex items-center justify-center gold-gradient shadow-xl">
           <CheckCircle2 size={36} color="#1B4332" />
         </motion.div>
-        <h2 className="text-3xl font-bold text-white mb-3 font-display">Application Submitted!</h2>
-        <p className="mb-6 leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>
-          Submitted to <strong style={{ color: "#E8B84B" }}>Dehrian Gram Panchayat</strong>. You will be notified in <strong className="text-white">5–7 working days</strong>.
-        </p>
+        <h2 className="text-3xl font-bold text-white mb-3 font-display">{tx.successTitle}</h2>
+        <p className="mb-6 leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>{tx.successDesc}</p>
         <div className="glass-dark rounded-2xl p-4 text-left mb-6 space-y-2.5">
-          <p className="text-sm font-semibold" style={{ color: "#74C69D" }}>What happens next?</p>
-          {[
-            "Panchayat office receives your application",
-            "Your Aadhaar is matched against panchayat records",
-            "Gram Pradhan verifies residency & character",
-            "Business listed with 'Panchayat Verified' badge",
-          ].map((s, i) => (
+          <p className="text-sm font-semibold" style={{ color: "#74C69D" }}>{lang === "en" ? "What happens next?" : "आगे क्या होगा?"}</p>
+          {tx.nextSteps.map((s, i) => (
             <div key={i} className="flex items-start gap-2.5 text-sm" style={{ color: "rgba(255,255,255,0.55)" }}>
               <span className="w-5 h-5 rounded-full bg-[#2D6A4F] text-white text-xs flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
               {s}
@@ -106,7 +100,7 @@ export default function RegisterPage() {
           onClick={() => { setDone(false); setStep(0); setForm(init); }}
           className="px-6 py-3 rounded-xl font-semibold text-sm gold-gradient"
           style={{ color: "#1B4332" }}>
-          Register Another Business
+          {tx.registerAnother}
         </motion.button>
       </motion.div>
     </div>
@@ -121,11 +115,9 @@ export default function RegisterPage() {
           style={{ backgroundImage: "radial-gradient(circle at 70% 50%, #C9922A, transparent 50%)" }} />
         <div className="relative max-w-2xl mx-auto px-4 sm:px-6 text-center">
           <h1 className="text-3xl sm:text-5xl font-bold text-white mb-2 font-display">
-            Register Your <span className="gold-shimmer">Business</span>
+            {tx.title} <span className="gold-shimmer">{tx.titleGold}</span>
           </h1>
-          <p className="text-base" style={{ color: "rgba(255,255,255,0.55)" }}>
-            Get listed and earn the <strong style={{ color: "#E8B84B" }}>Panchayat Verified</strong> badge.
-          </p>
+          <p className="text-base" style={{ color: "rgba(255,255,255,0.55)" }}>{tx.subtitle}</p>
         </div>
       </div>
 
@@ -134,7 +126,7 @@ export default function RegisterPage() {
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           className="mt-8 mb-5 card p-4 sm:p-5">
           <div className="flex items-center gap-1.5">
-            {steps.map((s, i) => (
+            {tx.steps.map((s, i) => (
               <div key={s} className="flex items-center gap-1.5 flex-1">
                 <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-all duration-300"
                   style={i < step ? { background: "linear-gradient(135deg, var(--green), var(--green-mid))", color: "white" }
@@ -143,7 +135,7 @@ export default function RegisterPage() {
                   {i < step ? <Check size={13} /> : i + 1}
                 </div>
                 <span className="text-xs hidden sm:block truncate" style={{ color: i === step ? "var(--green)" : "var(--text-3)", fontWeight: i === step ? 600 : 400 }}>{s}</span>
-                {i < steps.length - 1 && (
+                {i < tx.steps.length - 1 && (
                   <div className="h-px flex-1 mx-1 transition-colors" style={{ backgroundColor: i < step ? "var(--green-mid)" : "var(--border)" }} />
                 )}
               </div>
@@ -160,22 +152,27 @@ export default function RegisterPage() {
             {/* STEP 0 — Business Info */}
             {step === 0 && (
               <div className="space-y-4">
-                <SectionHead icon={<Store size={15} color="white" />} title="Business Info" hi="व्यापार की जानकारी" />
-                <Field label="Business Name" hi="व्यापार का नाम" ph="e.g. Sharma General Store" req val={form.bName} set={set("bName")} />
-                <Field label="Hindi Name" hi="हिंदी में नाम" ph="शर्मा जनरल स्टोर" val={form.bNameHi} set={set("bNameHi")} />
+                <SectionHead icon={<Store size={15} color="white" />} title={tx.steps[0]} hi="व्यापार की जानकारी" />
+                <Field label={lang === "en" ? "Business Name" : "व्यापार का नाम"} hi={lang === "en" ? "व्यापार का नाम" : undefined} ph="e.g. Sharma General Store" req val={form.bName} set={set("bName")} />
+                <Field label={lang === "en" ? "Hindi Name" : "हिंदी नाम"} hi={lang === "en" ? "हिंदी में नाम" : undefined} ph="शर्मा जनरल स्टोर" val={form.bNameHi} set={set("bNameHi")} />
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-medium" style={{ color: "var(--text)" }}>Category <span className="text-red-500">*</span></label>
+                  <label className="text-sm font-medium" style={{ color: "var(--text)" }}>
+                    {lang === "en" ? "Category" : "श्रेणी"} <span className="text-red-500">*</span>
+                  </label>
                   <select value={form.category} onChange={(e) => set("category")(e.target.value)} className="input" style={{ cursor: "pointer" }}>
-                    <option value="">Select category…</option>
+                    <option value="">{lang === "en" ? "Select category…" : "श्रेणी चुनें…"}</option>
                     {categories.map((c) => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
-                <Field label="Address" hi="पता" ph="Village/Ward, Dehrian" req val={form.address} set={set("address")} />
-                <Field label="Phone" hi="फोन" ph="+91 98XXXXXXXX" type="tel" req val={form.phone} set={set("phone")} />
-                <Field label="Timing" hi="समय" ph="9AM–8PM (Closed Sunday)" val={form.timing} set={set("timing")} />
+                <Field label={lang === "en" ? "Address" : "पता"} hi={lang === "en" ? "पता" : undefined} ph="Village/Ward, Dehrian" req val={form.address} set={set("address")} />
+                <Field label={lang === "en" ? "Phone" : "फोन"} hi={lang === "en" ? "फोन" : undefined} ph="+91 98XXXXXXXX" type="tel" req val={form.phone} set={set("phone")} />
+                <Field label={lang === "en" ? "Timing" : "समय"} hi={lang === "en" ? "समय" : undefined} ph="9AM–8PM (Closed Sunday)" val={form.timing} set={set("timing")} />
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-medium" style={{ color: "var(--text)" }}>Description</label>
-                  <textarea value={form.desc} onChange={(e) => set("desc")(e.target.value)} placeholder="Products/services you offer…" rows={3}
+                  <label className="text-sm font-medium" style={{ color: "var(--text)" }}>
+                    {lang === "en" ? "Description" : "विवरण"}
+                  </label>
+                  <textarea value={form.desc} onChange={(e) => set("desc")(e.target.value)}
+                    placeholder={lang === "en" ? "Products/services you offer…" : "आप क्या बेचते/सेवा देते हैं…"} rows={3}
                     className="input" style={{ resize: "none" }} />
                 </div>
               </div>
@@ -184,14 +181,15 @@ export default function RegisterPage() {
             {/* STEP 1 — Owner Details */}
             {step === 1 && (
               <div className="space-y-4">
-                <SectionHead icon={<User size={15} color="white" />} title="Owner Details" hi="मालिक की जानकारी" />
-                <Field label="Full Name" hi="पूरा नाम" ph="As on Aadhaar" req val={form.oName} set={set("oName")} />
-                <Field label="Mobile" hi="मोबाइल" ph="+91 XXXXXXXXXX" type="tel" req val={form.oPhone} set={set("oPhone")} />
-                <Field label="Email" ph="example@email.com (optional)" type="email" val={form.email} set={set("email")} />
+                <SectionHead icon={<User size={15} color="white" />} title={tx.steps[1]} hi="मालिक की जानकारी" />
+                <Field label={lang === "en" ? "Full Name" : "पूरा नाम"} hi={lang === "en" ? "पूरा नाम" : undefined} ph={lang === "en" ? "As on Aadhaar" : "आधार के अनुसार"} req val={form.oName} set={set("oName")} />
+                <Field label={lang === "en" ? "Mobile" : "मोबाइल"} hi={lang === "en" ? "मोबाइल" : undefined} ph="+91 XXXXXXXXXX" type="tel" req val={form.oPhone} set={set("oPhone")} />
+                <Field label={lang === "en" ? "Email" : "ईमेल"} ph={lang === "en" ? "example@email.com (optional)" : "example@email.com (वैकल्पिक)"} type="email" val={form.email} set={set("email")} />
 
                 <div className="flex flex-col gap-1.5">
                   <label className="text-sm font-medium" style={{ color: "var(--text)" }}>
-                    Aadhaar Number <span className="text-xs font-hindi" style={{ color: "var(--text-3)" }}>(आधार नंबर)</span>
+                    {lang === "en" ? "Aadhaar Number" : "आधार नंबर"}{" "}
+                    {lang === "en" && <span className="text-xs font-hindi" style={{ color: "var(--text-3)" }}>(आधार नंबर)</span>}
                     <span className="text-red-500 ml-0.5">*</span>
                   </label>
                   <input
@@ -211,11 +209,9 @@ export default function RegisterPage() {
                 <div className="rounded-xl p-4 space-y-2" style={{ backgroundColor: "rgba(27,67,50,0.07)", border: "1px solid rgba(27,67,50,0.15)" }}>
                   <div className="flex items-center gap-2">
                     <AlertCircle size={14} style={{ color: "var(--green-mid)" }} />
-                    <p className="text-xs font-semibold" style={{ color: "var(--green-mid)" }}>No documents needed</p>
+                    <p className="text-xs font-semibold" style={{ color: "var(--green-mid)" }}>{tx.noDocsNeeded}</p>
                   </div>
-                  <p className="text-xs leading-relaxed" style={{ color: "var(--text-2)" }}>
-                    Dehrian Panchayat already has your records. Your Aadhaar will be used to verify your identity, residency, and character directly from panchayat records — no paperwork required.
-                  </p>
+                  <p className="text-xs leading-relaxed" style={{ color: "var(--text-2)" }}>{tx.noDocsDesc}</p>
                 </div>
               </div>
             )}
@@ -223,14 +219,14 @@ export default function RegisterPage() {
             {/* STEP 2 — Review */}
             {step === 2 && (
               <div className="space-y-4">
-                <SectionHead icon={<Shield size={15} color="#1B4332" />} title="Review & Submit" hi="समीक्षा करें" gold />
+                <SectionHead icon={<Shield size={15} color="#1B4332" />} title={tx.steps[2]} hi="समीक्षा करें" gold />
                 <div className="rounded-xl p-4 space-y-2.5 text-sm" style={{ backgroundColor: "var(--bg-alt, var(--bg))", border: "1px solid var(--border)" }}>
                   {[
-                    ["Business", form.bName],
-                    ["Category", form.category],
-                    ["Address", form.address],
-                    ["Phone", form.phone],
-                    ["Owner", form.oName],
+                    [lang === "en" ? "Business" : "व्यापार", form.bName],
+                    [lang === "en" ? "Category" : "श्रेणी", form.category],
+                    [lang === "en" ? "Address" : "पता", form.address],
+                    [lang === "en" ? "Phone" : "फोन", form.phone],
+                    [lang === "en" ? "Owner" : "मालिक", form.oName],
                     ["Aadhaar", form.aadhaar ? "XXXX XXXX " + form.aadhaar.replace(/\s/g, "").slice(-4) : ""],
                   ].map(([k, v]) => v && (
                     <div key={k} className="flex gap-2">
@@ -242,12 +238,8 @@ export default function RegisterPage() {
 
                 {/* How verification works */}
                 <div className="rounded-xl p-4 space-y-2.5" style={{ backgroundColor: "rgba(201,146,42,0.06)", border: "1px solid rgba(201,146,42,0.18)" }}>
-                  <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--gold)" }}>Verification Process</p>
-                  {[
-                    "Panchayat matches your Aadhaar with village records",
-                    "Gram Pradhan confirms residency & good character",
-                    "Approved listings get the Panchayat Verified badge",
-                  ].map((s, i) => (
+                  <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--gold)" }}>{tx.verificationProcess}</p>
+                  {tx.verSteps.map((s, i) => (
                     <div key={i} className="flex items-start gap-2.5 text-xs" style={{ color: "var(--text-2)" }}>
                       <span className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold text-white mt-0.5"
                         style={{ backgroundColor: "var(--gold)" }}>{i + 1}</span>
@@ -264,9 +256,7 @@ export default function RegisterPage() {
                     style={{ borderColor: form.agree ? "var(--green-mid)" : "var(--border)", backgroundColor: form.agree ? "var(--green-mid)" : "transparent" }}>
                     {form.agree && <Check size={11} color="white" />}
                   </div>
-                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-2)" }}>
-                    I declare that all information provided is correct and I am a bona fide resident of Dehrian Panchayat.
-                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-2)" }}>{tx.declare}</p>
                 </motion.div>
               </div>
             )}
@@ -277,7 +267,7 @@ export default function RegisterPage() {
                 <motion.button whileTap={{ scale: 0.97 }} onClick={() => setStep((s) => s - 1)}
                   className="px-5 py-2.5 rounded-xl text-sm font-medium transition-all"
                   style={{ border: "1px solid var(--border)", color: "var(--text-2)", backgroundColor: "var(--bg-alt, var(--bg))" }}>
-                  Back
+                  {tx.back}
                 </motion.button>
               ) : <div />}
 
@@ -291,7 +281,7 @@ export default function RegisterPage() {
                     cursor: valid[step] ? "pointer" : "not-allowed",
                     color: valid[step] ? "white" : "var(--text-3)",
                   }}>
-                  Continue <ChevronRight size={15} />
+                  {tx.continue} <ChevronRight size={15} />
                 </motion.button>
               ) : (
                 <motion.button whileTap={{ scale: 0.97 }} onClick={submit}
@@ -302,7 +292,7 @@ export default function RegisterPage() {
                     opacity: valid[2] ? 1 : 0.5,
                     cursor: valid[2] ? "pointer" : "not-allowed",
                   }}>
-                  <Shield size={14} /> Submit for Verification
+                  <Shield size={14} /> {tx.submit}
                 </motion.button>
               )}
             </div>

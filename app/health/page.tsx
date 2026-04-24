@@ -6,6 +6,8 @@ import type { Transition } from "framer-motion";
 import { Phone, MapPin, Clock, Stethoscope, Heart, Pill } from "lucide-react";
 import healthData from "@/data/health.json";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLang } from "@/contexts/LanguageContext";
+import { T } from "@/data/translations";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -23,9 +25,11 @@ const typeStyle: Record<string, React.CSSProperties> = {
 
 export default function HealthPage() {
   const { user, requireAuth } = useAuth();
+  const { lang } = useLang();
+  const tx = T[lang].health;
 
   const handleCall = (phone: string) => {
-    if (!user) { requireAuth("Login to view and call health contacts"); return; }
+    if (!user) { requireAuth(lang === "en" ? "Login to view and call health contacts" : "स्वास्थ्य सम्पर्क देखने के लिए लॉगिन करें"); return; }
     window.location.href = `tel:${phone}`;
   };
 
@@ -41,17 +45,17 @@ export default function HealthPage() {
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6 glass-dark">
             <Heart size={12} style={{ color: "#7ab3e0" }} />
-            <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#7ab3e0" }}>Health Directory</span>
+            <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#7ab3e0" }}>{tx.badge}</span>
           </motion.div>
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
             className="text-4xl sm:text-6xl font-bold text-white mb-2 font-display">
-            Health <span style={{ background: "linear-gradient(90deg, #7ab3e0, #bde0f7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Services</span>
+            {tx.title} <span style={{ background: "linear-gradient(90deg, #7ab3e0, #bde0f7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>{tx.titleBlue}</span>
           </motion.h1>
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 }}
-            className="text-sm mb-3 font-hindi" style={{ color: "rgba(255,255,255,0.45)" }}>स्वास्थ्य सेवा निर्देशिका</motion.p>
+            className="text-sm mb-3 font-hindi" style={{ color: "rgba(255,255,255,0.45)" }}>{tx.sub}</motion.p>
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }}
             className="text-base max-w-lg mx-auto" style={{ color: "rgba(255,255,255,0.55)" }}>
-            Hospitals, ASHA workers, Jan Aushadhi & ambulance services for Dehrian & Jawalamukhi Block.
+            {tx.desc}
           </motion.p>
         </div>
       </div>
@@ -61,7 +65,7 @@ export default function HealthPage() {
         <motion.div {...fadeUp()} className="mt-8">
           <div className="rounded-2xl p-4 sm:p-5" style={{ background: "linear-gradient(135deg, #7f1d1d, #b91c1c)" }}>
             <p className="text-center text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "rgba(255,200,200,0.7)" }}>
-              Tap to Call — Free Ambulance Services
+              {tx.ambTitle}
             </p>
             <div className="flex flex-wrap gap-3 justify-center">
               {healthData.ambulance.map((a) => (
@@ -87,8 +91,8 @@ export default function HealthPage() {
               <Stethoscope size={16} color="white" />
             </div>
             <div>
-              <h2 className="text-lg sm:text-xl font-bold font-display" style={{ color: "var(--text)" }}>Hospitals & PHC</h2>
-              <p className="text-xs font-hindi" style={{ color: "var(--text-3)" }}>अस्पताल एवं प्राथमिक स्वास्थ्य केंद्र</p>
+              <h2 className="text-lg sm:text-xl font-bold font-display" style={{ color: "var(--text)" }}>{tx.hospitals}</h2>
+              <p className="text-xs font-hindi" style={{ color: "var(--text-3)" }}>{tx.hospitalsHi}</p>
             </div>
           </motion.div>
 
@@ -132,13 +136,13 @@ export default function HealthPage() {
                 <div className="mt-auto flex flex-wrap gap-2">
                   <motion.button whileTap={{ scale: 0.96 }} onClick={() => handleCall(h.phone)}
                     className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-white green-gradient flex-1 justify-center">
-                    <Phone size={12} /> {user ? "OPD" : "Login to Call"}
+                    <Phone size={12} /> {user ? tx.opd : tx.loginToCall}
                   </motion.button>
                   {h.emergency && (
                     <motion.button whileTap={{ scale: 0.96 }} onClick={() => handleCall(h.emergency!)}
                       className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-white flex-1 justify-center"
                       style={{ backgroundColor: "#dc2626" }}>
-                      <Phone size={12} /> Emergency
+                      <Phone size={12} /> {tx.emergency}
                     </motion.button>
                   )}
                 </div>
@@ -154,8 +158,8 @@ export default function HealthPage() {
               <Heart size={16} color="white" />
             </div>
             <div>
-              <h2 className="text-lg sm:text-xl font-bold font-display" style={{ color: "var(--text)" }}>ASHA Workers</h2>
-              <p className="text-xs font-hindi" style={{ color: "var(--text-3)" }}>आशा कार्यकर्ता — डेहरियाँ</p>
+              <h2 className="text-lg sm:text-xl font-bold font-display" style={{ color: "var(--text)" }}>{tx.asha}</h2>
+              <p className="text-xs font-hindi" style={{ color: "var(--text-3)" }}>{tx.ashaHi}</p>
             </div>
           </motion.div>
           <div className="grid sm:grid-cols-3 gap-4">
@@ -174,7 +178,7 @@ export default function HealthPage() {
                 <motion.button whileTap={{ scale: 0.96 }} onClick={() => handleCall(a.phone)}
                   className="w-full flex items-center justify-center gap-1.5 py-3 rounded-xl text-sm font-semibold text-white"
                   style={{ background: "linear-gradient(135deg, #9d174d, #db2777)" }}>
-                  <Phone size={13} /> {user ? "Call ASHA" : "Login to Call"}
+                  <Phone size={13} /> {user ? tx.callAsha : tx.loginToCall}
                 </motion.button>
               </motion.div>
             ))}
@@ -188,8 +192,8 @@ export default function HealthPage() {
               <Pill size={16} color="white" />
             </div>
             <div>
-              <h2 className="text-lg sm:text-xl font-bold font-display" style={{ color: "var(--text)" }}>Jan Aushadhi</h2>
-              <p className="text-xs font-hindi" style={{ color: "var(--text-3)" }}>जन औषधि केंद्र — सस्ती दवाइयाँ</p>
+              <h2 className="text-lg sm:text-xl font-bold font-display" style={{ color: "var(--text)" }}>{tx.jan}</h2>
+              <p className="text-xs font-hindi" style={{ color: "var(--text-3)" }}>{tx.janHi}</p>
             </div>
           </motion.div>
           {healthData.janAushadhi.map((j, i) => (
