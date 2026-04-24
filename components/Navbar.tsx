@@ -184,6 +184,14 @@ export default function Navbar() {
                 ))}
 
                 <div className="mt-2 flex flex-col gap-2">
+                  <Link href="/admin" onClick={() => setOpen(false)}
+                    className="flex items-center gap-2 px-4 py-3 rounded-xl font-medium text-sm"
+                    style={{ backgroundColor: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.55)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                    <Shield size={14} style={{ color: "#E8B84B" }} />
+                    <span>Admin Panel</span>
+                    <span className="ml-auto text-xs font-hindi" style={{ color: "rgba(255,255,255,0.3)" }}>पंचायत</span>
+                  </Link>
+
                   {user ? (
                     <div className="flex items-center justify-between px-4 py-3 rounded-xl"
                       style={{ backgroundColor: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
