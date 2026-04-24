@@ -1,35 +1,39 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import {
+  collection, doc, onSnapshot, setDoc, writeBatch, getDoc, getDocs,
+} from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import rawBusinesses from "@/data/businesses.json";
 import rawHealth from "@/data/health.json";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
-export type Notice = { id: string; title: string; body: string; date: string; urgent: boolean; };
-export type Business = { id: string; name: string; nameHi: string; category: string; owner: string; phone: string; address: string; timing: string; description: string; rating: number; verified: boolean; };
-export type Registration = { id: string; bName: string; bNameHi: string; category: string; address: string; phone: string; timing: string; desc: string; oName: string; oPhone: string; aadhaar: string; email: string; status: "pending" | "approved" | "rejected"; at: string; reviewNote?: string; };
-export type Hospital = { id: string; name: string; type: string; address: string; phone: string; emergency: string; timing: string; services: string[]; distance: string; };
-export type ASHAWorker = { id: string; name: string; village: string; phone: string; services: string[]; };
-export type JanAushadhi = { id: string; name: string; address: string; timing: string; note: string; phone: string; };
-export type PanchayatInfo = { address: string; phone: string; email: string; pradhan: string; secretary: string; };
-export type PanchayatMember = { id: string; name: string; nameHi: string; designation: string; ward: string; phone: string; };
-export type VillageStats = { villagers: string; businesses: string; schemes: string; emergency: string; };
+export type Notice         = { id: string; title: string; body: string; date: string; urgent: boolean };
+export type Business       = { id: string; name: string; nameHi: string; category: string; owner: string; phone: string; address: string; timing: string; description: string; rating: number; verified: boolean };
+export type Registration   = { id: string; bName: string; bNameHi: string; category: string; address: string; phone: string; timing: string; desc: string; oName: string; oPhone: string; aadhaar: string; email: string; status: "pending"|"approved"|"rejected"; at: string; reviewNote?: string };
+export type Hospital       = { id: string; name: string; type: string; address: string; phone: string; emergency: string; timing: string; services: string[]; distance: string };
+export type ASHAWorker     = { id: string; name: string; village: string; phone: string; services: string[] };
+export type JanAushadhi    = { id: string; name: string; address: string; timing: string; note: string; phone: string };
+export type PanchayatInfo  = { address: string; phone: string; email: string; pradhan: string; secretary: string };
+export type PanchayatMember= { id: string; name: string; nameHi: string; designation: string; ward: string; phone: string };
+export type VillageStats   = { villagers: string; businesses: string; schemes: string; emergency: string };
 
 type DataCtx = {
   notices: Notice[]; businesses: Business[]; registrations: Registration[];
   hospitals: Hospital[]; ashaWorkers: ASHAWorker[]; janAushadhi: JanAushadhi[];
   panchayatInfo: PanchayatInfo; villageStats: VillageStats; members: PanchayatMember[];
-  saveNotices: (n: Notice[]) => void;
-  saveBusinesses: (b: Business[]) => void;
-  saveRegistrations: (r: Registration[]) => void;
-  saveHospitals: (h: Hospital[]) => void;
-  saveAshaWorkers: (a: ASHAWorker[]) => void;
-  saveJanAushadhi: (j: JanAushadhi[]) => void;
-  savePanchayatInfo: (p: PanchayatInfo) => void;
-  saveVillageStats: (v: VillageStats) => void;
-  saveMembers: (m: PanchayatMember[]) => void;
-  approveRegistration: (id: string, note?: string) => void;
-  rejectRegistration: (id: string, note?: string) => void;
+  saveNotices:      (n: Notice[])          => Promise<void>;
+  saveBusinesses:   (b: Business[])        => Promise<void>;
+  saveRegistrations:(r: Registration[])    => Promise<void>;
+  saveHospitals:    (h: Hospital[])        => Promise<void>;
+  saveAshaWorkers:  (a: ASHAWorker[])      => Promise<void>;
+  saveJanAushadhi:  (j: JanAushadhi[])     => Promise<void>;
+  savePanchayatInfo:(p: PanchayatInfo)     => Promise<void>;
+  saveVillageStats: (v: VillageStats)      => Promise<void>;
+  saveMembers:      (m: PanchayatMember[]) => Promise<void>;
+  approveRegistration: (id: string, note?: string) => Promise<void>;
+  rejectRegistration:  (id: string, note?: string) => Promise<void>;
 };
 
 // ── Seed defaults ─────────────────────────────────────────────────────────────
@@ -69,27 +73,46 @@ const seedPanchayatInfo: PanchayatInfo = {
 const seedVillageStats: VillageStats = { villagers: "847", businesses: "32+", schemes: "16+", emergency: "6" };
 
 const seedMembers: PanchayatMember[] = [
-  { id:"m1", name:"(Pradhan Name)", nameHi:"(प्रधान नाम)", designation:"Gram Pradhan", ward:"", phone:"" },
-  { id:"m2", name:"(Up-Pradhan Name)", nameHi:"(उप-प्रधान नाम)", designation:"Up-Pradhan", ward:"", phone:"" },
-  { id:"m3", name:"(Secretary Name)", nameHi:"(सचिव नाम)", designation:"Gram Sachiv", ward:"", phone:"" },
-  { id:"m4", name:"(Gram Sewak Name)", nameHi:"(ग्राम सेवक)", designation:"Gram Sewak", ward:"", phone:"" },
-  { id:"m5", name:"(Ward Panch)", nameHi:"", designation:"Ward Panch", ward:"Ward 1", phone:"" },
-  { id:"m6", name:"(Ward Panch)", nameHi:"", designation:"Ward Panch", ward:"Ward 2", phone:"" },
-  { id:"m7", name:"(Ward Panch)", nameHi:"", designation:"Ward Panch", ward:"Ward 3", phone:"" },
-  { id:"m8", name:"(Ward Panch)", nameHi:"", designation:"Ward Panch", ward:"Ward 4", phone:"" },
-  { id:"m9", name:"(Ward Panch)", nameHi:"", designation:"Ward Panch", ward:"Ward 5", phone:"" },
+  { id:"m1", name:"(Pradhan Name)",    nameHi:"(प्रधान नाम)",   designation:"Gram Pradhan", ward:"",      phone:"" },
+  { id:"m2", name:"(Up-Pradhan Name)", nameHi:"(उप-प्रधान नाम)",designation:"Up-Pradhan",   ward:"",      phone:"" },
+  { id:"m3", name:"(Secretary Name)",  nameHi:"(सचिव नाम)",     designation:"Gram Sachiv",  ward:"",      phone:"" },
+  { id:"m4", name:"(Gram Sewak Name)", nameHi:"(ग्राम सेवक)",   designation:"Gram Sewak",   ward:"",      phone:"" },
+  { id:"m5", name:"(Ward Panch)",      nameHi:"",               designation:"Ward Panch",   ward:"Ward 1",phone:"" },
+  { id:"m6", name:"(Ward Panch)",      nameHi:"",               designation:"Ward Panch",   ward:"Ward 2",phone:"" },
+  { id:"m7", name:"(Ward Panch)",      nameHi:"",               designation:"Ward Panch",   ward:"Ward 3",phone:"" },
+  { id:"m8", name:"(Ward Panch)",      nameHi:"",               designation:"Ward Panch",   ward:"Ward 4",phone:"" },
+  { id:"m9", name:"(Ward Panch)",      nameHi:"",               designation:"Ward Panch",   ward:"Ward 5",phone:"" },
 ];
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+// ── Firestore helpers ─────────────────────────────────────────────────────────
 
-function load<T>(key: string, fallback: T): T {
-  if (typeof window === "undefined") return fallback;
-  const v = localStorage.getItem(key);
-  return v ? (JSON.parse(v) as T) : fallback;
+// Write all docs in an array to a collection, deleting any docs whose id
+// is in oldIds but not in the new array.
+async function syncCollection<T extends { id: string }>(
+  colName: string, newItems: T[], oldItems: T[]
+) {
+  const batch = writeBatch(db);
+  const newIds = new Set(newItems.map((x) => x.id));
+  oldItems.forEach((x) => { if (!newIds.has(x.id)) batch.delete(doc(db, colName, x.id)); });
+  newItems.forEach((x) => batch.set(doc(db, colName, x.id), x));
+  await batch.commit();
 }
 
-function persist<T>(key: string, value: T) {
-  localStorage.setItem(key, JSON.stringify(value));
+// Seed Firestore on first run (checks notices collection as sentinel)
+async function seedIfEmpty() {
+  const snap = await getDocs(collection(db, "notices"));
+  if (!snap.empty) return;
+
+  const batch = writeBatch(db);
+  seedNotices.forEach((n) => batch.set(doc(db, "notices",      n.id), n));
+  seedBusinesses.forEach((b) => batch.set(doc(db, "businesses", b.id), b));
+  seedHospitals.forEach((h) => batch.set(doc(db, "hospitals",   h.id), h));
+  seedAshaWorkers.forEach((a) => batch.set(doc(db, "ashaWorkers",a.id), a));
+  seedJanAushadhi.forEach((j) => batch.set(doc(db, "janAushadhi",j.id), j));
+  seedMembers.forEach((m) => batch.set(doc(db, "members",       m.id), m));
+  batch.set(doc(db, "config", "panchayatInfo"), seedPanchayatInfo);
+  batch.set(doc(db, "config", "villageStats"),  seedVillageStats);
+  await batch.commit();
 }
 
 // ── Context ───────────────────────────────────────────────────────────────────
@@ -109,53 +132,107 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [members,       setMembers]       = useState<PanchayatMember[]>(seedMembers);
 
   useEffect(() => {
-    setNotices(load("gc_notices", seedNotices));
-    setBusinesses(load("gc_businesses", seedBusinesses));
-    // Normalise legacy numeric ids from register page
-    const rawRegs = load<any[]>("gc_regs", []);
-    setRegistrations(rawRegs.map((r) => ({ ...r, id: String(r.id) })));
-    setHospitals(load("gc_hospitals", seedHospitals));
-    setAshaWorkers(load("gc_asha", seedAshaWorkers));
-    setJanAushadhi(load("gc_jan", seedJanAushadhi));
-    setPanchayatInfo(load("gc_info", seedPanchayatInfo));
-    setVillageStats(load("gc_stats", seedVillageStats));
-    setMembers(load("gc_members", seedMembers));
+    if (typeof window === "undefined") return;
+
+    let mounted = true;
+    const unsubs: (() => void)[] = [];
+
+    const init = async () => {
+      await seedIfEmpty();
+      if (!mounted) return;
+
+      unsubs.push(
+        onSnapshot(collection(db, "notices"),
+          (s) => setNotices(s.docs.map((d) => d.data() as Notice))),
+
+        onSnapshot(collection(db, "businesses"),
+          (s) => setBusinesses(s.docs.map((d) => d.data() as Business))),
+
+        onSnapshot(collection(db, "registrations"),
+          (s) => setRegistrations(s.docs.map((d) => ({ ...d.data(), id: d.id } as Registration)))),
+
+        onSnapshot(collection(db, "hospitals"),
+          (s) => setHospitals(s.docs.map((d) => d.data() as Hospital))),
+
+        onSnapshot(collection(db, "ashaWorkers"),
+          (s) => setAshaWorkers(s.docs.map((d) => d.data() as ASHAWorker))),
+
+        onSnapshot(collection(db, "janAushadhi"),
+          (s) => setJanAushadhi(s.docs.map((d) => d.data() as JanAushadhi))),
+
+        onSnapshot(collection(db, "members"),
+          (s) => setMembers(s.docs.map((d) => d.data() as PanchayatMember))),
+
+        onSnapshot(doc(db, "config", "panchayatInfo"),
+          (d) => { if (d.exists()) setPanchayatInfo(d.data() as PanchayatInfo); }),
+
+        onSnapshot(doc(db, "config", "villageStats"),
+          (d) => { if (d.exists()) setVillageStats(d.data() as VillageStats); }),
+      );
+    };
+
+    init();
+    return () => { mounted = false; unsubs.forEach((u) => u()); };
   }, []);
 
-  const saveNotices       = useCallback((n: Notice[])       => { setNotices(n);       persist("gc_notices",   n); }, []);
-  const saveBusinesses    = useCallback((b: Business[])     => { setBusinesses(b);    persist("gc_businesses",b); }, []);
-  const saveRegistrations = useCallback((r: Registration[]) => { setRegistrations(r); persist("gc_regs",      r); }, []);
-  const saveHospitals     = useCallback((h: Hospital[])     => { setHospitals(h);     persist("gc_hospitals", h); }, []);
-  const saveAshaWorkers   = useCallback((a: ASHAWorker[])   => { setAshaWorkers(a);   persist("gc_asha",      a); }, []);
-  const saveJanAushadhi   = useCallback((j: JanAushadhi[])  => { setJanAushadhi(j);   persist("gc_jan",       j); }, []);
-  const savePanchayatInfo = useCallback((p: PanchayatInfo)  => { setPanchayatInfo(p); persist("gc_info",      p); }, []);
-  const saveVillageStats  = useCallback((v: VillageStats)   => { setVillageStats(v);  persist("gc_stats",     v); }, []);
-  const saveMembers       = useCallback((m: PanchayatMember[]) => { setMembers(m);    persist("gc_members",   m); }, []);
+  // ── Write helpers (keep same API surface) ──
 
-  const approveRegistration = useCallback((id: string, note?: string) => {
-    setRegistrations((prev) => {
-      const reg = prev.find((r) => r.id === id);
-      if (!reg) return prev;
-      const newBiz: Business = {
-        id, name: reg.bName, nameHi: reg.bNameHi || "", category: reg.category,
-        owner: reg.oName, phone: reg.phone, address: reg.address,
-        timing: reg.timing || "", description: reg.desc || "",
-        rating: 4.0, verified: true,
-      };
-      setBusinesses((b) => { const u = [...b, newBiz]; persist("gc_businesses", u); return u; });
-      const updated = prev.map((r) => r.id === id ? { ...r, status: "approved" as const, reviewNote: note } : r);
-      persist("gc_regs", updated);
-      return updated;
-    });
+  const saveNotices = useCallback(async (n: Notice[]) => {
+    await syncCollection("notices", n, notices);
+  }, [notices]);
+
+  const saveBusinesses = useCallback(async (b: Business[]) => {
+    await syncCollection("businesses", b, businesses);
+  }, [businesses]);
+
+  const saveRegistrations = useCallback(async (r: Registration[]) => {
+    await syncCollection("registrations", r, registrations);
+  }, [registrations]);
+
+  const saveHospitals = useCallback(async (h: Hospital[]) => {
+    await syncCollection("hospitals", h, hospitals);
+  }, [hospitals]);
+
+  const saveAshaWorkers = useCallback(async (a: ASHAWorker[]) => {
+    await syncCollection("ashaWorkers", a, ashaWorkers);
+  }, [ashaWorkers]);
+
+  const saveJanAushadhi = useCallback(async (j: JanAushadhi[]) => {
+    await syncCollection("janAushadhi", j, janAushadhi);
+  }, [janAushadhi]);
+
+  const savePanchayatInfo = useCallback(async (p: PanchayatInfo) => {
+    await setDoc(doc(db, "config", "panchayatInfo"), p);
   }, []);
 
-  const rejectRegistration = useCallback((id: string, note?: string) => {
-    setRegistrations((prev) => {
-      const updated = prev.map((r) => r.id === id ? { ...r, status: "rejected" as const, reviewNote: note } : r);
-      persist("gc_regs", updated);
-      return updated;
-    });
+  const saveVillageStats = useCallback(async (v: VillageStats) => {
+    await setDoc(doc(db, "config", "villageStats"), v);
   }, []);
+
+  const saveMembers = useCallback(async (m: PanchayatMember[]) => {
+    await syncCollection("members", m, members);
+  }, [members]);
+
+  const approveRegistration = useCallback(async (id: string, note?: string) => {
+    const reg = registrations.find((r) => r.id === id);
+    if (!reg) return;
+    const newBiz: Business = {
+      id, name: reg.bName, nameHi: reg.bNameHi || "", category: reg.category,
+      owner: reg.oName, phone: reg.phone, address: reg.address,
+      timing: reg.timing || "", description: reg.desc || "",
+      rating: 4.0, verified: true,
+    };
+    const batch = writeBatch(db);
+    batch.set(doc(db, "businesses", id), newBiz);
+    batch.set(doc(db, "registrations", id), { ...reg, status: "approved", reviewNote: note || "" });
+    await batch.commit();
+  }, [registrations]);
+
+  const rejectRegistration = useCallback(async (id: string, note?: string) => {
+    const reg = registrations.find((r) => r.id === id);
+    if (!reg) return;
+    await setDoc(doc(db, "registrations", id), { ...reg, status: "rejected", reviewNote: note || "" });
+  }, [registrations]);
 
   return (
     <DataContext.Provider value={{
