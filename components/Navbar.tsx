@@ -16,7 +16,8 @@ const linkDefs = [
   { href: "/health",     key: "health"    as const },
   { href: "/emergency",  key: "emergency" as const },
   { href: "/directory",  key: "directory" as const },
-  { href: "/panchayat",  key: "panchayat" as const },
+  { href: "/panchayat",   key: "panchayat"  as const },
+  { href: "/family-tree", key: "familyTree" as const },
 ];
 
 export default function Navbar() {

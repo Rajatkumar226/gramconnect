@@ -2,7 +2,7 @@ export const T = {
   en: {
     nav: {
       home: "Home", yojnaen: "Yojnaen", health: "Health",
-      emergency: "Emergency", directory: "Directory", panchayat: "Panchayat",
+      emergency: "Emergency", directory: "Directory", panchayat: "Panchayat", familyTree: "Family Tree",
       login: "Login", register: "Register", logout: "Logout",
       loginMobile: "Login with Mobile", registerBusiness: "Register Your Business",
     },
@@ -27,6 +27,7 @@ export const T = {
         { label: "Emergency", hi: "आपातकाल" },
         { label: "Business Directory", hi: "स्थानीय व्यापार" },
         { label: "Panchayat", hi: "पंचायत सदस्य" },
+        { label: "Family Tree", hi: "वंश वृक्ष" },
       ],
       notices: [
         { title: "Gram Sabha — 28 April 2025", body: "Monthly Gram Sabha at Panchayat Bhawan, 11:00 AM. Agenda: PMAY housing list, road repair tender.", urgent: true, date: "22 Apr 2025" },
@@ -120,6 +121,7 @@ export const T = {
         ["/emergency", "Emergency Contacts"],
         ["/directory", "Business Directory"],
         ["/panchayat", "Panchayat Members"],
+        ["/family-tree", "Family Tree"],
         ["/register", "Register Business"],
         ["/admin", "Admin Panel"],
       ],
@@ -134,7 +136,7 @@ export const T = {
   hi: {
     nav: {
       home: "होम", yojnaen: "योजनाएँ", health: "स्वास्थ्य",
-      emergency: "आपातकाल", directory: "डायरेक्टरी", panchayat: "पंचायत",
+      emergency: "आपातकाल", directory: "डायरेक्टरी", panchayat: "पंचायत", familyTree: "वंश वृक्ष",
       login: "लॉगिन", register: "रजिस्टर", logout: "लॉगआउट",
       loginMobile: "मोबाइल से लॉगिन", registerBusiness: "व्यापार रजिस्टर करें",
     },
@@ -159,6 +161,7 @@ export const T = {
         { label: "आपातकाल", hi: "Emergency" },
         { label: "स्थानीय व्यापार", hi: "Business Directory" },
         { label: "पंचायत", hi: "Panchayat Members" },
+        { label: "वंश वृक्ष", hi: "Family Tree" },
       ],
       notices: [
         { title: "ग्राम सभा — 28 अप्रैल 2025", body: "पंचायत भवन में मासिक ग्राम सभा, सुबह 11 बजे। एजेंडा: PMAY आवास सूची, सड़क मरम्मत टेंडर।", urgent: true, date: "22 अप्रैल 2025" },
@@ -252,6 +255,7 @@ export const T = {
         ["/emergency", "आपातकालीन नंबर"],
         ["/directory", "व्यापार डायरेक्टरी"],
         ["/panchayat", "पंचायत सदस्य"],
+        ["/family-tree", "वंश वृक्ष"],
         ["/register", "व्यापार रजिस्टर करें"],
         ["/admin", "एडमिन पैनल"],
       ],
