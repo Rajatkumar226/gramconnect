@@ -115,15 +115,15 @@ export default function HomePage() {
 
       {/* ── WEATHER ALERT ── */}
       <div style={{ backgroundColor: "#7f1d1d" }}>
-        <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center gap-3 overflow-hidden">
-          <div className="flex items-center gap-1.5 shrink-0">
+        <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-start gap-3">
+          <div className="flex items-center gap-1.5 shrink-0 pt-0.5">
             <AlertTriangle size={13} className="animate-pulse" style={{ color: "#fca5a5" }} />
             <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "#fca5a5" }}>Alert</span>
           </div>
-          <div className="w-px h-3.5" style={{ backgroundColor: "#7f2020" }} />
-          <div className="flex items-center gap-2 overflow-hidden min-w-0">
-            <CloudRain size={13} className="shrink-0" style={{ color: "#fca5a5" }} />
-            <p className="text-xs truncate" style={{ color: "rgba(255,200,200,0.85)" }}>{tx.alert}</p>
+          <div className="w-px self-stretch" style={{ backgroundColor: "#7f2020" }} />
+          <div className="flex items-start gap-2 min-w-0">
+            <CloudRain size={13} className="shrink-0 mt-0.5" style={{ color: "#fca5a5" }} />
+            <p className="text-xs leading-relaxed" style={{ color: "rgba(255,200,200,0.85)" }}>{tx.alert}</p>
           </div>
         </div>
       </div>
