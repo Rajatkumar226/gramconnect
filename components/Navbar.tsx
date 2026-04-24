@@ -11,11 +11,12 @@ import { T } from "@/data/translations";
 import { AnimatePresence, motion } from "framer-motion";
 
 const linkDefs = [
-  { href: "/",          key: "home"      as const },
-  { href: "/yojnaen",   key: "yojnaen"   as const },
-  { href: "/health",    key: "health"    as const },
-  { href: "/emergency", key: "emergency" as const },
-  { href: "/directory", key: "directory" as const },
+  { href: "/",           key: "home"      as const },
+  { href: "/yojnaen",    key: "yojnaen"   as const },
+  { href: "/health",     key: "health"    as const },
+  { href: "/emergency",  key: "emergency" as const },
+  { href: "/directory",  key: "directory" as const },
+  { href: "/panchayat",  key: "panchayat" as const },
 ];
 
 export default function Navbar() {
@@ -27,8 +28,6 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
-  if (pathname.startsWith("/admin")) return null;
-
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", fn, { passive: true });
@@ -36,6 +35,8 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => { setOpen(false); }, [pathname]);
+
+  if (pathname.startsWith("/admin")) return null;
 
   const navBg = scrolled ? "backdrop-blur-xl shadow-2xl shadow-black/20" : "";
 
