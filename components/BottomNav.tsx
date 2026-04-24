@@ -19,6 +19,8 @@ export default function BottomNav() {
   const { lang } = useLang();
   const tx = T[lang].nav;
 
+  if (pathname.startsWith("/admin")) return null;
+
   return (
     <nav
       className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-stretch"

@@ -4,10 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Phone, MapPin, Clock, Shield, Star, Filter, ArrowRight, X } from "lucide-react";
-import businesses from "@/data/businesses.json";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLang } from "@/contexts/LanguageContext";
 import { T } from "@/data/translations";
+import { useData } from "@/contexts/DataContext";
 
 const categories = ["All", "Grocery & Kirana", "Medical & Pharmacy", "Dairy & Milk", "Hardware & Electronics", "Food & Restaurant", "Tailoring & Clothing", "Mobile & Repair", "Agriculture & Nursery"];
 
@@ -33,6 +33,7 @@ export default function DirectoryPage() {
   const { user, requireAuth } = useAuth();
   const { lang } = useLang();
   const tx = T[lang].directory;
+  const { businesses } = useData();
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("All");
   const [verified, setVerified] = useState(false);
@@ -50,7 +51,7 @@ export default function DirectoryPage() {
     return matchCat && matchV && matchQ;
   });
 
-  const verCount = businesses.filter((b) => b.verified).length;
+  const verCount = businesses.filter((b: any) => b.verified).length;
 
   return (
     <div style={{ backgroundColor: "var(--bg)", minHeight: "100vh" }}>

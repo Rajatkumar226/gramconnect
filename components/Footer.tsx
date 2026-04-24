@@ -3,10 +3,14 @@ import Link from "next/link";
 import { Leaf, Phone, MapPin, Mail } from "lucide-react";
 import { useLang } from "@/contexts/LanguageContext";
 import { T } from "@/data/translations";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
   const { lang } = useLang();
   const tx = T[lang].footer;
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/admin")) return null;
 
   return (
     <footer className="hidden md:block" style={{ backgroundColor: "#041A0C", color: "white" }}>
