@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { DataProvider } from "@/contexts/DataContext";
 import Navbar from "@/components/Navbar";
 import BottomNav from "@/components/BottomNav";
 import Footer from "@/components/Footer";
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body style={{ fontFamily: "'Plus Jakarta Sans', 'Noto Sans Devanagari', sans-serif" }}>
         <ThemeProvider>
           <LanguageProvider>
+          <DataProvider>
           <AuthProvider>
             <Navbar />
             <LoginModal />
@@ -51,6 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <BottomNav />
             <InstallPrompt />
           </AuthProvider>
+          </DataProvider>
           </LanguageProvider>
         </ThemeProvider>
       </body>

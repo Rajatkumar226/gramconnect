@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useLang } from "@/contexts/LanguageContext";
 import { T } from "@/data/translations";
+import { useData } from "@/contexts/DataContext";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 32 },
@@ -29,8 +30,9 @@ const quickLinkDefs = [
 export default function HomePage() {
   const { lang } = useLang();
   const tx = T[lang].home;
+  const { notices: liveNotices, villageStats } = useData();
 
-  const notices = tx.notices;
+  const notices = liveNotices.length > 0 ? liveNotices : tx.notices;
   const [ticker, setTicker] = useState(0);
 
   useEffect(() => {
@@ -39,10 +41,10 @@ export default function HomePage() {
   }, [notices.length]);
 
   const stats = [
-    { v: "847", l: tx.statsV,  hi: tx.statsVHi },
-    { v: "32+", l: tx.statsB,  hi: tx.statsBHi },
-    { v: "16+", l: tx.statsS,  hi: tx.statsSHi },
-    { v: "6",   l: tx.statsE,  hi: tx.statsEHi },
+    { v: villageStats.villagers, l: tx.statsV,  hi: tx.statsVHi },
+    { v: villageStats.businesses, l: tx.statsB, hi: tx.statsBHi },
+    { v: villageStats.schemes,    l: tx.statsS, hi: tx.statsSHi },
+    { v: villageStats.emergency,  l: tx.statsE, hi: tx.statsEHi },
   ];
 
   return (

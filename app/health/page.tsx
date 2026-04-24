@@ -8,6 +8,7 @@ import healthData from "@/data/health.json";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLang } from "@/contexts/LanguageContext";
 import { T } from "@/data/translations";
+import { useData } from "@/contexts/DataContext";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -27,6 +28,7 @@ export default function HealthPage() {
   const { user, requireAuth } = useAuth();
   const { lang } = useLang();
   const tx = T[lang].health;
+  const { hospitals, ashaWorkers, janAushadhi } = useData();
 
   const handleCall = (phone: string) => {
     if (!user) { requireAuth(lang === "en" ? "Login to view and call health contacts" : "स्वास्थ्य सम्पर्क देखने के लिए लॉगिन करें"); return; }
@@ -97,7 +99,7 @@ export default function HealthPage() {
           </motion.div>
 
           <div className="grid sm:grid-cols-2 gap-4">
-            {healthData.hospitals.map((h, i) => (
+            {(hospitals.length > 0 ? hospitals : healthData.hospitals as any[]).map((h: any, i: number) => (
               <motion.div key={h.id} {...fadeUp(i * 0.07)} className="card p-4 sm:p-5 flex flex-col gap-3">
                 <div className="flex items-start justify-between gap-2">
                   <h3 className="font-semibold text-sm sm:text-base" style={{ color: "var(--text)" }}>{h.name}</h3>
@@ -125,7 +127,7 @@ export default function HealthPage() {
                 </div>
 
                 <div className="flex flex-wrap gap-1.5">
-                  {h.services.slice(0, 4).map((s) => (
+                  {h.services.slice(0, 4).map((s: string) => (
                     <span key={s} className="px-2 py-0.5 rounded-full text-xs" style={{ backgroundColor: "rgba(27,67,50,0.08)", color: "var(--green)" }}>{s}</span>
                   ))}
                   {h.services.length > 4 && (
@@ -163,7 +165,7 @@ export default function HealthPage() {
             </div>
           </motion.div>
           <div className="grid sm:grid-cols-3 gap-4">
-            {healthData.ashaWorkers.map((a, i) => (
+            {(ashaWorkers.length > 0 ? ashaWorkers : healthData.ashaWorkers as any[]).map((a: any, i: number) => (
               <motion.div key={a.id} {...fadeUp(i * 0.07)} className="card p-4 text-center flex flex-col items-center gap-3">
                 <div className="w-14 h-14 rounded-full flex items-center justify-center text-3xl" style={{ backgroundColor: "rgba(219,39,119,0.1)" }}>👩‍⚕️</div>
                 <div>
@@ -171,7 +173,7 @@ export default function HealthPage() {
                   <p className="text-xs mt-0.5" style={{ color: "var(--text-3)" }}>{a.village}</p>
                 </div>
                 <div className="flex flex-wrap gap-1.5 justify-center">
-                  {a.services.slice(0, 3).map((s) => (
+                  {a.services.slice(0, 3).map((s: string) => (
                     <span key={s} className="px-2 py-0.5 rounded-full text-xs" style={{ backgroundColor: "rgba(219,39,119,0.1)", color: "#db2777" }}>{s}</span>
                   ))}
                 </div>
@@ -196,7 +198,7 @@ export default function HealthPage() {
               <p className="text-xs font-hindi" style={{ color: "var(--text-3)" }}>{tx.janHi}</p>
             </div>
           </motion.div>
-          {healthData.janAushadhi.map((j, i) => (
+          {(janAushadhi.length > 0 ? janAushadhi : healthData.janAushadhi as any[]).map((j: any, i: number) => (
             <motion.div key={j.id} {...fadeUp(i * 0.07)} className="card p-4 sm:p-5">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0" style={{ backgroundColor: "rgba(124,58,237,0.1)" }}>💊</div>
