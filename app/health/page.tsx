@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import type { Transition } from "framer-motion";
-import { Phone, MapPin, Clock, Stethoscope, Heart, Pill } from "lucide-react";
+import { Phone, MapPin, Clock, Stethoscope, Heart, Pill, Info } from "lucide-react";
 import healthData from "@/data/health.json";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLang } from "@/contexts/LanguageContext";
@@ -135,11 +135,25 @@ export default function HealthPage() {
                   )}
                 </div>
 
+                {h.note && (
+                  <div className="flex items-start gap-1.5 px-3 py-2 rounded-xl text-xs"
+                    style={{ backgroundColor: "rgba(59,130,246,0.06)", color: "var(--text-3)" }}>
+                    <Info size={11} className="shrink-0 mt-0.5" style={{ color: "#3b82f6" }} />
+                    <span>{h.note}</span>
+                  </div>
+                )}
                 <div className="mt-auto flex flex-wrap gap-2">
-                  <motion.button whileTap={{ scale: 0.96 }} onClick={() => handleCall(h.phone)}
-                    className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-white green-gradient flex-1 justify-center">
-                    <Phone size={12} /> {user ? tx.opd : tx.loginToCall}
-                  </motion.button>
+                  {h.phone ? (
+                    <motion.button whileTap={{ scale: 0.96 }} onClick={() => handleCall(h.phone)}
+                      className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-white green-gradient flex-1 justify-center">
+                      <Phone size={12} /> {user ? tx.opd : tx.loginToCall}
+                    </motion.button>
+                  ) : (
+                    <div className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-xs flex-1 justify-center"
+                      style={{ backgroundColor: "rgba(100,100,100,0.06)", color: "var(--text-3)", border: "1px dashed var(--border)" }}>
+                      {lang === "en" ? "Number to be updated — contact Panchayat" : "नंबर जल्द अपडेट होगा — पंचायत कार्यालय से संपर्क करें"}
+                    </div>
+                  )}
                   {h.emergency && (
                     <motion.button whileTap={{ scale: 0.96 }} onClick={() => handleCall(h.emergency!)}
                       className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-white flex-1 justify-center"
@@ -177,11 +191,21 @@ export default function HealthPage() {
                     <span key={s} className="px-2 py-0.5 rounded-full text-xs" style={{ backgroundColor: "rgba(219,39,119,0.1)", color: "#db2777" }}>{s}</span>
                   ))}
                 </div>
-                <motion.button whileTap={{ scale: 0.96 }} onClick={() => handleCall(a.phone)}
-                  className="w-full flex items-center justify-center gap-1.5 py-3 rounded-xl text-sm font-semibold text-white"
-                  style={{ background: "linear-gradient(135deg, #9d174d, #db2777)" }}>
-                  <Phone size={13} /> {user ? tx.callAsha : tx.loginToCall}
-                </motion.button>
+                {a.note && (
+                  <p className="text-[10px] text-center px-1" style={{ color: "var(--text-3)" }}>{a.note}</p>
+                )}
+                {a.phone ? (
+                  <motion.button whileTap={{ scale: 0.96 }} onClick={() => handleCall(a.phone)}
+                    className="w-full flex items-center justify-center gap-1.5 py-3 rounded-xl text-sm font-semibold text-white"
+                    style={{ background: "linear-gradient(135deg, #9d174d, #db2777)" }}>
+                    <Phone size={13} /> {user ? tx.callAsha : tx.loginToCall}
+                  </motion.button>
+                ) : (
+                  <div className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs"
+                    style={{ backgroundColor: "rgba(219,39,119,0.06)", color: "#db2777", border: "1px dashed rgba(219,39,119,0.3)" }}>
+                    {lang === "en" ? "Contact Panchayat for number" : "नंबर के लिए पंचायत कार्यालय से संपर्क करें"}
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>

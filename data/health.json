@@ -16,11 +16,12 @@
       "name": "Primary Health Centre (PHC) Dehrian",
       "type": "PHC",
       "address": "Village Dehrian, Jawalamukhi Block, Kangra",
-      "phone": "01970-XXXXXX",
+      "phone": "",
       "emergency": null,
       "services": ["OPD", "Vaccination", "Maternal Health", "Family Planning", "Basic Diagnostics"],
       "timing": "Mon–Sat: 9AM–4PM",
-      "distance": "In Village"
+      "distance": "In Village",
+      "note": "For emergencies or to confirm timings, contact Civil Hospital Jawalamukhi: 01970-222001"
     },
     {
       "id": 3,
@@ -48,24 +49,27 @@
   "ashaWorkers": [
     {
       "id": 1,
-      "name": "Smt. Sunita Devi",
+      "name": "ASHA Worker — Ward 1",
       "village": "Dehrian (Ward 1)",
-      "phone": "+91 98XXXXXXXX",
-      "services": ["Maternal & Child Health", "Vaccination Reminder", "Home Visits", "JSSK"]
+      "phone": "",
+      "services": ["Maternal & Child Health", "Vaccination Reminder", "Home Visits", "JSSK"],
+      "note": "Contact PHC Dehrian or Panchayat office for ASHA worker contact details"
     },
     {
       "id": 2,
-      "name": "Smt. Rekha Kumari",
+      "name": "ASHA Worker — Ward 2–3",
       "village": "Dehrian (Ward 2–3)",
-      "phone": "+91 94XXXXXXXX",
-      "services": ["Family Planning", "TB DOTS", "Immunization", "Anaemia Treatment"]
+      "phone": "",
+      "services": ["Family Planning", "TB DOTS", "Immunization", "Anaemia Treatment"],
+      "note": "Contact PHC Dehrian or Panchayat office for ASHA worker contact details"
     },
     {
       "id": 3,
-      "name": "Smt. Manju Sharma",
+      "name": "ASHA Worker — Ward 4–5",
       "village": "Dehrian (Ward 4–5)",
-      "phone": "+91 89XXXXXXXX",
-      "services": ["Nutrition Counselling", "Home Delivery Support", "NHM Schemes"]
+      "phone": "",
+      "services": ["Nutrition Counselling", "Home Delivery Support", "NHM Schemes"],
+      "note": "Contact PHC Dehrian or Panchayat office for ASHA worker contact details"
     }
   ],
   "janAushadhi": [
@@ -73,9 +77,9 @@
       "id": 1,
       "name": "Jan Aushadhi Kendra — Jawalamukhi",
       "address": "Near Civil Hospital, Jawalamukhi",
-      "phone": "01970-XXXXXX",
+      "phone": "01970-222001",
       "timing": "9AM–8PM (Mon–Sat)",
-      "note": "Generic medicines up to 90% cheaper than branded"
+      "note": "Generic medicines up to 90% cheaper than branded. Contact Civil Hospital for exact kendra location."
     }
   ],
   "ambulance": [

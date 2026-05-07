@@ -60,28 +60,29 @@ const seedJanAushadhi: JanAushadhi[] = (rawHealth.janAushadhi as any[]).map((j) 
 }));
 
 const seedNotices: Notice[] = [
-  { id: "1", title: "PM-KISAN 17th Installment Released", body: "The 17th installment of PM-KISAN has been credited to eligible farmers. Check your bank account.", date: "Apr 20, 2025", urgent: false },
-  { id: "2", title: "Vaccination Camp — Dehrian PHC", body: "Free vaccination camp on Apr 28 at PHC Dehrian. Bring Aadhaar + immunization card.", date: "Apr 19, 2025", urgent: false },
-  { id: "3", title: "Gram Sabha Meeting", body: "Monthly gram sabha on Apr 30, 10AM at Panchayat Ghar. All residents invited.", date: "Apr 18, 2025", urgent: true },
+  { id: "1", title: "PM-KISAN 18th Installment — Check Your Account", body: "The 18th installment of PM-KISAN (₹2,000) has been released. Eligible farmers should check their linked bank account. Contact Panchayat office if not received.", date: "May 5, 2025", urgent: false },
+  { id: "2", title: "Sahara Yojana — Apply for ₹3,000/Month Support", body: "HP Sahara Yojana provides ₹3,000/month to patients of cancer, renal failure, and other serious illnesses. Visit Panchayat Ghar with Aadhaar and medical certificate.", date: "May 3, 2025", urgent: false },
+  { id: "3", title: "Gram Sabha Meeting — May 2025", body: "Monthly Gram Sabha will be held at Panchayat Ghar. All Dehrian residents are invited. Attendance is important for village development decisions.", date: "May 1, 2025", urgent: true },
+  { id: "4", title: "Voter List Verification Drive", body: "ECI voter roll update for 2025. If your name is missing or has errors, contact the Panchayat office. Voter slip distribution will begin shortly.", date: "Apr 28, 2025", urgent: false },
 ];
 
 const seedPanchayatInfo: PanchayatInfo = {
-  address: "GP Dehrian, Jawalamukhi, Kangra, HP — 176031",
+  address: "Gram Panchayat Dehrian, Jawalamukhi Block, Kangra, HP — 176031",
   phone: "", email: "panchayat.dehrian@hp.gov.in", pradhan: "", secretary: "",
 };
 
-const seedVillageStats: VillageStats = { villagers: "847", businesses: "32+", schemes: "16+", emergency: "6" };
+const seedVillageStats: VillageStats = { villagers: "601+", businesses: "12+", schemes: "21+", emergency: "6" };
 
 const seedMembers: PanchayatMember[] = [
-  { id:"m1", name:"(Pradhan Name)",    nameHi:"(प्रधान नाम)",   designation:"Gram Pradhan", ward:"",      phone:"" },
-  { id:"m2", name:"(Up-Pradhan Name)", nameHi:"(उप-प्रधान नाम)",designation:"Up-Pradhan",   ward:"",      phone:"" },
-  { id:"m3", name:"(Secretary Name)",  nameHi:"(सचिव नाम)",     designation:"Gram Sachiv",  ward:"",      phone:"" },
-  { id:"m4", name:"(Gram Sewak Name)", nameHi:"(ग्राम सेवक)",   designation:"Gram Sewak",   ward:"",      phone:"" },
-  { id:"m5", name:"(Ward Panch)",      nameHi:"",               designation:"Ward Panch",   ward:"Ward 1",phone:"" },
-  { id:"m6", name:"(Ward Panch)",      nameHi:"",               designation:"Ward Panch",   ward:"Ward 2",phone:"" },
-  { id:"m7", name:"(Ward Panch)",      nameHi:"",               designation:"Ward Panch",   ward:"Ward 3",phone:"" },
-  { id:"m8", name:"(Ward Panch)",      nameHi:"",               designation:"Ward Panch",   ward:"Ward 4",phone:"" },
-  { id:"m9", name:"(Ward Panch)",      nameHi:"",               designation:"Ward Panch",   ward:"Ward 5",phone:"" },
+  { id:"m1", name:"",    nameHi:"",   designation:"Gram Pradhan", ward:"Dehrian Panchayat", phone:"" },
+  { id:"m2", name:"",    nameHi:"",   designation:"Up-Pradhan",   ward:"",                   phone:"" },
+  { id:"m3", name:"",    nameHi:"",   designation:"Gram Sachiv",  ward:"",                   phone:"" },
+  { id:"m4", name:"",    nameHi:"",   designation:"Gram Sewak",   ward:"",                   phone:"" },
+  { id:"m5", name:"",    nameHi:"",   designation:"Ward Panch",   ward:"Ward 1",             phone:"" },
+  { id:"m6", name:"",    nameHi:"",   designation:"Ward Panch",   ward:"Ward 2",             phone:"" },
+  { id:"m7", name:"",    nameHi:"",   designation:"Ward Panch",   ward:"Ward 3",             phone:"" },
+  { id:"m8", name:"",    nameHi:"",   designation:"Ward Panch",   ward:"Ward 4",             phone:"" },
+  { id:"m9", name:"",    nameHi:"",   designation:"Ward Panch",   ward:"Ward 5",             phone:"" },
 ];
 
 // ── Firestore helpers ─────────────────────────────────────────────────────────
@@ -98,20 +99,34 @@ async function syncCollection<T extends { id: string }>(
   await batch.commit();
 }
 
-// Seed Firestore on first run (checks notices collection as sentinel)
-async function seedIfEmpty() {
+// Bump this string whenever health/members/stats seed data changes.
+// The app auto-pushes new seed to Firestore when the stored version doesn't match.
+const STATIC_SEED_VERSION = "v2";
+
+// Seed notices + businesses only on first run (admin manages these going forward).
+async function seedAdminIfEmpty() {
   const snap = await getDocs(collection(db, "notices"));
   if (!snap.empty) return;
-
   const batch = writeBatch(db);
   seedNotices.forEach((n) => batch.set(doc(db, "notices",      n.id), n));
   seedBusinesses.forEach((b) => batch.set(doc(db, "businesses", b.id), b));
-  seedHospitals.forEach((h) => batch.set(doc(db, "hospitals",   h.id), h));
-  seedAshaWorkers.forEach((a) => batch.set(doc(db, "ashaWorkers",a.id), a));
-  seedJanAushadhi.forEach((j) => batch.set(doc(db, "janAushadhi",j.id), j));
-  seedMembers.forEach((m) => batch.set(doc(db, "members",       m.id), m));
-  batch.set(doc(db, "config", "panchayatInfo"), seedPanchayatInfo);
-  batch.set(doc(db, "config", "villageStats"),  seedVillageStats);
+  await batch.commit();
+}
+
+// Seed health/members/stats whenever STATIC_SEED_VERSION is bumped.
+// This lets code-level corrections propagate to Firestore automatically.
+async function seedStaticIfStale() {
+  const vDoc = await getDoc(doc(db, "config", "staticSeedVersion"));
+  if (vDoc.exists() && vDoc.data().v === STATIC_SEED_VERSION) return;
+
+  const batch = writeBatch(db);
+  seedHospitals.forEach((h) => batch.set(doc(db, "hospitals",    h.id), h));
+  seedAshaWorkers.forEach((a) => batch.set(doc(db, "ashaWorkers", a.id), a));
+  seedJanAushadhi.forEach((j) => batch.set(doc(db, "janAushadhi", j.id), j));
+  seedMembers.forEach((m) => batch.set(doc(db, "members",         m.id), m));
+  batch.set(doc(db, "config", "panchayatInfo"),        seedPanchayatInfo);
+  batch.set(doc(db, "config", "villageStats"),          seedVillageStats);
+  batch.set(doc(db, "config", "staticSeedVersion"),     { v: STATIC_SEED_VERSION });
   await batch.commit();
 }
 
@@ -138,7 +153,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     const unsubs: (() => void)[] = [];
 
     const init = async () => {
-      await seedIfEmpty();
+      await Promise.all([seedAdminIfEmpty(), seedStaticIfStale()]);
       if (!mounted) return;
 
       unsubs.push(
