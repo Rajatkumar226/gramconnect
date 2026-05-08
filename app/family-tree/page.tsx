@@ -39,8 +39,22 @@ function isCleanName(name: string) {
   return latinCount < totalCount * 0.5 && name.length > 1;
 }
 
+// Derive the true gender using the same priority as deriveRole.
+// The OCR gender field has errors; relType + name suffix are more reliable.
+const FEMALE_SUFFIXES = ["देवी", "कुमारी", "बाई", "वती", "मती", "बेगम", "बीबी"];
+const MALE_SUFFIXES   = ["कुमार", "राम", "लाल", "सिंह", "प्रसाद", "नाथ", "दास", "चन्द", "चंद"];
+
+function inferGender(m: Member): "M" | "F" {
+  if (m.relType === "husband") return "F"; // person IS a wife — 100% reliable
+  if (m.relType === "wife")    return "M"; // person IS a husband — 100% reliable
+  for (const s of FEMALE_SUFFIXES) if (m.name.includes(s)) return "F";
+  for (const s of MALE_SUFFIXES)   if (m.name.endsWith(s) || m.name.includes(` ${s}`)) return "M";
+  return m.gender; // OCR field as last resort
+}
+
 function memberIcon(m: Member) {
-  if (m.gender === "F") return m.age > 55 ? "👩‍🦳" : m.age > 20 ? "👩" : "👧";
+  const g = inferGender(m);
+  if (g === "F") return m.age > 55 ? "👩‍🦳" : m.age > 20 ? "👩" : "👧";
   return m.age > 60 ? "👴" : m.age > 30 ? "👨" : m.age > 14 ? "🧑" : "👦";
 }
 
@@ -65,24 +79,26 @@ function deriveRole(m: Member, headId: string, lang: string): { label: string; c
   const en = lang === "en";
   if (m.id === headId)
     return { label: en ? "Head" : "मुखिया", color: "#C9922A" };
-  if (m.gender === "F" && m.relType === "husband")
-    return { label: en ? "Wife" : "पत्नी", color: "#db2777" };
-  if (m.gender === "M" && m.relType === "father")
-    return { label: en ? "Son" : "पुत्र", color: "#2563eb" };
-  if (m.gender === "F" && m.relType === "father")
-    return { label: en ? "Daughter" : "पुत्री", color: "#7c3aed" };
+
+  // Use inferGender — NOT m.gender — to avoid OCR field errors
+  const g = inferGender(m);
+
+  if (m.relType === "husband")
+    return { label: en ? "Wife" : "पत्नी", color: "#db2777" };   // always female
   if (m.relType === "wife")
-    return { label: en ? "Husband" : "पति", color: "#2563eb" };
+    return { label: en ? "Husband" : "पति", color: "#2563eb" };  // always male
+  if (m.relType === "father")
+    return g === "F"
+      ? { label: en ? "Daughter" : "पुत्री", color: "#7c3aed" }
+      : { label: en ? "Son"      : "पुत्र",   color: "#2563eb" };
   if (m.relType === "mother")
     return { label: en ? "Child" : "संतान", color: "#16a34a" };
-  // Male + relType="husband" = OCR artifact; best-guess is son
-  if (m.gender === "M" && m.relType === "husband")
-    return { label: en ? "Son" : "पुत्र", color: "#2563eb" };
   return { label: en ? "Member" : "सदस्य", color: "var(--text-3)" };
 }
 
-function genColor(gender: string) {
-  return gender === "F"
+function genColor(m: Member) {
+  const g = inferGender(m);
+  return g === "F"
     ? { bg: "rgba(236,72,153,0.1)", border: "rgba(236,72,153,0.3)", text: "#db2777" }
     : { bg: "rgba(59,130,246,0.1)", border: "rgba(59,130,246,0.3)", text: "#2563eb" };
 }
@@ -91,13 +107,13 @@ function genColor(gender: string) {
 
 function MemberCard({ m, highlight, index, headId }: { m: Member; highlight: boolean; index: number; headId: string }) {
   const { lang } = useLang();
-  const col = genColor(m.gender);
+  const col = genColor(m);
   const { label: roleLabel, color: roleColor } = deriveRole(m, headId, lang);
   const refName = m.id !== headId ? extractFirstName(m.relName) : "";
   const refPrefix =
-    m.relType === "husband" && m.gender === "F" ? (lang === "en" ? "W/O" : "पति:") :
-    m.relType === "father"                       ? (lang === "en" ? "S/D of" : "पिता:") :
-    m.relType === "wife"                         ? (lang === "en" ? "H/O" : "पत्नी:") : "";
+    m.relType === "husband" ? (lang === "en" ? "W/O" : "पति:") :
+    m.relType === "father"  ? (lang === "en" ? "S/D of" : "पिता:") :
+    m.relType === "wife"    ? (lang === "en" ? "H/O" : "पत्नी:") : "";
 
   return (
     <motion.div
@@ -131,7 +147,7 @@ function MemberCard({ m, highlight, index, headId }: { m: Member; highlight: boo
             {roleLabel}
           </span>
           <span className="text-[10px]" style={{ color: "var(--text-3)" }}>
-            {m.gender === "F" ? "महिला" : "पुरुष"} · {m.age > 0 ? `${m.age} yr` : "?"}
+            {inferGender(m) === "F" ? "महिला" : "पुरुष"} · {m.age > 0 ? `${m.age} yr` : "?"}
           </span>
         </div>
         {refName && refPrefix && (

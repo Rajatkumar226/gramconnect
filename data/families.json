@@ -1,105 +1,9 @@
 [
   {
     "id": "f1",
-    "house": "",
-    "headId": "h_m4",
-    "headName": "हंस राज",
-    "members": [
-      {
-        "part": "5",
-        "name": "रंजना कुमारी",
-        "relType": "husband",
-        "relName": "वालक राम पति का नाम: सोहन सिह पति का नाम: बालकृष्ण",
-        "house": "/",
-        "age": 67,
-        "gender": "F",
-        "id": "h_m0",
-        "linkedTo": null
-      },
-      {
-        "part": "5",
-        "name": "सुदर्शना कुमारी",
-        "relType": "husband",
-        "relName": "चन्द्र कांत पति का नाम: मस्तराम राम",
-        "house": "/",
-        "age": 50,
-        "gender": "F",
-        "id": "h_m1",
-        "linkedTo": null
-      },
-      {
-        "part": "5",
-        "name": "अभिलेख चौधरी",
-        "relType": "husband",
-        "relName": "मोहित पिता का नाम: बलदेव सिंह",
-        "house": "/",
-        "age": 43,
-        "gender": "M",
-        "id": "h_m2",
-        "linkedTo": null
-      },
-      {
-        "part": "5",
-        "name": "आशीष कुमार",
-        "relType": "husband",
-        "relName": "अनुप चौधरी पिता का नाम: अरुण कुमार",
-        "house": "/",
-        "age": 22,
-        "gender": "M",
-        "id": "h_m3",
-        "linkedTo": null
-      },
-      {
-        "part": "5",
-        "name": "हंस राज",
-        "relType": "husband",
-        "relName": "विशम्बर दास पिता का नाम: बिहारी लाल",
-        "house": "/",
-        "age": 68,
-        "gender": "M",
-        "id": "h_m4",
-        "linkedTo": null
-      },
-      {
-        "part": "5",
-        "name": "कमल जीत",
-        "relType": "husband",
-        "relName": "परमजीत कुमार पिता का नाम: बिशम्बर दास पिता का नाम: हंस राज",
-        "house": "/",
-        "age": 42,
-        "gender": "F",
-        "id": "h_m5",
-        "linkedTo": "h_m4"
-      },
-      {
-        "part": "5",
-        "name": "कलाशां देवी",
-        "relType": "husband",
-        "relName": "राहुल चौधरी पिता का नाम: रंजीत सिंह पति का नाम: हरिचन्द",
-        "house": "/",
-        "age": 24,
-        "gender": "F",
-        "id": "h_m6",
-        "linkedTo": null
-      },
-      {
-        "part": "5",
-        "name": "शक्ति चन्द",
-        "relType": "husband",
-        "relName": "हरदयाल सिह पिता का नाम: हरदयाल सिंह पिता का नाम: मुन्शी राम",
-        "house": "/",
-        "age": 60,
-        "gender": "F",
-        "id": "h_m7",
-        "linkedTo": null
-      }
-    ]
-  },
-  {
-    "id": "f2",
     "house": "0",
-    "headId": "h0_m5",
-    "headName": "वीना देवी",
+    "headId": "h0_m2",
+    "headName": "कुलदीप सिंह",
     "members": [
       {
         "part": "4",
@@ -163,7 +67,7 @@
         "relName": "किशन ee पति का नाम: श्यामलाल",
         "house": "0",
         "age": 67,
-        "gender": "M",
+        "gender": "F",
         "id": "h0_m5",
         "linkedTo": null
       },
@@ -174,7 +78,7 @@
         "relName": "सुमन कुमार",
         "house": "0",
         "age": 53,
-        "gender": "M",
+        "gender": "F",
         "id": "h0_m6",
         "linkedTo": null
       },
@@ -203,7 +107,7 @@
     ]
   },
   {
-    "id": "f3",
+    "id": "f2",
     "house": "00",
     "headId": "h00_m0",
     "headName": "पकंज कौण्डल",
@@ -248,7 +152,7 @@
         "relName": "रजिन्द्र कुमार पति का नाम: बीर सिंह",
         "house": "00/",
         "age": 59,
-        "gender": "M",
+        "gender": "F",
         "id": "h00_m3",
         "linkedTo": "h00_m2"
       },
@@ -277,7 +181,7 @@
     ]
   },
   {
-    "id": "f4",
+    "id": "f3",
     "house": "0007",
     "headId": "h0007_m0",
     "headName": "कविता चौधरी",
@@ -289,14 +193,14 @@
         "relName": "अशोक कुमार",
         "house": "000/7",
         "age": 4,
-        "gender": "M",
+        "gender": "F",
         "id": "h0007_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f5",
+    "id": "f4",
     "house": "02",
     "headId": "h02_m0",
     "headName": "सुनीता कुमारी",
@@ -315,7 +219,7 @@
     ]
   },
   {
-    "id": "f6",
+    "id": "f5",
     "house": "022",
     "headId": "h022_m0",
     "headName": "कमला देवी",
@@ -327,14 +231,14 @@
         "relName": "सुभाष चन्द पति का नाम: चन्दर शेखर",
         "house": "02/2",
         "age": 47,
-        "gender": "M",
+        "gender": "F",
         "id": "h022_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f7",
+    "id": "f6",
     "house": "027",
     "headId": "h027_m0",
     "headName": "क्रान्ति कुमार",
@@ -346,17 +250,17 @@
         "relName": "मनोज कुमार पिता का नाम: सुभाष चन्द",
         "house": "02/7",
         "age": 42,
-        "gender": "M",
+        "gender": "F",
         "id": "h027_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f8",
+    "id": "f7",
     "house": "047",
-    "headId": "h047_m0",
-    "headName": "योगेश कुमार",
+    "headId": "h047_m2",
+    "headName": "मोहित कुमार",
     "members": [
       {
         "part": "4",
@@ -365,7 +269,7 @@
         "relName": "परवीन कुमार पिता का नाम: हंस राज",
         "house": "04/7",
         "age": 33,
-        "gender": "M",
+        "gender": "F",
         "id": "h047_m0",
         "linkedTo": null
       },
@@ -376,7 +280,7 @@
         "relName": "चमन लाल पिता का नाम: चमन लाल पिता का नाम: चमन लाल",
         "house": "04/7",
         "age": 24,
-        "gender": "M",
+        "gender": "F",
         "id": "h047_m1",
         "linkedTo": null
       },
@@ -394,10 +298,10 @@
     ]
   },
   {
-    "id": "f9",
+    "id": "f8",
     "house": "06",
-    "headId": "h06_m0",
-    "headName": "नवीन निशचल",
+    "headId": "h06_m1",
+    "headName": "शकुंतला देवी",
     "members": [
       {
         "part": "5",
@@ -406,7 +310,7 @@
         "relName": "प्रकाश चंद पिता का नाम: प्रकाश चन्द",
         "house": "06",
         "age": 8,
-        "gender": "M",
+        "gender": "F",
         "id": "h06_m0",
         "linkedTo": null
       },
@@ -417,17 +321,17 @@
         "relName": "नवीन निशचल पति का नाम: सुनिल कुमार",
         "house": "06",
         "age": 46,
-        "gender": "M",
+        "gender": "F",
         "id": "h06_m1",
         "linkedTo": "h06_m0"
       }
     ]
   },
   {
-    "id": "f10",
+    "id": "f9",
     "house": "07",
-    "headId": "h07_m0",
-    "headName": "अंजना कुमारी",
+    "headId": "h07_m1",
+    "headName": "वालकराम",
     "members": [
       {
         "part": "4",
@@ -436,7 +340,7 @@
         "relName": "हंस राज पति का नाम: लाल चन्द",
         "house": "0/7",
         "age": 58,
-        "gender": "M",
+        "gender": "F",
         "id": "h07_m0",
         "linkedTo": null
       },
@@ -447,7 +351,7 @@
         "relName": "विनोद कुमार पिता का नाम: विनोद कुमार पिता का नाम: वीरुराम",
         "house": "0/7",
         "age": 2,
-        "gender": "F",
+        "gender": "M",
         "id": "h07_m1",
         "linkedTo": null
       },
@@ -491,7 +395,7 @@
         "relName": "आशीष कुमार",
         "house": "0/7",
         "age": 32,
-        "gender": "M",
+        "gender": "F",
         "id": "h07_m5",
         "linkedTo": null
       },
@@ -509,7 +413,7 @@
     ]
   },
   {
-    "id": "f11",
+    "id": "f10",
     "house": "0725",
     "headId": "h0725_m0",
     "headName": "विवेक कुमार",
@@ -528,7 +432,7 @@
     ]
   },
   {
-    "id": "f12",
+    "id": "f11",
     "house": "075",
     "headId": "h075_m0",
     "headName": "नितेश कुमार कॉंडल",
@@ -540,14 +444,14 @@
         "relName": "कमलेश चंद पिता का नाम: सुमन पाल",
         "house": "0/75",
         "age": 58,
-        "gender": "M",
+        "gender": "F",
         "id": "h075_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f13",
+    "id": "f12",
     "house": "077",
     "headId": "h077_m0",
     "headName": "शीतल",
@@ -559,7 +463,7 @@
         "relName": "धर्मेन्द्र सिंह पिता का नाम: संजीव कुमार",
         "house": "07/7",
         "age": 49,
-        "gender": "M",
+        "gender": "F",
         "id": "h077_m0",
         "linkedTo": null
       },
@@ -581,14 +485,14 @@
         "relName": "मनीष पिता का नाम: लौंगुराम",
         "house": "0/77",
         "age": 40,
-        "gender": "M",
+        "gender": "F",
         "id": "h077_m2",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f14",
+    "id": "f13",
     "house": "09",
     "headId": "h09_m0",
     "headName": "मनीष कुमार",
@@ -607,7 +511,7 @@
     ]
   },
   {
-    "id": "f15",
+    "id": "f14",
     "house": "0I8",
     "headId": "h0I8_m0",
     "headName": "अनुज कुमार",
@@ -619,17 +523,17 @@
         "relName": "जय चंद पिता का नाम: जय चंद",
         "house": "0/i8",
         "age": 26,
-        "gender": "M",
+        "gender": "F",
         "id": "h0I8_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f16",
+    "id": "f15",
     "house": "2",
-    "headId": "h2_m9",
-    "headName": "पकंज पठानिया",
+    "headId": "h2_m11",
+    "headName": "राजीव कुमार",
     "members": [
       {
         "part": "4",
@@ -649,7 +553,7 @@
         "relName": "रोज़ दीन",
         "house": "/2",
         "age": 4,
-        "gender": "M",
+        "gender": "F",
         "id": "h2_m1",
         "linkedTo": "h2_m20"
       },
@@ -715,7 +619,7 @@
         "relName": "सुदेश कुमार पति का नाम: विजय सिह",
         "house": "2//",
         "age": 54,
-        "gender": "M",
+        "gender": "F",
         "id": "h2_m7",
         "linkedTo": null
       },
@@ -726,7 +630,7 @@
         "relName": "राहुल पठानिया पिता का नाम: विजय पठानिया",
         "house": "2",
         "age": 30,
-        "gender": "M",
+        "gender": "F",
         "id": "h2_m8",
         "linkedTo": null
       },
@@ -737,7 +641,7 @@
         "relName": "हाकम सिंह पिता का नाम: हाकम सिंह",
         "house": "2//",
         "age": 72,
-        "gender": "M",
+        "gender": "F",
         "id": "h2_m9",
         "linkedTo": null
       },
@@ -781,7 +685,7 @@
         "relName": "किशन चन्द पिता का नाम: किशन चन्द",
         "house": "2/",
         "age": 22,
-        "gender": "M",
+        "gender": "F",
         "id": "h2_m13",
         "linkedTo": null
       },
@@ -792,7 +696,7 @@
         "relName": "धर्म सिंह पति का नाम: दिनेश कुमार",
         "house": "2/",
         "age": 58,
-        "gender": "M",
+        "gender": "F",
         "id": "h2_m14",
         "linkedTo": "h2_m13"
       },
@@ -858,7 +762,7 @@
         "relName": "मीर दीन पिता का नाम: मीर दीन",
         "house": "2/",
         "age": 44,
-        "gender": "M",
+        "gender": "F",
         "id": "h2_m20",
         "linkedTo": null
       },
@@ -880,7 +784,7 @@
         "relName": "रणजीत सूंहहि",
         "house": "2/",
         "age": 67,
-        "gender": "M",
+        "gender": "F",
         "id": "h2_m22",
         "linkedTo": null
       },
@@ -891,7 +795,7 @@
         "relName": "संजीव कुमार पिता का नाम: रंजीत सिंह",
         "house": "2/",
         "age": 47,
-        "gender": "M",
+        "gender": "F",
         "id": "h2_m23",
         "linkedTo": null
       },
@@ -931,7 +835,7 @@
     ]
   },
   {
-    "id": "f17",
+    "id": "f16",
     "house": "20",
     "headId": "h20_m0",
     "headName": "राधा देवी",
@@ -943,7 +847,7 @@
         "relName": "सुभाष चन्द पति का नाम: शेर सिह",
         "house": "20/",
         "age": 62,
-        "gender": "M",
+        "gender": "F",
         "id": "h20_m0",
         "linkedTo": null
       },
@@ -972,7 +876,7 @@
     ]
   },
   {
-    "id": "f18",
+    "id": "f17",
     "house": "200",
     "headId": "h200_m0",
     "headName": "रेखा देवी",
@@ -984,17 +888,17 @@
         "relName": "संजीव कुमार",
         "house": "200",
         "age": 37,
-        "gender": "M",
+        "gender": "F",
         "id": "h200_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f19",
+    "id": "f18",
     "house": "202",
-    "headId": "h202_m8",
-    "headName": "अनुराग सिंह",
+    "headId": "h202_m2",
+    "headName": "रसपाल",
     "members": [
       {
         "part": "4",
@@ -1003,7 +907,7 @@
         "relName": "सुशील कुमार पति का नाम: सुरेन्दर कुमार",
         "house": "20/2",
         "age": 48,
-        "gender": "M",
+        "gender": "F",
         "id": "h202_m0",
         "linkedTo": null
       },
@@ -1014,7 +918,7 @@
         "relName": "सुरेंद्र कुमार पिता का नाम: सुरेंद्र कुमार पिता का नाम: सुशील कुमार",
         "house": "20/2",
         "age": 2,
-        "gender": "M",
+        "gender": "F",
         "id": "h202_m1",
         "linkedTo": null
       },
@@ -1036,7 +940,7 @@
         "relName": "सुरजीत कुमार पिता का नाम: विशन दास",
         "house": "20/2",
         "age": 40,
-        "gender": "M",
+        "gender": "F",
         "id": "h202_m3",
         "linkedTo": null
       },
@@ -1047,7 +951,7 @@
         "relName": "मनजीत कुमार",
         "house": "20/2",
         "age": 28,
-        "gender": "M",
+        "gender": "F",
         "id": "h202_m4",
         "linkedTo": null
       },
@@ -1069,7 +973,7 @@
         "relName": "जलाल दीन पिता का नाम: साहव दीन",
         "house": "20/2",
         "age": 47,
-        "gender": "M",
+        "gender": "F",
         "id": "h202_m6",
         "linkedTo": null
       },
@@ -1080,7 +984,7 @@
         "relName": "अजय कौंडल पति का नाम: हिमाशुं कौण्डल",
         "house": "20/2",
         "age": 43,
-        "gender": "M",
+        "gender": "F",
         "id": "h202_m7",
         "linkedTo": null
       },
@@ -1091,7 +995,7 @@
         "relName": "देव राज पिता का नाम: देव राज",
         "house": "20/2",
         "age": 64,
-        "gender": "M",
+        "gender": "F",
         "id": "h202_m8",
         "linkedTo": null
       },
@@ -1102,14 +1006,14 @@
         "relName": "रमन कुमार पिता का नाम: rg राम",
         "house": "20/2",
         "age": 29,
-        "gender": "M",
+        "gender": "F",
         "id": "h202_m9",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f20",
+    "id": "f19",
     "house": "207",
     "headId": "h207_m1",
     "headName": "सालो देवी",
@@ -1132,17 +1036,17 @@
         "relName": "पवनकुमार पति का नाम: पठानूराम",
         "house": "2/07",
         "age": 64,
-        "gender": "M",
+        "gender": "F",
         "id": "h207_m1",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f21",
+    "id": "f20",
     "house": "22",
-    "headId": "h22_m2",
-    "headName": "विजय सिंह",
+    "headId": "h22_m8",
+    "headName": "मदन लाल",
     "members": [
       {
         "part": "4",
@@ -1173,7 +1077,7 @@
         "relName": "ऑकर सिंह पिता का नाम: धर्म सिंह",
         "house": "22/",
         "age": 66,
-        "gender": "M",
+        "gender": "F",
         "id": "h22_m2",
         "linkedTo": null
       },
@@ -1217,7 +1121,7 @@
         "relName": "अमर सिंह पिता का नाम: घेलर",
         "house": "22/",
         "age": 48,
-        "gender": "M",
+        "gender": "F",
         "id": "h22_m6",
         "linkedTo": null
       },
@@ -1228,7 +1132,7 @@
         "relName": "मदन लाल पति का नाम: दीप कुमार",
         "house": "2/2",
         "age": 86,
-        "gender": "M",
+        "gender": "F",
         "id": "h22_m7",
         "linkedTo": "h22_m8"
       },
@@ -1239,7 +1143,7 @@
         "relName": "दीप कुमार पिता का नाम: जयराम",
         "house": "2/2",
         "age": 2,
-        "gender": "F",
+        "gender": "M",
         "id": "h22_m8",
         "linkedTo": null
       },
@@ -1250,7 +1154,7 @@
         "relName": "सुभाष चंद",
         "house": "2/2",
         "age": 30,
-        "gender": "M",
+        "gender": "F",
         "id": "h22_m9",
         "linkedTo": null
       },
@@ -1261,7 +1165,7 @@
         "relName": "अजय कुमार अन्य: ऑंकार चन्द",
         "house": "2/2",
         "age": 49,
-        "gender": "M",
+        "gender": "F",
         "id": "h22_m10",
         "linkedTo": null
       },
@@ -1283,14 +1187,14 @@
         "relName": "जाकिर हुसैन पति का नाम: मौज दीन",
         "house": "2/2",
         "age": 38,
-        "gender": "M",
+        "gender": "F",
         "id": "h22_m12",
         "linkedTo": "h22_m11"
       }
     ]
   },
   {
-    "id": "f22",
+    "id": "f21",
     "house": "220",
     "headId": "h220_m0",
     "headName": "युसुफ दीन",
@@ -1309,10 +1213,10 @@
     ]
   },
   {
-    "id": "f23",
+    "id": "f22",
     "house": "222",
-    "headId": "h222_m0",
-    "headName": "कुशल सिंह",
+    "headId": "h222_m2",
+    "headName": "मनीष कुमार",
     "members": [
       {
         "part": "4",
@@ -1321,7 +1225,7 @@
         "relName": "कुलदीप सिंह पिता का नाम: पंजाब सिंह",
         "house": "22/2",
         "age": 63,
-        "gender": "M",
+        "gender": "F",
         "id": "h222_m0",
         "linkedTo": null
       },
@@ -1332,7 +1236,7 @@
         "relName": "कुशल सिंह पति का नाम: वलदेव सिंह",
         "house": "22/2",
         "age": 57,
-        "gender": "M",
+        "gender": "F",
         "id": "h222_m1",
         "linkedTo": "h222_m0"
       },
@@ -1365,7 +1269,7 @@
         "relName": "प्रेम नाथ",
         "house": "22/2",
         "age": 26,
-        "gender": "M",
+        "gender": "F",
         "id": "h222_m4",
         "linkedTo": null
       },
@@ -1376,14 +1280,14 @@
         "relName": "भीम सिंह",
         "house": "22/2",
         "age": 3,
-        "gender": "M",
+        "gender": "F",
         "id": "h222_m5",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f24",
+    "id": "f23",
     "house": "23",
     "headId": "h23_m2",
     "headName": "शान्ति देवी",
@@ -1406,7 +1310,7 @@
         "relName": "शशी कुमार पति का नाम: ओम प्रकाश",
         "house": "23/",
         "age": 52,
-        "gender": "M",
+        "gender": "F",
         "id": "h23_m1",
         "linkedTo": null
       },
@@ -1417,7 +1321,7 @@
         "relName": "दलीप सिंह",
         "house": "23",
         "age": 67,
-        "gender": "M",
+        "gender": "F",
         "id": "h23_m2",
         "linkedTo": null
       },
@@ -1435,10 +1339,10 @@
     ]
   },
   {
-    "id": "f25",
+    "id": "f24",
     "house": "24",
-    "headId": "h24_m3",
-    "headName": "लता कुमारी",
+    "headId": "h24_m5",
+    "headName": "अंशुल राणा",
     "members": [
       {
         "part": "4",
@@ -1480,7 +1384,7 @@
         "relName": "setter सिंह",
         "house": "24/",
         "age": 67,
-        "gender": "M",
+        "gender": "F",
         "id": "h24_m3",
         "linkedTo": null
       },
@@ -1491,7 +1395,7 @@
         "relName": "जोगिन्दर सिंह पति का नाम: तरसेम सिंह",
         "house": "24/",
         "age": 56,
-        "gender": "M",
+        "gender": "F",
         "id": "h24_m4",
         "linkedTo": null
       },
@@ -1509,10 +1413,10 @@
     ]
   },
   {
-    "id": "f26",
+    "id": "f25",
     "house": "247",
-    "headId": "h247_m0",
-    "headName": "जान मुहम्मद",
+    "headId": "h247_m3",
+    "headName": "लाल चन्द",
     "members": [
       {
         "part": "4",
@@ -1521,7 +1425,7 @@
         "relName": "निक्कु दीन पिता का नाम: Prag दीन",
         "house": "24/7",
         "age": 87,
-        "gender": "M",
+        "gender": "F",
         "id": "h247_m0",
         "linkedTo": null
       },
@@ -1543,7 +1447,7 @@
         "relName": "जुल्फी पति का नाम: सोहण सिंह",
         "house": "24/7",
         "age": 50,
-        "gender": "M",
+        "gender": "F",
         "id": "h247_m2",
         "linkedTo": null
       },
@@ -1554,14 +1458,14 @@
         "relName": "तरसेम सिंह पिता का नाम: जोगिंदर सिंह पिता का नाम: लछमण दास",
         "house": "24/7",
         "age": 23,
-        "gender": "F",
+        "gender": "M",
         "id": "h247_m3",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f27",
+    "id": "f26",
     "house": "2477",
     "headId": "h2477_m0",
     "headName": "हसमते",
@@ -1580,10 +1484,10 @@
     ]
   },
   {
-    "id": "f28",
+    "id": "f27",
     "house": "25",
-    "headId": "h25_m4",
-    "headName": "माया देवी",
+    "headId": "h25_m3",
+    "headName": "प्रवीण कुमार",
     "members": [
       {
         "part": "4",
@@ -1592,7 +1496,7 @@
         "relName": "संजू",
         "house": "25",
         "age": 30,
-        "gender": "M",
+        "gender": "F",
         "id": "h25_m0",
         "linkedTo": null
       },
@@ -1636,17 +1540,17 @@
         "relName": "शेर सिंह",
         "house": "25//",
         "age": 52,
-        "gender": "M",
+        "gender": "F",
         "id": "h25_m4",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f29",
+    "id": "f28",
     "house": "27",
-    "headId": "h27_m0",
-    "headName": "गुलजार बेगम",
+    "headId": "h27_m7",
+    "headName": "पलक",
     "members": [
       {
         "part": "4",
@@ -1655,7 +1559,7 @@
         "relName": "नूरदीन पति का नाम: मीर मुहम्मद",
         "house": "27/",
         "age": 78,
-        "gender": "M",
+        "gender": "F",
         "id": "h27_m0",
         "linkedTo": null
       },
@@ -1677,7 +1581,7 @@
         "relName": "जान मुहम्मद पति का नाम: सतरदीन",
         "house": "27",
         "age": 64,
-        "gender": "M",
+        "gender": "F",
         "id": "h27_m2",
         "linkedTo": null
       },
@@ -1710,7 +1614,7 @@
         "relName": "सदीक मुहम्मद",
         "house": "2/7",
         "age": 39,
-        "gender": "M",
+        "gender": "F",
         "id": "h27_m5",
         "linkedTo": null
       },
@@ -1721,7 +1625,7 @@
         "relName": "अशोक कुमार पिता का नाम: अशोक कुमार",
         "house": "2/7",
         "age": 50,
-        "gender": "M",
+        "gender": "F",
         "id": "h27_m6",
         "linkedTo": null
       },
@@ -1750,7 +1654,7 @@
     ]
   },
   {
-    "id": "f30",
+    "id": "f29",
     "house": "28",
     "headId": "h28_m2",
     "headName": "अबदुल रसीद",
@@ -1762,7 +1666,7 @@
         "relName": "बाबू दीन पिता का नाम: बाबु दीन",
         "house": "28",
         "age": 47,
-        "gender": "M",
+        "gender": "F",
         "id": "h28_m0",
         "linkedTo": null
       },
@@ -1773,7 +1677,7 @@
         "relName": "विजय कुमार पिता का नाम: किशन चन्द",
         "house": "28",
         "age": 52,
-        "gender": "M",
+        "gender": "F",
         "id": "h28_m1",
         "linkedTo": null
       },
@@ -1784,7 +1688,7 @@
         "relName": "गुलाम दीन पिता का नाम: गुलाम दीन",
         "house": "28/",
         "age": 67,
-        "gender": "M",
+        "gender": "F",
         "id": "h28_m2",
         "linkedTo": null
       },
@@ -1795,7 +1699,7 @@
         "relName": "लालदीन",
         "house": "28/",
         "age": 22,
-        "gender": "M",
+        "gender": "F",
         "id": "h28_m3",
         "linkedTo": null
       },
@@ -1806,17 +1710,17 @@
         "relName": "अमर दीन पिता का नाम: चूहा",
         "house": "28//",
         "age": 54,
-        "gender": "M",
+        "gender": "F",
         "id": "h28_m4",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f31",
+    "id": "f30",
     "house": "29",
-    "headId": "h29_m6",
-    "headName": "रसूलां बेगम",
+    "headId": "h29_m3",
+    "headName": "ater देवी",
     "members": [
       {
         "part": "4",
@@ -1891,14 +1795,14 @@
         "relName": "जलालदीन",
         "house": "29/",
         "age": 40,
-        "gender": "M",
+        "gender": "F",
         "id": "h29_m6",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f32",
+    "id": "f31",
     "house": "2904",
     "headId": "h2904_m0",
     "headName": "शुभम चौधरी",
@@ -1910,17 +1814,17 @@
         "relName": "रफी मुहम्मद पिता का नाम: सुरजीत सिंह",
         "house": "29/04",
         "age": 32,
-        "gender": "M",
+        "gender": "F",
         "id": "h2904_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f33",
+    "id": "f32",
     "house": "3",
-    "headId": "h3_m7",
-    "headName": "रजत पंडीर",
+    "headId": "h3_m16",
+    "headName": "ज्ञान चन्द",
     "members": [
       {
         "part": "4",
@@ -1951,7 +1855,7 @@
         "relName": "प्यार चन्द",
         "house": "3/",
         "age": 64,
-        "gender": "M",
+        "gender": "F",
         "id": "h3_m2",
         "linkedTo": null
       },
@@ -1962,7 +1866,7 @@
         "relName": "नरिन्द्र सिंह पिता का नाम: प्यार चंद",
         "house": "3/",
         "age": 42,
-        "gender": "M",
+        "gender": "F",
         "id": "h3_m3",
         "linkedTo": null
       },
@@ -1995,7 +1899,7 @@
         "relName": "मनीष कुमार पिता का नाम: धर्म सिंह",
         "house": "3/",
         "age": 52,
-        "gender": "M",
+        "gender": "F",
         "id": "h3_m6",
         "linkedTo": null
       },
@@ -2006,7 +1910,7 @@
         "relName": "राज सिंह पिता का नाम: राय सिंह",
         "house": "3/",
         "age": 77,
-        "gender": "M",
+        "gender": "F",
         "id": "h3_m7",
         "linkedTo": null
       },
@@ -2017,7 +1921,7 @@
         "relName": "अशोक कुमार पिता का नाम: अशोक कुमार",
         "house": "3/",
         "age": 50,
-        "gender": "M",
+        "gender": "F",
         "id": "h3_m8",
         "linkedTo": null
       },
@@ -2028,7 +1932,7 @@
         "relName": "योग राज पिता का नाम: साधु राम",
         "house": "3",
         "age": 4,
-        "gender": "M",
+        "gender": "F",
         "id": "h3_m9",
         "linkedTo": null
       },
@@ -2050,7 +1954,7 @@
         "relName": "संदीप सिंह पिता का नाम: प्रेम चन्द",
         "house": "3",
         "age": 43,
-        "gender": "M",
+        "gender": "F",
         "id": "h3_m11",
         "linkedTo": null
       },
@@ -2061,7 +1965,7 @@
         "relName": "संजीव कुमार पिता का नाम: चन्दू लाल",
         "house": "3",
         "age": 29,
-        "gender": "M",
+        "gender": "F",
         "id": "h3_m12",
         "linkedTo": "h3_m22"
       },
@@ -2072,7 +1976,7 @@
         "relName": "जलाल दीन पति का नाम: रवि मुहम्मद",
         "house": "3/",
         "age": 58,
-        "gender": "M",
+        "gender": "F",
         "id": "h3_m13",
         "linkedTo": null
       },
@@ -2094,7 +1998,7 @@
         "relName": "किशोरी लाल पिता का नाम: किशोरी लाल पिता का नाम: हरिया राम",
         "house": "3",
         "age": 23,
-        "gender": "F",
+        "gender": "M",
         "id": "h3_m15",
         "linkedTo": null
       },
@@ -2127,7 +2031,7 @@
         "relName": "तिलक राज पिता का नाम: रोशन लाल",
         "house": "3/",
         "age": 32,
-        "gender": "F",
+        "gender": "M",
         "id": "h3_m18",
         "linkedTo": null
       },
@@ -2138,7 +2042,7 @@
         "relName": "अनिल कुमार पिता का नाम: रोशन लाल",
         "house": "3/",
         "age": 39,
-        "gender": "M",
+        "gender": "F",
         "id": "h3_m19",
         "linkedTo": null
       },
@@ -2160,7 +2064,7 @@
         "relName": "तिलकराज",
         "house": "3/",
         "age": 35,
-        "gender": "M",
+        "gender": "F",
         "id": "h3_m21",
         "linkedTo": null
       },
@@ -2182,7 +2086,7 @@
         "relName": "ज्ञान चन्द",
         "house": "3",
         "age": 29,
-        "gender": "M",
+        "gender": "F",
         "id": "h3_m23",
         "linkedTo": "h3_m16"
       },
@@ -2226,7 +2130,7 @@
         "relName": "चंद्र जीत पति का नाम: किशोरी लाल",
         "house": "3",
         "age": 36,
-        "gender": "M",
+        "gender": "F",
         "id": "h3_m27",
         "linkedTo": null
       },
@@ -2255,10 +2159,10 @@
     ]
   },
   {
-    "id": "f34",
+    "id": "f33",
     "house": "30",
-    "headId": "h30_m2",
-    "headName": "साक्षी देवी",
+    "headId": "h30_m0",
+    "headName": "सुरजीत सिंह",
     "members": [
       {
         "part": "5",
@@ -2267,7 +2171,7 @@
         "relName": "सुरजीत सिंह पिता का नाम: seit चन्द पिता का नाम: बंसी चंद",
         "house": "30",
         "age": 25,
-        "gender": "F",
+        "gender": "M",
         "id": "h30_m0",
         "linkedTo": null
       },
@@ -2278,7 +2182,7 @@
         "relName": "सुरजीत सिह पति का नाम: निर्मल सिह",
         "house": "30",
         "age": 59,
-        "gender": "M",
+        "gender": "F",
         "id": "h30_m1",
         "linkedTo": null
       },
@@ -2289,7 +2193,7 @@
         "relName": "अमीचन्द पिता का नाम: मुकेश कुमार",
         "house": "30",
         "age": 69,
-        "gender": "M",
+        "gender": "F",
         "id": "h30_m2",
         "linkedTo": null
       },
@@ -2307,7 +2211,7 @@
     ]
   },
   {
-    "id": "f35",
+    "id": "f34",
     "house": "307",
     "headId": "h307_m0",
     "headName": "प्रवीन",
@@ -2326,7 +2230,7 @@
     ]
   },
   {
-    "id": "f36",
+    "id": "f35",
     "house": "32",
     "headId": "h32_m3",
     "headName": "अजय कुमार",
@@ -2349,7 +2253,7 @@
         "relName": "सतीश कुमार पिता का नाम: सतीश कुमार",
         "house": "3/2",
         "age": 67,
-        "gender": "M",
+        "gender": "F",
         "id": "h32_m1",
         "linkedTo": null
       },
@@ -2371,7 +2275,7 @@
         "relName": "कश्मीर सिंह पिता का नाम: कश्मीर सिंह",
         "house": "3/2",
         "age": 74,
-        "gender": "M",
+        "gender": "F",
         "id": "h32_m3",
         "linkedTo": null
       },
@@ -2404,7 +2308,7 @@
         "relName": "किकर सिंह",
         "house": "32",
         "age": 53,
-        "gender": "M",
+        "gender": "F",
         "id": "h32_m6",
         "linkedTo": null
       },
@@ -2433,10 +2337,10 @@
     ]
   },
   {
-    "id": "f37",
+    "id": "f36",
     "house": "33",
-    "headId": "h33_m8",
-    "headName": "रोकी",
+    "headId": "h33_m10",
+    "headName": "प्यार चंद",
     "members": [
       {
         "part": "4",
@@ -2478,7 +2382,7 @@
         "relName": "देश राज",
         "house": "33/",
         "age": 54,
-        "gender": "M",
+        "gender": "F",
         "id": "h33_m3",
         "linkedTo": null
       },
@@ -2500,7 +2404,7 @@
         "relName": "रमेश कुमार पिता का नाम: रमेश कुमार पिता का नाम: नत्थू राम",
         "house": "33/",
         "age": 2,
-        "gender": "F",
+        "gender": "M",
         "id": "h33_m5",
         "linkedTo": null
       },
@@ -2511,7 +2415,7 @@
         "relName": "धर्म चन्द पिता का नाम: सालीराम",
         "house": "33/",
         "age": 60,
-        "gender": "M",
+        "gender": "F",
         "id": "h33_m6",
         "linkedTo": null
       },
@@ -2533,7 +2437,7 @@
         "relName": "कृष्ण कुमार पिता का नाम: कृष्ण कुमार",
         "house": "3/3",
         "age": 62,
-        "gender": "M",
+        "gender": "F",
         "id": "h33_m8",
         "linkedTo": null
       },
@@ -2555,14 +2459,14 @@
         "relName": "मदन लाल देहरिया पिता का नाम: विजय कुमार पिता का नाम: रसीला राम",
         "house": "33",
         "age": 28,
-        "gender": "F",
+        "gender": "M",
         "id": "h33_m10",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f38",
+    "id": "f37",
     "house": "332",
     "headId": "h332_m0",
     "headName": "साजन कुमार",
@@ -2574,17 +2478,17 @@
         "relName": "देव राज पिता का नाम: देव राज",
         "house": "33/2",
         "age": 6,
-        "gender": "M",
+        "gender": "F",
         "id": "h332_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f39",
+    "id": "f38",
     "house": "34",
-    "headId": "h34_m1",
-    "headName": "नसरदीन",
+    "headId": "h34_m3",
+    "headName": "शुभम",
     "members": [
       {
         "part": "4",
@@ -2593,7 +2497,7 @@
         "relName": "चुनी लाल",
         "house": "34/",
         "age": 20,
-        "gender": "M",
+        "gender": "F",
         "id": "h34_m0",
         "linkedTo": null
       },
@@ -2604,7 +2508,7 @@
         "relName": "फिरोजदीन पिता का नाम: फिरोजदीन",
         "house": "34/",
         "age": 97,
-        "gender": "M",
+        "gender": "F",
         "id": "h34_m1",
         "linkedTo": null
       },
@@ -2615,7 +2519,7 @@
         "relName": "बली मुहम्मद",
         "house": "34/",
         "age": 54,
-        "gender": "M",
+        "gender": "F",
         "id": "h34_m2",
         "linkedTo": null
       },
@@ -2670,7 +2574,7 @@
         "relName": "विजय कुमार",
         "house": "34",
         "age": 54,
-        "gender": "M",
+        "gender": "F",
         "id": "h34_m7",
         "linkedTo": null
       },
@@ -2688,7 +2592,7 @@
     ]
   },
   {
-    "id": "f40",
+    "id": "f39",
     "house": "342",
     "headId": "h342_m0",
     "headName": "शंकर सिंह",
@@ -2700,14 +2604,14 @@
         "relName": "भूपेन्द्र सिंह पिता का नाम: सन्त राम",
         "house": "34/2",
         "age": 42,
-        "gender": "M",
+        "gender": "F",
         "id": "h342_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f41",
+    "id": "f40",
     "house": "343",
     "headId": "h343_m0",
     "headName": "शीतल",
@@ -2726,10 +2630,10 @@
     ]
   },
   {
-    "id": "f42",
+    "id": "f41",
     "house": "35",
-    "headId": "h35_m2",
-    "headName": "राजेश कुमार",
+    "headId": "h35_m0",
+    "headName": "राज कुमार",
     "members": [
       {
         "part": "4",
@@ -2760,7 +2664,7 @@
         "relName": "कृष्ण दास पिता का नाम: कृष्ण दास",
         "house": "35",
         "age": 84,
-        "gender": "M",
+        "gender": "F",
         "id": "h35_m2",
         "linkedTo": null
       },
@@ -2771,7 +2675,7 @@
         "relName": "पुष्पेन्द्र कुमार पति का नाम: राजेश कुमार",
         "house": "35",
         "age": 52,
-        "gender": "M",
+        "gender": "F",
         "id": "h35_m3",
         "linkedTo": "h35_m2"
       },
@@ -2793,17 +2697,17 @@
         "relName": "नरेश कुमार पति का नाम: विजय कुमार",
         "house": "35",
         "age": 47,
-        "gender": "M",
+        "gender": "F",
         "id": "h35_m5",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f43",
+    "id": "f42",
     "house": "36",
-    "headId": "h36_m0",
-    "headName": "कुमारी मनीता",
+    "headId": "h36_m4",
+    "headName": "जोगिन्द्र सिह",
     "members": [
       {
         "part": "4",
@@ -2812,7 +2716,7 @@
         "relName": "चमन लाल",
         "house": "36/",
         "age": 80,
-        "gender": "M",
+        "gender": "F",
         "id": "h36_m0",
         "linkedTo": null
       },
@@ -2867,7 +2771,7 @@
         "relName": "जगत राम पिता का नाम: जगत राम कॉड़ल",
         "house": "36",
         "age": 7,
-        "gender": "M",
+        "gender": "F",
         "id": "h36_m5",
         "linkedTo": null
       },
@@ -2885,7 +2789,7 @@
     ]
   },
   {
-    "id": "f44",
+    "id": "f43",
     "house": "367",
     "headId": "h367_m0",
     "headName": "वन्सी लाल",
@@ -2904,10 +2808,10 @@
     ]
   },
   {
-    "id": "f45",
+    "id": "f44",
     "house": "37",
-    "headId": "h37_m4",
-    "headName": "मुकेश कुमार",
+    "headId": "h37_m0",
+    "headName": "निम्मो देवी",
     "members": [
       {
         "part": "4",
@@ -2927,7 +2831,7 @@
         "relName": "बंसी लाल प्रति का नाम: शशी पाल पिता का नाम: शशपाल सिंह",
         "house": "37",
         "age": 59,
-        "gender": "M",
+        "gender": "F",
         "id": "h37_m1",
         "linkedTo": null
       },
@@ -2949,7 +2853,7 @@
         "relName": "रविन्द्र कुमार पिता का नाम: रोशन लाल",
         "house": "3/7",
         "age": 35,
-        "gender": "M",
+        "gender": "F",
         "id": "h37_m3",
         "linkedTo": null
       },
@@ -2960,14 +2864,14 @@
         "relName": "विजय कुमार पिता का नाम: विजय कुमार",
         "house": "3/7",
         "age": 67,
-        "gender": "M",
+        "gender": "F",
         "id": "h37_m4",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f46",
+    "id": "f45",
     "house": "377",
     "headId": "h377_m0",
     "headName": "अरविन्द",
@@ -2979,17 +2883,17 @@
         "relName": "हेम राज पिता का नाम: हेम राज",
         "house": "37/7",
         "age": 27,
-        "gender": "M",
+        "gender": "F",
         "id": "h377_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f47",
+    "id": "f46",
     "house": "38",
-    "headId": "h38_m2",
-    "headName": "आस्मा",
+    "headId": "h38_m3",
+    "headName": "नीलमा कुमारी",
     "members": [
       {
         "part": "4",
@@ -3009,7 +2913,7 @@
         "relName": "जैसी राम पिता का नाम: जैसी राम",
         "house": "38/",
         "age": 24,
-        "gender": "M",
+        "gender": "F",
         "id": "h38_m1",
         "linkedTo": null
       },
@@ -3020,7 +2924,7 @@
         "relName": "ईदु",
         "house": "38/",
         "age": 53,
-        "gender": "M",
+        "gender": "F",
         "id": "h38_m2",
         "linkedTo": null
       },
@@ -3042,17 +2946,17 @@
         "relName": "मोहन लाल पिता का नाम: मोहन लाल",
         "house": "38",
         "age": 25,
-        "gender": "M",
+        "gender": "F",
         "id": "h38_m4",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f48",
+    "id": "f47",
     "house": "39",
-    "headId": "h39_m0",
-    "headName": "सुमना देवी",
+    "headId": "h39_m4",
+    "headName": "ज्ञानदेई",
     "members": [
       {
         "part": "4",
@@ -3061,7 +2965,7 @@
         "relName": "पवन कुमार पति का नाम: देश राज",
         "house": "39",
         "age": 57,
-        "gender": "M",
+        "gender": "F",
         "id": "h39_m0",
         "linkedTo": null
       },
@@ -3072,7 +2976,7 @@
         "relName": "विजय कुमार पिता का नाम: देश राज",
         "house": "39",
         "age": 36,
-        "gender": "M",
+        "gender": "F",
         "id": "h39_m1",
         "linkedTo": null
       },
@@ -3083,7 +2987,7 @@
         "relName": "धर्म चन्द पति का नाम: रत्न चन्द",
         "house": "39",
         "age": 52,
-        "gender": "M",
+        "gender": "F",
         "id": "h39_m2",
         "linkedTo": null
       },
@@ -3112,7 +3016,7 @@
     ]
   },
   {
-    "id": "f49",
+    "id": "f48",
     "house": "3E",
     "headId": "h3E_m0",
     "headName": "विमला देवी",
@@ -3131,7 +3035,7 @@
     ]
   },
   {
-    "id": "f50",
+    "id": "f49",
     "house": "4",
     "headId": "h4_m6",
     "headName": "चन्द्र कान्त",
@@ -3143,7 +3047,7 @@
         "relName": "रुकमदीन पति का नाम: Fete मुहम्मद",
         "house": "4/",
         "age": 64,
-        "gender": "M",
+        "gender": "F",
         "id": "h4_m0",
         "linkedTo": null
       },
@@ -3198,7 +3102,7 @@
         "relName": "गिरधारी लाल पति का नाम: देश राज",
         "house": "4/",
         "age": 72,
-        "gender": "M",
+        "gender": "F",
         "id": "h4_m5",
         "linkedTo": null
       },
@@ -3209,7 +3113,7 @@
         "relName": "are किशोर पिता का नाम: चांद किशोर",
         "house": "4/",
         "age": 77,
-        "gender": "M",
+        "gender": "F",
         "id": "h4_m6",
         "linkedTo": null
       },
@@ -3231,7 +3135,7 @@
         "relName": "अजित पाल पिता का नाम: तिलक राज",
         "house": "4",
         "age": 36,
-        "gender": "M",
+        "gender": "F",
         "id": "h4_m8",
         "linkedTo": null
       },
@@ -3242,14 +3146,14 @@
         "relName": "तिलकराज पिता का नाम: किशोरी लाल",
         "house": "4/",
         "age": 63,
-        "gender": "M",
+        "gender": "F",
         "id": "h4_m9",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f51",
+    "id": "f50",
     "house": "40",
     "headId": "h40_m4",
     "headName": "विकास चौधरी",
@@ -3261,7 +3165,7 @@
         "relName": "कदरदीन पति का नाम: Fee दीन",
         "house": "4/0",
         "age": 54,
-        "gender": "M",
+        "gender": "F",
         "id": "h40_m0",
         "linkedTo": null
       },
@@ -3283,7 +3187,7 @@
         "relName": "स्वतंत्र सिंह पिता का नाम: मदन लाल",
         "house": "40/",
         "age": 37,
-        "gender": "M",
+        "gender": "F",
         "id": "h40_m2",
         "linkedTo": null
       },
@@ -3305,7 +3209,7 @@
         "relName": "रतनचन्द पिता का नाम: रतन चंद",
         "house": "40",
         "age": 65,
-        "gender": "M",
+        "gender": "F",
         "id": "h40_m4",
         "linkedTo": null
       },
@@ -3323,7 +3227,7 @@
     ]
   },
   {
-    "id": "f52",
+    "id": "f51",
     "house": "402",
     "headId": "h402_m1",
     "headName": "राजकुमारी",
@@ -3346,7 +3250,7 @@
         "relName": "अमर सिंह पति का नाम: प्रकाश चन्द",
         "house": "40/2",
         "age": 69,
-        "gender": "M",
+        "gender": "F",
         "id": "h402_m1",
         "linkedTo": null
       },
@@ -3357,14 +3261,14 @@
         "relName": "प्रेमचन्द",
         "house": "40/2",
         "age": 35,
-        "gender": "M",
+        "gender": "F",
         "id": "h402_m2",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f53",
+    "id": "f52",
     "house": "405",
     "headId": "h405_m0",
     "headName": "सुशीत्ठ कुमार",
@@ -3376,14 +3280,14 @@
         "relName": "अजीत कुमार पिता का नाम: चन्दु लाल पिता का नाम: चन्दू लाल",
         "house": "4/05",
         "age": 24,
-        "gender": "F",
+        "gender": "M",
         "id": "h405_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f54",
+    "id": "f53",
     "house": "407",
     "headId": "h407_m1",
     "headName": "तारो देवी",
@@ -3406,17 +3310,17 @@
         "relName": "सुरिन्द्र कुमार पति का नाम: जौंहडू राम",
         "house": "40/7",
         "age": 56,
-        "gender": "M",
+        "gender": "F",
         "id": "h407_m1",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f55",
+    "id": "f54",
     "house": "42",
-    "headId": "h42_m3",
-    "headName": "रविन्द्र सिंह",
+    "headId": "h42_m1",
+    "headName": "राहुल कुमार",
     "members": [
       {
         "part": "4",
@@ -3458,7 +3362,7 @@
         "relName": "कश्मीर सिंह पिता का नाम: कशमीर सिंह",
         "house": "4/2",
         "age": 66,
-        "gender": "M",
+        "gender": "F",
         "id": "h42_m3",
         "linkedTo": null
       },
@@ -3491,7 +3395,7 @@
         "relName": "मनोज कुमार पिता का नाम: मनोज कुमार",
         "house": "42",
         "age": 60,
-        "gender": "M",
+        "gender": "F",
         "id": "h42_m6",
         "linkedTo": null
       },
@@ -3509,7 +3413,7 @@
     ]
   },
   {
-    "id": "f56",
+    "id": "f55",
     "house": "427",
     "headId": "h427_m0",
     "headName": "शशि कान्ता",
@@ -3528,10 +3432,10 @@
     ]
   },
   {
-    "id": "f57",
+    "id": "f56",
     "house": "43",
-    "headId": "h43_m0",
-    "headName": "रेनु बाला",
+    "headId": "h43_m3",
+    "headName": "अंकुश चौधरी",
     "members": [
       {
         "part": "4",
@@ -3540,7 +3444,7 @@
         "relName": "राजीव कुमार",
         "house": "43",
         "age": 48,
-        "gender": "M",
+        "gender": "F",
         "id": "h43_m0",
         "linkedTo": null
       },
@@ -3562,7 +3466,7 @@
         "relName": "fate कुमार पिता का नाम: अमरचन्द",
         "house": "43",
         "age": 44,
-        "gender": "M",
+        "gender": "F",
         "id": "h43_m2",
         "linkedTo": null
       },
@@ -3580,7 +3484,7 @@
     ]
   },
   {
-    "id": "f58",
+    "id": "f57",
     "house": "432",
     "headId": "h432_m0",
     "headName": "अनुज कौंडल",
@@ -3592,14 +3496,14 @@
         "relName": "राम स्वरुप पिता का नाम: राम स्वरूप",
         "house": "43/2",
         "age": 52,
-        "gender": "M",
+        "gender": "F",
         "id": "h432_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f59",
+    "id": "f58",
     "house": "44",
     "headId": "h44_m2",
     "headName": "संगम",
@@ -3622,7 +3526,7 @@
         "relName": "शेर सिंह",
         "house": "44",
         "age": 32,
-        "gender": "M",
+        "gender": "F",
         "id": "h44_m1",
         "linkedTo": null
       },
@@ -3699,7 +3603,7 @@
         "relName": "विनोद कुमार",
         "house": "44",
         "age": 46,
-        "gender": "M",
+        "gender": "F",
         "id": "h44_m8",
         "linkedTo": null
       },
@@ -3717,7 +3621,7 @@
     ]
   },
   {
-    "id": "f60",
+    "id": "f59",
     "house": "4405",
     "headId": "h4405_m0",
     "headName": "सुरिन्द्र कुमार",
@@ -3729,17 +3633,17 @@
         "relName": "जगदीश चन्द पिता का नाम: जगदीश चन्द",
         "house": "44/05",
         "age": 23,
-        "gender": "M",
+        "gender": "F",
         "id": "h4405_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f61",
+    "id": "f60",
     "house": "442",
-    "headId": "h442_m0",
-    "headName": "सर्वजीत",
+    "headId": "h442_m1",
+    "headName": "बलजीत कुमारी",
     "members": [
       {
         "part": "5",
@@ -3748,7 +3652,7 @@
         "relName": "लेख राज पिता का नाम: नेगीराम",
         "house": "44/2",
         "age": 34,
-        "gender": "M",
+        "gender": "F",
         "id": "h442_m0",
         "linkedTo": null
       },
@@ -3766,7 +3670,7 @@
     ]
   },
   {
-    "id": "f62",
+    "id": "f61",
     "house": "447",
     "headId": "h447_m0",
     "headName": "राजन कुमार",
@@ -3785,7 +3689,7 @@
     ]
   },
   {
-    "id": "f63",
+    "id": "f62",
     "house": "45",
     "headId": "h45_m4",
     "headName": "कमला देवी",
@@ -3830,7 +3734,7 @@
         "relName": "सुमेश कुमार पिता का नाम: रसीला राम",
         "house": "4/5",
         "age": 40,
-        "gender": "M",
+        "gender": "F",
         "id": "h45_m3",
         "linkedTo": null
       },
@@ -3841,14 +3745,14 @@
         "relName": "अवतार सिंह पति का नाम: भगतराम",
         "house": "45",
         "age": 55,
-        "gender": "M",
+        "gender": "F",
         "id": "h45_m4",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f64",
+    "id": "f63",
     "house": "46",
     "headId": "h46_m0",
     "headName": "कुलदीप सिंह",
@@ -3915,7 +3819,7 @@
         "relName": "रमन कुमार पति का नाम: जीवन कुमार",
         "house": "46",
         "age": 50,
-        "gender": "M",
+        "gender": "F",
         "id": "h46_m5",
         "linkedTo": null
       },
@@ -3933,7 +3837,7 @@
     ]
   },
   {
-    "id": "f65",
+    "id": "f64",
     "house": "462",
     "headId": "h462_m2",
     "headName": "सुभाष ae",
@@ -4007,7 +3911,7 @@
     ]
   },
   {
-    "id": "f66",
+    "id": "f65",
     "house": "47",
     "headId": "h47_m2",
     "headName": "महिन्द्र सिह",
@@ -4052,14 +3956,14 @@
         "relName": "महिन्द्र सिह पिता का नाम: महेंद्र सिंह",
         "house": "4/7",
         "age": 53,
-        "gender": "M",
+        "gender": "F",
         "id": "h47_m3",
         "linkedTo": "h47_m2"
       }
     ]
   },
   {
-    "id": "f67",
+    "id": "f66",
     "house": "48",
     "headId": "h48_m0",
     "headName": "निधि कौंडल",
@@ -4071,17 +3975,17 @@
         "relName": "सुरिन्द्र पाल पिता का नाम: राम स्वरूप",
         "house": "48",
         "age": 44,
-        "gender": "M",
+        "gender": "F",
         "id": "h48_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f68",
+    "id": "f67",
     "house": "49",
-    "headId": "h49_m4",
-    "headName": "रजनी",
+    "headId": "h49_m5",
+    "headName": "उमेश",
     "members": [
       {
         "part": "4",
@@ -4090,7 +3994,7 @@
         "relName": "हुकम चन्द पिता का नाम: किशन चन्द",
         "house": "49/",
         "age": 70,
-        "gender": "M",
+        "gender": "F",
         "id": "h49_m0",
         "linkedTo": null
       },
@@ -4101,7 +4005,7 @@
         "relName": "अशोक कुमार पिता का नाम: किशन चन्द",
         "house": "49/",
         "age": 50,
-        "gender": "M",
+        "gender": "F",
         "id": "h49_m1",
         "linkedTo": null
       },
@@ -4134,7 +4038,7 @@
         "relName": "संन्दीप कुमार",
         "house": "49/",
         "age": 72,
-        "gender": "M",
+        "gender": "F",
         "id": "h49_m4",
         "linkedTo": null
       },
@@ -4178,17 +4082,17 @@
         "relName": "सतीश कुमार",
         "house": "49/",
         "age": 24,
-        "gender": "M",
+        "gender": "F",
         "id": "h49_m8",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f69",
+    "id": "f68",
     "house": "497",
-    "headId": "h497_m0",
-    "headName": "सुमना देवी",
+    "headId": "h497_m1",
+    "headName": "आदर्श धनोटिया",
     "members": [
       {
         "part": "4",
@@ -4197,7 +4101,7 @@
         "relName": "Ae लाल पति का नाम: कमल किशोर",
         "house": "49/7",
         "age": 62,
-        "gender": "M",
+        "gender": "F",
         "id": "h497_m0",
         "linkedTo": null
       },
@@ -4215,7 +4119,7 @@
     ]
   },
   {
-    "id": "f70",
+    "id": "f69",
     "house": "4EA",
     "headId": "h4EA_m0",
     "headName": "कमालदीन",
@@ -4234,10 +4138,10 @@
     ]
   },
   {
-    "id": "f71",
+    "id": "f70",
     "house": "5",
-    "headId": "h5_m4",
-    "headName": "शोभा देवी",
+    "headId": "h5_m3",
+    "headName": "मोहन लाल",
     "members": [
       {
         "part": "4",
@@ -4257,7 +4161,7 @@
         "relName": "सन्दीप कुमार पिता का नाम: zat",
         "house": "5/",
         "age": 40,
-        "gender": "M",
+        "gender": "F",
         "id": "h5_m1",
         "linkedTo": "h5_m0"
       },
@@ -4290,7 +4194,7 @@
         "relName": "कुशल चंद",
         "house": "5/",
         "age": 46,
-        "gender": "M",
+        "gender": "F",
         "id": "h5_m4",
         "linkedTo": null
       },
@@ -4301,7 +4205,7 @@
         "relName": "दीप कुमार पति का नाम: रत्नेश कुमार",
         "house": "5/",
         "age": 4,
-        "gender": "M",
+        "gender": "F",
         "id": "h5_m5",
         "linkedTo": null
       },
@@ -4312,7 +4216,7 @@
         "relName": "रमन कांत पिता का नाम: जैशी राम",
         "house": "/5",
         "age": 46,
-        "gender": "M",
+        "gender": "F",
         "id": "h5_m6",
         "linkedTo": null
       },
@@ -4330,7 +4234,7 @@
     ]
   },
   {
-    "id": "f72",
+    "id": "f71",
     "house": "50",
     "headId": "h50_m7",
     "headName": "मदन लाल",
@@ -4342,7 +4246,7 @@
         "relName": "सीता राम पिता का नाम: सीता राम पिता का नाम: रोशन लाल",
         "house": "5/0",
         "age": 34,
-        "gender": "M",
+        "gender": "F",
         "id": "h50_m0",
         "linkedTo": null
       },
@@ -4364,7 +4268,7 @@
         "relName": "विपन कुमार पति का नाम: सन्नी कुमार",
         "house": "50",
         "age": 39,
-        "gender": "M",
+        "gender": "F",
         "id": "h50_m2",
         "linkedTo": "h50_m1"
       },
@@ -4375,7 +4279,7 @@
         "relName": "रमेश चंद",
         "house": "50",
         "age": 22,
-        "gender": "M",
+        "gender": "F",
         "id": "h50_m3",
         "linkedTo": null
       },
@@ -4386,7 +4290,7 @@
         "relName": "मनीष कुमार पिता का नाम: मदन लाल",
         "house": "50/",
         "age": 35,
-        "gender": "M",
+        "gender": "F",
         "id": "h50_m4",
         "linkedTo": "h50_m7"
       },
@@ -4408,7 +4312,7 @@
         "relName": "केवल कृष्ण पिता का नाम: केवल कृष्ण",
         "house": "5/0",
         "age": 47,
-        "gender": "M",
+        "gender": "F",
         "id": "h50_m6",
         "linkedTo": "h50_m5"
       },
@@ -4419,14 +4323,14 @@
         "relName": "राकेश कुमार पिता का नाम: रोशन लाल",
         "house": "50/",
         "age": 66,
-        "gender": "M",
+        "gender": "F",
         "id": "h50_m7",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f73",
+    "id": "f72",
     "house": "5007",
     "headId": "h5007_m0",
     "headName": "सरिता देवी",
@@ -4445,7 +4349,7 @@
     ]
   },
   {
-    "id": "f74",
+    "id": "f73",
     "house": "502",
     "headId": "h502_m0",
     "headName": "नरेन्द्र कुमार",
@@ -4457,7 +4361,7 @@
         "relName": "प्रेम चन्द पिता का नाम: प्रेम चन्द पिता का नाम: प्रेम चन्द",
         "house": "50/2",
         "age": 52,
-        "gender": "F",
+        "gender": "M",
         "id": "h502_m0",
         "linkedTo": null
       },
@@ -4468,7 +4372,7 @@
         "relName": "रणजीत सिंह पति का नाम: नरेन्द्र कुमार",
         "house": "50/2",
         "age": 47,
-        "gender": "M",
+        "gender": "F",
         "id": "h502_m1",
         "linkedTo": "h502_m0"
       },
@@ -4486,7 +4390,7 @@
     ]
   },
   {
-    "id": "f75",
+    "id": "f74",
     "house": "50747",
     "headId": "h50747_m0",
     "headName": "सचिन शर्मा",
@@ -4505,10 +4409,10 @@
     ]
   },
   {
-    "id": "f76",
+    "id": "f75",
     "house": "52",
-    "headId": "h52_m1",
-    "headName": "सुनील कुमार",
+    "headId": "h52_m4",
+    "headName": "अर्जुन सिंह",
     "members": [
       {
         "part": "4",
@@ -4517,7 +4421,7 @@
         "relName": "गुरदेव सिंह",
         "house": "52",
         "age": 27,
-        "gender": "M",
+        "gender": "F",
         "id": "h52_m0",
         "linkedTo": null
       },
@@ -4528,7 +4432,7 @@
         "relName": "राम नाथ पिता का नाम: लक्ष्मण दास",
         "house": "52",
         "age": 67,
-        "gender": "M",
+        "gender": "F",
         "id": "h52_m1",
         "linkedTo": null
       },
@@ -4561,7 +4465,7 @@
         "relName": "कर्म चन्द पिता का नाम: कर्म चन्द पिता का नाम: रतन चन्द",
         "house": "52",
         "age": 28,
-        "gender": "F",
+        "gender": "M",
         "id": "h52_m4",
         "linkedTo": null
       },
@@ -4579,7 +4483,7 @@
     ]
   },
   {
-    "id": "f77",
+    "id": "f76",
     "house": "522",
     "headId": "h522_m1",
     "headName": "सुमन कुमार",
@@ -4591,7 +4495,7 @@
         "relName": "रत्नचन्द",
         "house": "52/2",
         "age": 27,
-        "gender": "M",
+        "gender": "F",
         "id": "h522_m0",
         "linkedTo": null
       },
@@ -4602,17 +4506,17 @@
         "relName": "रिखीराम पिता का नाम: रिखीराम",
         "house": "52/2",
         "age": 36,
-        "gender": "M",
+        "gender": "F",
         "id": "h522_m1",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f78",
+    "id": "f77",
     "house": "53",
-    "headId": "h53_m2",
-    "headName": "बिपन कुमार",
+    "headId": "h53_m9",
+    "headName": "शिवानी",
     "members": [
       {
         "part": "4",
@@ -4621,7 +4525,7 @@
         "relName": "देवेन्द्र सिंह",
         "house": "53",
         "age": 47,
-        "gender": "M",
+        "gender": "F",
         "id": "h53_m0",
         "linkedTo": null
       },
@@ -4643,7 +4547,7 @@
         "relName": "किशन ee पिता का नाम: किशन ere",
         "house": "53",
         "age": 87,
-        "gender": "M",
+        "gender": "F",
         "id": "h53_m2",
         "linkedTo": null
       },
@@ -4654,7 +4558,7 @@
         "relName": "विपन कुमार पिता का नाम: किशन चन्द",
         "house": "53",
         "age": 55,
-        "gender": "M",
+        "gender": "F",
         "id": "h53_m3",
         "linkedTo": null
       },
@@ -4709,7 +4613,7 @@
         "relName": "गोपाल दास",
         "house": "53/",
         "age": 74,
-        "gender": "M",
+        "gender": "F",
         "id": "h53_m8",
         "linkedTo": null
       },
@@ -4731,7 +4635,7 @@
         "relName": "मुन्शी राम पिता का नाम: प्रकाश चंद कौण्डल पिता का नाम: मदन लाल",
         "house": "53//",
         "age": 60,
-        "gender": "M",
+        "gender": "F",
         "id": "h53_m10",
         "linkedTo": null
       },
@@ -4742,7 +4646,7 @@
         "relName": "नरेश कुमार पिता का नाम: मान चंद",
         "house": "53",
         "age": 26,
-        "gender": "M",
+        "gender": "F",
         "id": "h53_m11",
         "linkedTo": null
       },
@@ -4753,7 +4657,7 @@
         "relName": "प्रकाश चन्द",
         "house": "53/",
         "age": 24,
-        "gender": "M",
+        "gender": "F",
         "id": "h53_m12",
         "linkedTo": null
       },
@@ -4775,7 +4679,7 @@
         "relName": "रणजीत सिंह पिता का नाम: अजीत कुमार",
         "house": "53/",
         "age": 52,
-        "gender": "M",
+        "gender": "F",
         "id": "h53_m14",
         "linkedTo": "h53_m11"
       },
@@ -4786,7 +4690,7 @@
         "relName": "सुमन कुमार पिता का नाम: रिखी राम",
         "house": "53/",
         "age": 50,
-        "gender": "M",
+        "gender": "F",
         "id": "h53_m15",
         "linkedTo": null
       },
@@ -4804,7 +4708,7 @@
     ]
   },
   {
-    "id": "f79",
+    "id": "f78",
     "house": "532",
     "headId": "h532_m1",
     "headName": "पुनी चंद",
@@ -4816,7 +4720,7 @@
         "relName": "रिशी कुमार पति का नाम: श्रवन कुमार",
         "house": "53/2",
         "age": 34,
-        "gender": "M",
+        "gender": "F",
         "id": "h532_m0",
         "linkedTo": null
       },
@@ -4827,7 +4731,7 @@
         "relName": "जैशीराम पिता का नाम: जैसी राम",
         "house": "53/2",
         "age": 88,
-        "gender": "M",
+        "gender": "F",
         "id": "h532_m1",
         "linkedTo": null
       },
@@ -4856,7 +4760,7 @@
     ]
   },
   {
-    "id": "f80",
+    "id": "f79",
     "house": "53725",
     "headId": "h53725_m0",
     "headName": "कोकना देवी",
@@ -4875,10 +4779,10 @@
     ]
   },
   {
-    "id": "f81",
+    "id": "f80",
     "house": "54",
-    "headId": "h54_m1",
-    "headName": "सुजाता राणा",
+    "headId": "h54_m3",
+    "headName": "महिन्द्र सिंह",
     "members": [
       {
         "part": "4",
@@ -4898,7 +4802,7 @@
         "relName": "दिलबाग सिंह राणा",
         "house": "54",
         "age": 36,
-        "gender": "M",
+        "gender": "F",
         "id": "h54_m1",
         "linkedTo": null
       },
@@ -4909,7 +4813,7 @@
         "relName": "मनजीत सिंह पति का नाम: मनीष कुमार",
         "house": "54",
         "age": 29,
-        "gender": "M",
+        "gender": "F",
         "id": "h54_m2",
         "linkedTo": null
       },
@@ -4927,7 +4831,7 @@
     ]
   },
   {
-    "id": "f82",
+    "id": "f81",
     "house": "542",
     "headId": "h542_m0",
     "headName": "देश राज",
@@ -4939,14 +4843,14 @@
         "relName": "विजय कुमार पिता का नाम: ब्रिज लाल",
         "house": "54/2",
         "age": 39,
-        "gender": "M",
+        "gender": "F",
         "id": "h542_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f83",
+    "id": "f82",
     "house": "547",
     "headId": "h547_m0",
     "headName": "कुशल कुमार",
@@ -4958,17 +4862,17 @@
         "relName": "रमेश चन्द पिता का नाम: रमेश चन्द",
         "house": "54/7",
         "age": 73,
-        "gender": "M",
+        "gender": "F",
         "id": "h547_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f84",
+    "id": "f83",
     "house": "55",
-    "headId": "h55_m3",
-    "headName": "सरोज कुमारी",
+    "headId": "h55_m1",
+    "headName": "गुलशन",
     "members": [
       {
         "part": "4",
@@ -4977,7 +4881,7 @@
         "relName": "बुधी सिंह पति का नाम: महिन्द्र सिंह",
         "house": "55/",
         "age": 53,
-        "gender": "M",
+        "gender": "F",
         "id": "h55_m0",
         "linkedTo": null
       },
@@ -5010,7 +4914,7 @@
         "relName": "विशम्भर दास",
         "house": "55/",
         "age": 66,
-        "gender": "M",
+        "gender": "F",
         "id": "h55_m3",
         "linkedTo": null
       },
@@ -5021,7 +4925,7 @@
         "relName": "देश राज",
         "house": "55//",
         "age": 28,
-        "gender": "M",
+        "gender": "F",
         "id": "h55_m4",
         "linkedTo": null
       },
@@ -5032,14 +4936,14 @@
         "relName": "तारा चन्द पति का नाम: बलजीत सिंह",
         "house": "55/",
         "age": 43,
-        "gender": "M",
+        "gender": "F",
         "id": "h55_m5",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f85",
+    "id": "f84",
     "house": "550",
     "headId": "h550_m0",
     "headName": "नीलम कुमारी",
@@ -5058,7 +4962,7 @@
     ]
   },
   {
-    "id": "f86",
+    "id": "f85",
     "house": "552",
     "headId": "h552_m0",
     "headName": "rar देवी",
@@ -5070,7 +4974,7 @@
         "relName": "हेमराज पति का नाम: पवन कुमार",
         "house": "55/2",
         "age": 63,
-        "gender": "M",
+        "gender": "F",
         "id": "h552_m0",
         "linkedTo": null
       },
@@ -5081,17 +4985,17 @@
         "relName": "गुलवंत सिंह पिता का नाम: पवन कुमार",
         "house": "55/2",
         "age": 34,
-        "gender": "M",
+        "gender": "F",
         "id": "h552_m1",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f87",
+    "id": "f86",
     "house": "56",
-    "headId": "h56_m1",
-    "headName": "शैलजा",
+    "headId": "h56_m0",
+    "headName": "सलोचना देवी",
     "members": [
       {
         "part": "4",
@@ -5111,17 +5015,17 @@
         "relName": "संजय कुमार",
         "house": "56",
         "age": 27,
-        "gender": "M",
+        "gender": "F",
         "id": "h56_m1",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f88",
+    "id": "f87",
     "house": "57",
-    "headId": "h57_m0",
-    "headName": "acta कुमारी",
+    "headId": "h57_m1",
+    "headName": "किशोर चन्द",
     "members": [
       {
         "part": "4",
@@ -5130,7 +5034,7 @@
         "relName": "राज कुमार",
         "house": "57",
         "age": 80,
-        "gender": "M",
+        "gender": "F",
         "id": "h57_m0",
         "linkedTo": null
       },
@@ -5163,7 +5067,7 @@
         "relName": "प्यारे लाल पति का नाम: aft Gar",
         "house": "5/7",
         "age": 67,
-        "gender": "M",
+        "gender": "F",
         "id": "h57_m3",
         "linkedTo": null
       },
@@ -5174,7 +5078,7 @@
         "relName": "सुनिल कुमार पति का नाम: कुलदीप कुमार",
         "house": "5/7",
         "age": 47,
-        "gender": "M",
+        "gender": "F",
         "id": "h57_m4",
         "linkedTo": null
       },
@@ -5196,7 +5100,7 @@
         "relName": "जगन सिह पिता का नाम: जगन सिंह",
         "house": "57",
         "age": 57,
-        "gender": "M",
+        "gender": "F",
         "id": "h57_m6",
         "linkedTo": null
       },
@@ -5207,17 +5111,17 @@
         "relName": "रवि कुमार",
         "house": "5/7",
         "age": 28,
-        "gender": "M",
+        "gender": "F",
         "id": "h57_m7",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f89",
+    "id": "f88",
     "house": "58",
-    "headId": "h58_m3",
-    "headName": "अनिता देवी",
+    "headId": "h58_m4",
+    "headName": "इशान सिंह पठानिया",
     "members": [
       {
         "part": "4",
@@ -5259,7 +5163,7 @@
         "relName": "राजिन्द्र कुमार पति का नाम: नरिन्द्र पाल",
         "house": "58",
         "age": 64,
-        "gender": "M",
+        "gender": "F",
         "id": "h58_m3",
         "linkedTo": null
       },
@@ -5277,7 +5181,7 @@
     ]
   },
   {
-    "id": "f90",
+    "id": "f89",
     "house": "59",
     "headId": "h59_m0",
     "headName": "मनोरमा देवी",
@@ -5318,7 +5222,7 @@
     ]
   },
   {
-    "id": "f91",
+    "id": "f90",
     "house": "5I",
     "headId": "h5I_m0",
     "headName": "अंकज कौशल",
@@ -5337,10 +5241,10 @@
     ]
   },
   {
-    "id": "f92",
+    "id": "f91",
     "house": "6",
-    "headId": "h6_m11",
-    "headName": "सीमत कुमारी",
+    "headId": "h6_m1",
+    "headName": "शवनम",
     "members": [
       {
         "part": "4",
@@ -5371,7 +5275,7 @@
         "relName": "किशोरी लाल पति का नाम: अमी चन्द",
         "house": "6",
         "age": 20,
-        "gender": "M",
+        "gender": "F",
         "id": "h6_m2",
         "linkedTo": null
       },
@@ -5382,7 +5286,7 @@
         "relName": "प्रदीप कुमार",
         "house": "6",
         "age": 72,
-        "gender": "M",
+        "gender": "F",
         "id": "h6_m3",
         "linkedTo": null
       },
@@ -5393,7 +5297,7 @@
         "relName": "यश पाल पिता का नाम: कृष्ण कुमार",
         "house": "6",
         "age": 40,
-        "gender": "M",
+        "gender": "F",
         "id": "h6_m4",
         "linkedTo": null
       },
@@ -5415,7 +5319,7 @@
         "relName": "कृष्ण कुमार",
         "house": "6",
         "age": 60,
-        "gender": "M",
+        "gender": "F",
         "id": "h6_m6",
         "linkedTo": null
       },
@@ -5426,7 +5330,7 @@
         "relName": "arent पिता का नाम: मानचन्द",
         "house": "6",
         "age": 63,
-        "gender": "M",
+        "gender": "F",
         "id": "h6_m7",
         "linkedTo": null
       },
@@ -5437,7 +5341,7 @@
         "relName": "राकेश कुमार",
         "house": "6",
         "age": 4,
-        "gender": "M",
+        "gender": "F",
         "id": "h6_m8",
         "linkedTo": null
       },
@@ -5470,7 +5374,7 @@
         "relName": "सुनिल कुमार पति का नाम: रोबिन मेहता",
         "house": "6//",
         "age": 75,
-        "gender": "M",
+        "gender": "F",
         "id": "h6_m11",
         "linkedTo": null
       },
@@ -5488,7 +5392,7 @@
     ]
   },
   {
-    "id": "f93",
+    "id": "f92",
     "house": "60",
     "headId": "h60_m2",
     "headName": "अजय कुमार",
@@ -5533,7 +5437,7 @@
         "relName": "राजकुमार पिता का नाम: राज कुमार",
         "house": "60/",
         "age": 65,
-        "gender": "M",
+        "gender": "F",
         "id": "h60_m3",
         "linkedTo": "h60_m5"
       },
@@ -5544,7 +5448,7 @@
         "relName": "ओंकार ae",
         "house": "60/",
         "age": 56,
-        "gender": "M",
+        "gender": "F",
         "id": "h60_m4",
         "linkedTo": null
       },
@@ -5562,7 +5466,7 @@
     ]
   },
   {
-    "id": "f94",
+    "id": "f93",
     "house": "60I",
     "headId": "h60I_m0",
     "headName": "मंजू बाला",
@@ -5581,7 +5485,7 @@
     ]
   },
   {
-    "id": "f95",
+    "id": "f94",
     "house": "62",
     "headId": "h62_m0",
     "headName": "कृष्णा कुमारी",
@@ -5593,7 +5497,7 @@
         "relName": "अशोक कुमार",
         "house": "62",
         "age": 66,
-        "gender": "M",
+        "gender": "F",
         "id": "h62_m0",
         "linkedTo": null
       },
@@ -5637,14 +5541,14 @@
         "relName": "afte fate पति का नाम: सुरिन्‍्द्र सिंह",
         "house": "62/",
         "age": 47,
-        "gender": "M",
+        "gender": "F",
         "id": "h62_m4",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f96",
+    "id": "f95",
     "house": "622",
     "headId": "h622_m0",
     "headName": "ज्ञान चन्द",
@@ -5674,7 +5578,7 @@
     ]
   },
   {
-    "id": "f97",
+    "id": "f96",
     "house": "627",
     "headId": "h627_m0",
     "headName": "कृष्ण कुमार",
@@ -5686,17 +5590,17 @@
         "relName": "fate कुमार पिता का नाम: सन्त राम",
         "house": "62/7",
         "age": 40,
-        "gender": "M",
+        "gender": "F",
         "id": "h627_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f98",
+    "id": "f97",
     "house": "65",
-    "headId": "h65_m0",
-    "headName": "अंकुश कुमार",
+    "headId": "h65_m1",
+    "headName": "सुरेश कुमार",
     "members": [
       {
         "part": "5",
@@ -5705,7 +5609,7 @@
         "relName": "ओम स्वरुप पिता का नाम: ओम स्वरुप",
         "house": "65/",
         "age": 58,
-        "gender": "M",
+        "gender": "F",
         "id": "h65_m0",
         "linkedTo": null
       },
@@ -5723,7 +5627,7 @@
     ]
   },
   {
-    "id": "f99",
+    "id": "f98",
     "house": "66",
     "headId": "h66_m0",
     "headName": "सुषमा देवी",
@@ -5735,7 +5639,7 @@
         "relName": "रविन्द्र कुमार पति का नाम: सुरेन्द्र कुमार",
         "house": "66/",
         "age": 59,
-        "gender": "M",
+        "gender": "F",
         "id": "h66_m0",
         "linkedTo": null
       },
@@ -5746,7 +5650,7 @@
         "relName": "ओम प्रकाश पिता का नाम: eee कुमार पिता का नाम: सुरेन्द्र कुमार",
         "house": "66/",
         "age": 42,
-        "gender": "M",
+        "gender": "F",
         "id": "h66_m1",
         "linkedTo": null
       },
@@ -5786,7 +5690,7 @@
     ]
   },
   {
-    "id": "f100",
+    "id": "f99",
     "house": "662",
     "headId": "h662_m0",
     "headName": "रजनीश चौधरी",
@@ -5798,17 +5702,17 @@
         "relName": "लील कुमार पिता का नाम: ओम प्रकाश",
         "house": "66/2",
         "age": 44,
-        "gender": "M",
+        "gender": "F",
         "id": "h662_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f101",
+    "id": "f100",
     "house": "67",
-    "headId": "h67_m1",
-    "headName": "संजीव कुमार",
+    "headId": "h67_m0",
+    "headName": "साहनी",
     "members": [
       {
         "part": "4",
@@ -5828,14 +5732,14 @@
         "relName": "चिपलू राम पिता का नाम: फतेह सिंह",
         "house": "6/7",
         "age": 26,
-        "gender": "M",
+        "gender": "F",
         "id": "h67_m1",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f102",
+    "id": "f101",
     "house": "670",
     "headId": "h670_m0",
     "headName": "राजेन्दर कुमार",
@@ -5854,7 +5758,7 @@
     ]
   },
   {
-    "id": "f103",
+    "id": "f102",
     "house": "68",
     "headId": "h68_m0",
     "headName": "विनीता कुमारी",
@@ -5866,7 +5770,7 @@
         "relName": "राजिन्द्र कुमार पति का नाम: अंग्रेज सिंह",
         "house": "68/",
         "age": 50,
-        "gender": "M",
+        "gender": "F",
         "id": "h68_m0",
         "linkedTo": null
       },
@@ -5884,7 +5788,7 @@
     ]
   },
   {
-    "id": "f104",
+    "id": "f103",
     "house": "682",
     "headId": "h682_m0",
     "headName": "संसारो",
@@ -5896,14 +5800,14 @@
         "relName": "संजीव कुमार पति का नाम: वदरी राम",
         "house": "68/2",
         "age": 43,
-        "gender": "M",
+        "gender": "F",
         "id": "h682_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f105",
+    "id": "f104",
     "house": "683",
     "headId": "h683_m0",
     "headName": "बलबीर सिंह",
@@ -5915,14 +5819,14 @@
         "relName": "कमल कुमार पिता का नाम: मौजी राम",
         "house": "68/3",
         "age": 50,
-        "gender": "M",
+        "gender": "F",
         "id": "h683_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f106",
+    "id": "f105",
     "house": "69",
     "headId": "h69_m1",
     "headName": "कान्ता देवी",
@@ -5952,10 +5856,10 @@
     ]
   },
   {
-    "id": "f107",
+    "id": "f106",
     "house": "7",
-    "headId": "h7_m10",
-    "headName": "सुषमा देवी",
+    "headId": "h7_m15",
+    "headName": "केवल कुमार",
     "members": [
       {
         "part": "4",
@@ -5986,7 +5890,7 @@
         "relName": "सादिक़ मुहम्मद पति का नाम: कानव धीमान",
         "house": "7",
         "age": 29,
-        "gender": "M",
+        "gender": "F",
         "id": "h7_m2",
         "linkedTo": null
       },
@@ -5997,7 +5901,7 @@
         "relName": "शुकर दीन पिता का नाम: ae लाल",
         "house": "7",
         "age": 27,
-        "gender": "M",
+        "gender": "F",
         "id": "h7_m3",
         "linkedTo": null
       },
@@ -6019,7 +5923,7 @@
         "relName": "मदन लाल पिता का नाम: अरमीं चंद",
         "house": "7/",
         "age": 47,
-        "gender": "M",
+        "gender": "F",
         "id": "h7_m5",
         "linkedTo": null
       },
@@ -6074,7 +5978,7 @@
         "relName": "श्री कृष्ण पिता का नाम: कृष्ण",
         "house": "7/",
         "age": 70,
-        "gender": "M",
+        "gender": "F",
         "id": "h7_m10",
         "linkedTo": null
       },
@@ -6085,7 +5989,7 @@
         "relName": "रमेश चन्द पति का नाम: चुनी लाल",
         "house": "7",
         "age": 43,
-        "gender": "M",
+        "gender": "F",
         "id": "h7_m11",
         "linkedTo": null
       },
@@ -6096,7 +6000,7 @@
         "relName": "बिधि चन्द पिता का नाम: बिधि चन्द",
         "house": "7/",
         "age": 56,
-        "gender": "M",
+        "gender": "F",
         "id": "h7_m12",
         "linkedTo": null
       },
@@ -6136,7 +6040,7 @@
     ]
   },
   {
-    "id": "f108",
+    "id": "f107",
     "house": "70",
     "headId": "h70_m2",
     "headName": "ज्योति बाला",
@@ -6148,7 +6052,7 @@
         "relName": "कुलदीप चन्द पिता का नाम: reff चंद",
         "house": "7/0",
         "age": 53,
-        "gender": "M",
+        "gender": "F",
         "id": "h70_m0",
         "linkedTo": null
       },
@@ -6177,7 +6081,7 @@
     ]
   },
   {
-    "id": "f109",
+    "id": "f108",
     "house": "702",
     "headId": "h702_m1",
     "headName": "शीला देवी",
@@ -6207,7 +6111,7 @@
     ]
   },
   {
-    "id": "f110",
+    "id": "f109",
     "house": "705",
     "headId": "h705_m0",
     "headName": "राजेश कुमार",
@@ -6226,7 +6130,7 @@
     ]
   },
   {
-    "id": "f111",
+    "id": "f110",
     "house": "72",
     "headId": "h72_m1",
     "headName": "अशवित्नी कुमार",
@@ -6238,7 +6142,7 @@
         "relName": "वीरदीन पिता का नाम: इलमदीन",
         "house": "72",
         "age": 57,
-        "gender": "M",
+        "gender": "F",
         "id": "h72_m0",
         "linkedTo": null
       },
@@ -6260,7 +6164,7 @@
         "relName": "seat कुमार प्रति का नाम: मुकेश कुमार",
         "house": "7/2",
         "age": 42,
-        "gender": "M",
+        "gender": "F",
         "id": "h72_m2",
         "linkedTo": null
       },
@@ -6271,7 +6175,7 @@
         "relName": "वख्शी राम",
         "house": "7/2",
         "age": 2,
-        "gender": "M",
+        "gender": "F",
         "id": "h72_m3",
         "linkedTo": null
       },
@@ -6322,7 +6226,7 @@
     ]
   },
   {
-    "id": "f112",
+    "id": "f111",
     "house": "7288",
     "headId": "h7288_m0",
     "headName": "राम कौर",
@@ -6341,7 +6245,7 @@
     ]
   },
   {
-    "id": "f113",
+    "id": "f112",
     "house": "73",
     "headId": "h73_m0",
     "headName": "गुलाम मुहमद",
@@ -6353,7 +6257,7 @@
         "relName": "मौजदीन पिता का नाम: जलाल दीन",
         "house": "73",
         "age": 59,
-        "gender": "M",
+        "gender": "F",
         "id": "h73_m0",
         "linkedTo": null
       },
@@ -6371,7 +6275,7 @@
     ]
   },
   {
-    "id": "f114",
+    "id": "f113",
     "house": "75",
     "headId": "h75_m0",
     "headName": "रन्‍जना कुमारी",
@@ -6390,7 +6294,7 @@
     ]
   },
   {
-    "id": "f115",
+    "id": "f114",
     "house": "76",
     "headId": "h76_m1",
     "headName": "निर्मल कुमारी",
@@ -6420,7 +6324,7 @@
     ]
   },
   {
-    "id": "f116",
+    "id": "f115",
     "house": "767",
     "headId": "h767_m0",
     "headName": "विशाल कौंडल",
@@ -6439,7 +6343,7 @@
     ]
   },
   {
-    "id": "f117",
+    "id": "f116",
     "house": "76I",
     "headId": "h76I_m0",
     "headName": "रीना कुमारी",
@@ -6451,17 +6355,17 @@
         "relName": "विजय सिह",
         "house": "76/I",
         "age": 57,
-        "gender": "M",
+        "gender": "F",
         "id": "h76I_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f118",
+    "id": "f117",
     "house": "77",
-    "headId": "h77_m2",
-    "headName": "किरना देवी",
+    "headId": "h77_m1",
+    "headName": "निखिल",
     "members": [
       {
         "part": "4",
@@ -6492,7 +6396,7 @@
         "relName": "गुलजार सिंह",
         "house": "77/",
         "age": 55,
-        "gender": "M",
+        "gender": "F",
         "id": "h77_m2",
         "linkedTo": null
       },
@@ -6503,14 +6407,14 @@
         "relName": "राजिन्द्र प्रसाद",
         "house": "77/",
         "age": 27,
-        "gender": "M",
+        "gender": "F",
         "id": "h77_m3",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f119",
+    "id": "f118",
     "house": "772",
     "headId": "h772_m0",
     "headName": "प्रताप चन्द",
@@ -6522,7 +6426,7 @@
         "relName": "रतन चन्द पिता का नाम: बख्शी राम",
         "house": "77/2",
         "age": 57,
-        "gender": "M",
+        "gender": "F",
         "id": "h772_m0",
         "linkedTo": null
       },
@@ -6533,14 +6437,14 @@
         "relName": "शेर सिंह पिता का नाम: जैसी राम",
         "house": "77/2",
         "age": 23,
-        "gender": "M",
+        "gender": "F",
         "id": "h772_m1",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f120",
+    "id": "f119",
     "house": "78",
     "headId": "h78_m0",
     "headName": "दिनेश कुमार",
@@ -6574,17 +6478,17 @@
         "relName": "सुरजीत कुमार पति का नाम: कशमीर सिंह",
         "house": "78/",
         "age": 44,
-        "gender": "M",
+        "gender": "F",
         "id": "h78_m2",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f121",
+    "id": "f120",
     "house": "8",
-    "headId": "h8_m0",
-    "headName": "निशा कुमारी",
+    "headId": "h8_m3",
+    "headName": "रशपाल",
     "members": [
       {
         "part": "5",
@@ -6593,7 +6497,7 @@
         "relName": "वलदेव राज पिता का नाम: मदन लाल",
         "house": "8",
         "age": 69,
-        "gender": "M",
+        "gender": "F",
         "id": "h8_m0",
         "linkedTo": null
       },
@@ -6615,7 +6519,7 @@
         "relName": "जय चंद पिता का नाम: जय चन्द",
         "house": "8",
         "age": 55,
-        "gender": "M",
+        "gender": "F",
         "id": "h8_m2",
         "linkedTo": null
       },
@@ -6626,7 +6530,7 @@
         "relName": "जय चन्द पिता का नाम: जय चंद पिता का नाम: जौंडू",
         "house": "8",
         "age": 22,
-        "gender": "F",
+        "gender": "M",
         "id": "h8_m3",
         "linkedTo": null
       },
@@ -6648,17 +6552,17 @@
         "relName": "देश राज पिता का नाम: हरिया राम",
         "house": "8/",
         "age": 20,
-        "gender": "M",
+        "gender": "F",
         "id": "h8_m5",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f122",
+    "id": "f121",
     "house": "80",
-    "headId": "h80_m0",
-    "headName": "विनोद कुमार",
+    "headId": "h80_m1",
+    "headName": "सन्‍जय कुमार अन्य: सोनिका",
     "members": [
       {
         "part": "5",
@@ -6678,7 +6582,7 @@
         "relName": "हंस राज पिता का नाम: देश राज",
         "house": "80/",
         "age": 22,
-        "gender": "F",
+        "gender": "M",
         "id": "h80_m1",
         "linkedTo": null
       },
@@ -6689,7 +6593,7 @@
         "relName": "संजय कुमार पति का नाम: विक्रम सिंह",
         "house": "80/",
         "age": 37,
-        "gender": "M",
+        "gender": "F",
         "id": "h80_m2",
         "linkedTo": "h80_m3"
       },
@@ -6707,7 +6611,7 @@
     ]
   },
   {
-    "id": "f123",
+    "id": "f122",
     "house": "82",
     "headId": "h82_m4",
     "headName": "तिलक राज",
@@ -6741,7 +6645,7 @@
         "relName": "सुकर दीन पिता का नाम: सुकर डीन",
         "house": "8/2",
         "age": 57,
-        "gender": "M",
+        "gender": "F",
         "id": "h82_m2",
         "linkedTo": null
       },
@@ -6752,7 +6656,7 @@
         "relName": "कर्मदीन",
         "house": "8/2",
         "age": 20,
-        "gender": "M",
+        "gender": "F",
         "id": "h82_m3",
         "linkedTo": null
       },
@@ -6814,7 +6718,7 @@
     ]
   },
   {
-    "id": "f124",
+    "id": "f123",
     "house": "822",
     "headId": "h822_m0",
     "headName": "चैंचला देवी",
@@ -6826,7 +6730,7 @@
         "relName": "कौर चन्द",
         "house": "82/2",
         "age": 79,
-        "gender": "M",
+        "gender": "F",
         "id": "h822_m0",
         "linkedTo": null
       },
@@ -6866,7 +6770,7 @@
     ]
   },
   {
-    "id": "f125",
+    "id": "f124",
     "house": "83",
     "headId": "h83_m0",
     "headName": "सावो",
@@ -6878,7 +6782,7 @@
         "relName": "जानमुहम्मद",
         "house": "8/3",
         "age": 67,
-        "gender": "M",
+        "gender": "F",
         "id": "h83_m0",
         "linkedTo": null
       },
@@ -6900,7 +6804,7 @@
         "relName": "सदीक हुसैन पिता का नाम: रमज़ान दीन",
         "house": "8/3",
         "age": 30,
-        "gender": "M",
+        "gender": "F",
         "id": "h83_m2",
         "linkedTo": null
       },
@@ -6922,14 +6826,14 @@
         "relName": "शिव कुमार पिता का नाम: शिव कुमार",
         "house": "83/",
         "age": 45,
-        "gender": "M",
+        "gender": "F",
         "id": "h83_m4",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f126",
+    "id": "f125",
     "house": "832",
     "headId": "h832_m0",
     "headName": "सन्नी चौधरी",
@@ -6941,7 +6845,7 @@
         "relName": "मेहरचन्द पिता का नाम: मेहर सिंह",
         "house": "83/2",
         "age": 67,
-        "gender": "M",
+        "gender": "F",
         "id": "h832_m0",
         "linkedTo": null
       },
@@ -6959,10 +6863,10 @@
     ]
   },
   {
-    "id": "f127",
+    "id": "f126",
     "house": "852",
-    "headId": "h852_m1",
-    "headName": "श्वेता देवी",
+    "headId": "h852_m0",
+    "headName": "अनिता देवी",
     "members": [
       {
         "part": "5",
@@ -6982,14 +6886,14 @@
         "relName": "देश राज पिता का नाम: देश राज पिता का नाम: देश राज",
         "house": "85/2",
         "age": 26,
-        "gender": "M",
+        "gender": "F",
         "id": "h852_m1",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f128",
+    "id": "f127",
     "house": "86",
     "headId": "h86_m1",
     "headName": "मोनू कुमारी",
@@ -7001,7 +6905,7 @@
         "relName": "छोटू राम पिता का नाम: छोटू राम",
         "house": "86/",
         "age": 56,
-        "gender": "M",
+        "gender": "F",
         "id": "h86_m0",
         "linkedTo": null
       },
@@ -7012,7 +6916,7 @@
         "relName": "प्रवीण कुमार",
         "house": "86//",
         "age": 68,
-        "gender": "M",
+        "gender": "F",
         "id": "h86_m1",
         "linkedTo": null
       },
@@ -7023,7 +6927,7 @@
         "relName": "ओम राज पति का नाम: कुलवंत सिंह",
         "house": "86/",
         "age": 60,
-        "gender": "M",
+        "gender": "F",
         "id": "h86_m2",
         "linkedTo": null
       },
@@ -7034,7 +6938,7 @@
         "relName": "ओम राज पिता का नाम: राय सिंह पिता का नाम: ओम राज",
         "house": "86/",
         "age": 32,
-        "gender": "M",
+        "gender": "F",
         "id": "h86_m3",
         "linkedTo": null
       },
@@ -7045,14 +6949,14 @@
         "relName": "नानकूराम पिता का नाम: नानकू राम",
         "house": "86/",
         "age": 62,
-        "gender": "M",
+        "gender": "F",
         "id": "h86_m4",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f129",
+    "id": "f128",
     "house": "8624",
     "headId": "h8624_m0",
     "headName": "कशमीरां देवी",
@@ -7064,14 +6968,14 @@
         "relName": "राय सिंह",
         "house": "86/24",
         "age": 66,
-        "gender": "M",
+        "gender": "F",
         "id": "h8624_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f130",
+    "id": "f129",
     "house": "87",
     "headId": "h87_m0",
     "headName": "मौज़ दीन",
@@ -7149,14 +7053,14 @@
         "relName": "अभिषेक कुमार",
         "house": "87/",
         "age": 28,
-        "gender": "M",
+        "gender": "F",
         "id": "h87_m6",
         "linkedTo": "h87_m5"
       }
     ]
   },
   {
-    "id": "f131",
+    "id": "f130",
     "house": "8725",
     "headId": "h8725_m0",
     "headName": "सैरो देवी",
@@ -7175,7 +7079,7 @@
     ]
   },
   {
-    "id": "f132",
+    "id": "f131",
     "house": "878",
     "headId": "h878_m0",
     "headName": "कश्मीर सिंह",
@@ -7194,7 +7098,7 @@
     ]
   },
   {
-    "id": "f133",
+    "id": "f132",
     "house": "88",
     "headId": "h88_m2",
     "headName": "प्रमोद सिंह",
@@ -7235,7 +7139,7 @@
     ]
   },
   {
-    "id": "f134",
+    "id": "f133",
     "house": "9",
     "headId": "h9_m0",
     "headName": "सन्दीप कुमार",
@@ -7269,7 +7173,7 @@
         "relName": "ज्ञान चन्द",
         "house": "9/",
         "age": 30,
-        "gender": "M",
+        "gender": "F",
         "id": "h9_m2",
         "linkedTo": null
       },
@@ -7291,14 +7195,14 @@
         "relName": "शेर सिंह",
         "house": "9",
         "age": 25,
-        "gender": "M",
+        "gender": "F",
         "id": "h9_m4",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f135",
+    "id": "f134",
     "house": "90",
     "headId": "h90_m0",
     "headName": "मनिंदर सिंह",
@@ -7317,7 +7221,7 @@
     ]
   },
   {
-    "id": "f136",
+    "id": "f135",
     "house": "92",
     "headId": "h92_m0",
     "headName": "सरोज कुमारी",
@@ -7329,17 +7233,17 @@
         "relName": "कैलाश चंद पति का नाम: सुरेश कुमार",
         "house": "9/2",
         "age": 57,
-        "gender": "M",
+        "gender": "F",
         "id": "h92_m0",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f137",
+    "id": "f136",
     "house": "93",
-    "headId": "h93_m3",
-    "headName": "संजीव कुमार",
+    "headId": "h93_m1",
+    "headName": "कृष्णा देवी",
     "members": [
       {
         "part": "5",
@@ -7348,7 +7252,7 @@
         "relName": "चूहडू दीन",
         "house": "9/3",
         "age": 9,
-        "gender": "M",
+        "gender": "F",
         "id": "h93_m0",
         "linkedTo": null
       },
@@ -7381,14 +7285,14 @@
         "relName": "प्रीतमचन्द पिता का नाम: प्रीतम चंद",
         "house": "9/3",
         "age": 45,
-        "gender": "M",
+        "gender": "F",
         "id": "h93_m3",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f138",
+    "id": "f137",
     "house": "935",
     "headId": "h935_m0",
     "headName": "मोरनी देवी",
@@ -7407,10 +7311,10 @@
     ]
   },
   {
-    "id": "f139",
+    "id": "f138",
     "house": "95",
-    "headId": "h95_m2",
-    "headName": "बेबी चौधरी",
+    "headId": "h95_m0",
+    "headName": "संजीव कुमार",
     "members": [
       {
         "part": "5",
@@ -7441,14 +7345,14 @@
         "relName": "अश्वनी कुमार पति का नाम: देव राज",
         "house": "95/",
         "age": 47,
-        "gender": "M",
+        "gender": "F",
         "id": "h95_m2",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f140",
+    "id": "f139",
     "house": "96",
     "headId": "h96_m3",
     "headName": "बबली",
@@ -7482,7 +7386,7 @@
         "relName": "सरवण कुमार पिता का नाम: मदन लाल",
         "house": "96",
         "age": 60,
-        "gender": "M",
+        "gender": "F",
         "id": "h96_m2",
         "linkedTo": "h96_m0"
       },
@@ -7511,10 +7415,10 @@
     ]
   },
   {
-    "id": "f141",
+    "id": "f140",
     "house": "97",
-    "headId": "h97_m4",
-    "headName": "आशा देवी",
+    "headId": "h97_m2",
+    "headName": "हरिचन्द",
     "members": [
       {
         "part": "4",
@@ -7523,7 +7427,7 @@
         "relName": "मनोज कुमार",
         "house": "9/7",
         "age": 49,
-        "gender": "M",
+        "gender": "F",
         "id": "h97_m0",
         "linkedTo": null
       },
@@ -7545,7 +7449,7 @@
         "relName": "महिंद्र सिंह पिता का नाम: महिंदर सिंह पिता का नाम: रांझा",
         "house": "9/7",
         "age": 79,
-        "gender": "F",
+        "gender": "M",
         "id": "h97_m2",
         "linkedTo": null
       },
@@ -7556,7 +7460,7 @@
         "relName": "राकेश कुमार पिता का नाम: राकेश कुमार",
         "house": "97/",
         "age": 67,
-        "gender": "M",
+        "gender": "F",
         "id": "h97_m3",
         "linkedTo": null
       },
@@ -7567,7 +7471,7 @@
         "relName": "सन्तराम पति का नाम: ज्ञानचन्द",
         "house": "9/7",
         "age": 74,
-        "gender": "M",
+        "gender": "F",
         "id": "h97_m4",
         "linkedTo": null
       },
@@ -7578,14 +7482,14 @@
         "relName": "संजय कुमार",
         "house": "97/",
         "age": 35,
-        "gender": "M",
+        "gender": "F",
         "id": "h97_m5",
         "linkedTo": null
       }
     ]
   },
   {
-    "id": "f142",
+    "id": "f141",
     "house": "972",
     "headId": "h972_m0",
     "headName": "अशोक कुमार",
@@ -7597,7 +7501,7 @@
         "relName": "रोशन लाल पिता का नाम: रोशन लाल",
         "house": "97/2",
         "age": 98,
-        "gender": "M",
+        "gender": "F",
         "id": "h972_m0",
         "linkedTo": null
       },
@@ -7626,7 +7530,7 @@
     ]
   },
   {
-    "id": "f143",
+    "id": "f142",
     "house": "98",
     "headId": "h98_m2",
     "headName": "तुलसीराम",
@@ -7649,7 +7553,7 @@
         "relName": "चन्दु राम पिता का नाम: हंस राज पिता का नाम: हंस राज",
         "house": "98/",
         "age": 42,
-        "gender": "M",
+        "gender": "F",
         "id": "h98_m1",
         "linkedTo": null
       },
@@ -7660,7 +7564,7 @@
         "relName": "चन्दू लाल पिता का नाम: चन्दू लाल",
         "house": "98/",
         "age": 87,
-        "gender": "M",
+        "gender": "F",
         "id": "h98_m2",
         "linkedTo": null
       },
@@ -7689,7 +7593,7 @@
     ]
   },
   {
-    "id": "f144",
+    "id": "f143",
     "house": "AA",
     "headId": "hAA_m0",
     "headName": "उर्मिला देवी",
@@ -7708,7 +7612,7 @@
     ]
   },
   {
-    "id": "f145",
+    "id": "f144",
     "house": "H0A",
     "headId": "hH0A_m0",
     "headName": "कर्म चन्द",
@@ -7727,7 +7631,7 @@
     ]
   },
   {
-    "id": "f146",
+    "id": "f145",
     "house": "S",
     "headId": "hS_m0",
     "headName": "वीना देवी",
@@ -7746,7 +7650,7 @@
     ]
   },
   {
-    "id": "f147",
+    "id": "f146",
     "house": "SI",
     "headId": "hSI_m0",
     "headName": "अंकुश कौशल",
@@ -7765,7 +7669,7 @@
     ]
   },
   {
-    "id": "f148",
+    "id": "f147",
     "house": "ST",
     "headId": "hST_m0",
     "headName": "सिकन्दर",
@@ -7784,6 +7688,102 @@
     ]
   },
   {
+    "id": "f148",
+    "house": "UNKNOWN",
+    "headId": "hUNKNOWN_m4",
+    "headName": "हंस राज",
+    "members": [
+      {
+        "part": "5",
+        "name": "रंजना कुमारी",
+        "relType": "husband",
+        "relName": "वालक राम पति का नाम: सोहन सिह पति का नाम: बालकृष्ण",
+        "house": "/",
+        "age": 67,
+        "gender": "F",
+        "id": "hUNKNOWN_m0",
+        "linkedTo": null
+      },
+      {
+        "part": "5",
+        "name": "सुदर्शना कुमारी",
+        "relType": "husband",
+        "relName": "चन्द्र कांत पति का नाम: मस्तराम राम",
+        "house": "/",
+        "age": 50,
+        "gender": "F",
+        "id": "hUNKNOWN_m1",
+        "linkedTo": null
+      },
+      {
+        "part": "5",
+        "name": "अभिलेख चौधरी",
+        "relType": "husband",
+        "relName": "मोहित पिता का नाम: बलदेव सिंह",
+        "house": "/",
+        "age": 43,
+        "gender": "F",
+        "id": "hUNKNOWN_m2",
+        "linkedTo": null
+      },
+      {
+        "part": "5",
+        "name": "आशीष कुमार",
+        "relType": "husband",
+        "relName": "अनुप चौधरी पिता का नाम: अरुण कुमार",
+        "house": "/",
+        "age": 22,
+        "gender": "F",
+        "id": "hUNKNOWN_m3",
+        "linkedTo": null
+      },
+      {
+        "part": "5",
+        "name": "हंस राज",
+        "relType": "husband",
+        "relName": "विशम्बर दास पिता का नाम: बिहारी लाल",
+        "house": "/",
+        "age": 68,
+        "gender": "F",
+        "id": "hUNKNOWN_m4",
+        "linkedTo": null
+      },
+      {
+        "part": "5",
+        "name": "कमल जीत",
+        "relType": "husband",
+        "relName": "परमजीत कुमार पिता का नाम: बिशम्बर दास पिता का नाम: हंस राज",
+        "house": "/",
+        "age": 42,
+        "gender": "F",
+        "id": "hUNKNOWN_m5",
+        "linkedTo": "hUNKNOWN_m4"
+      },
+      {
+        "part": "5",
+        "name": "कलाशां देवी",
+        "relType": "husband",
+        "relName": "राहुल चौधरी पिता का नाम: रंजीत सिंह पति का नाम: हरिचन्द",
+        "house": "/",
+        "age": 24,
+        "gender": "F",
+        "id": "hUNKNOWN_m6",
+        "linkedTo": null
+      },
+      {
+        "part": "5",
+        "name": "शक्ति चन्द",
+        "relType": "husband",
+        "relName": "हरदयाल सिह पिता का नाम: हरदयाल सिंह पिता का नाम: मुन्शी राम",
+        "house": "/",
+        "age": 60,
+        "gender": "F",
+        "id": "hUNKNOWN_m7",
+        "linkedTo": null
+      }
+    ]
+  },
+  {
     "id": "f149",
     "house": "VG",
     "headId": "hVG_m0",
@@ -7796,7 +7796,7 @@
         "relName": "अनूप चौधरी पिता का नाम: पुष्कर लाल",
         "house": "VG",
         "age": 36,
-        "gender": "M",
+        "gender": "F",
         "id": "hVG_m0",
         "linkedTo": null
       }
