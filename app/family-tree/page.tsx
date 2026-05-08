@@ -3,11 +3,13 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Transition } from "framer-motion";
-import { Search, Users, TreePine, Info, ChevronDown, ChevronRight } from "lucide-react";
+import { Search, Users, TreePine, Info, ChevronDown, ChevronRight, Hammer } from "lucide-react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLang } from "@/contexts/LanguageContext";
+
+type DataSource = "voter" | "nrega";
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -176,7 +178,7 @@ function TreeNode({
 
 // ── Family Tree Visualization ─────────────────────────────────────────────────
 
-function FamilyTree({ family, searchedName }: { family: Family; searchedName: string }) {
+function FamilyTree({ family, searchedName, source = "voter" }: { family: Family; searchedName: string; source?: DataSource }) {
   const { lang } = useLang();
   const members = family.members;
   const searchNorm = norm(searchedName);
@@ -227,13 +229,19 @@ function FamilyTree({ family, searchedName }: { family: Family; searchedName: st
         style={{ background: "linear-gradient(135deg,#1B4332,#2D6A4F)", border: "1px solid rgba(201,146,42,0.2)" }}>
         <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at 80% 20%, rgba(201,146,42,0.1), transparent 60%)" }} />
         <p className="text-[11px] tracking-widest uppercase text-white/40 mb-1 relative">
-          {lang === "en" ? "Household" : "परिवार"} · {lang === "en" ? "House No." : "गृह संख्या"} {family.house || "—"} · Part {members[0]?.part}
+          {source === "nrega"
+            ? `NREGA · ${lang === "en" ? "Job Card" : "जॉब कार्ड"} ${family.house || "—"}`
+            : `${lang === "en" ? "Household" : "परिवार"} · ${lang === "en" ? "House No." : "गृह संख्या"} ${family.house || "—"} · Part ${members[0]?.part}`}
         </p>
         <p className="text-xl font-bold text-white font-hindi relative">{family.headName}</p>
         <p className="text-xs text-white/40 mt-0.5 relative">{lang === "en" ? "Head of household" : "परिवार के मुखिया"}</p>
         <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs relative"
           style={{ backgroundColor: "rgba(201,146,42,0.15)", color: "#E8B84B" }}>
-          <Users size={11} /> {members.length} {lang === "en" ? "registered voters" : "पंजीकृत मतदाता"}
+          {source === "nrega" ? <Hammer size={11} /> : <Users size={11} />}
+          {members.length}{" "}
+          {source === "nrega"
+            ? (lang === "en" ? "NREGA members" : "NREGA सदस्य")
+            : (lang === "en" ? "registered voters" : "पंजीकृत मतदाता")}
         </div>
       </motion.div>
 
@@ -350,9 +358,13 @@ function FamilyTree({ family, searchedName }: { family: Family; searchedName: st
         style={{ backgroundColor: "rgba(59,130,246,0.06)", border: "1px solid rgba(59,130,246,0.12)" }}>
         <Info size={12} className="mt-0.5 shrink-0" style={{ color: "#3b82f6" }} />
         <p className="text-[11px] leading-relaxed" style={{ color: "var(--text-3)" }}>
-          {lang === "en"
-            ? "Source: ECI Final Voter Roll 2025, Jawalamukhi (Parts 4 & 5). Only registered voters shown. Relationships are derived from voter roll fields — some groupings may need correction. For errors, contact Dehrian Panchayat office."
-            : "स्रोत: ECI अंतिम मतदाता सूची 2025, जवालामुखी (भाग 4 और 5)। केवल पंजीकृत मतदाता दिखते हैं। रिश्ते मतदाता सूची से निकाले गए हैं — किसी गलती के लिए पंचायत कार्यालय से संपर्क करें।"}
+          {source === "nrega"
+            ? (lang === "en"
+                ? "Source: MGNREGA Job Card Register 2024–25, DOHAG DEHRIYAN Panchayat (Code 1304003116). Shows job-card holders and household members. For corrections contact Panchayat office or BDO Surani."
+                : "स्रोत: MGNREGA जॉब कार्ड रजिस्टर 2024–25, दोहग देहरियाँ पंचायत। जॉब कार्ड धारकों और उनके परिजनों की सूची। सुधार के लिए पंचायत कार्यालय या BDO सुरानी से संपर्क करें।")
+            : (lang === "en"
+                ? "Source: ECI Final Voter Roll 2025, Jawalamukhi (Parts 4 & 5). Only registered voters shown. Relationships are derived from voter roll fields — some groupings may need correction. For errors, contact Dehrian Panchayat office."
+                : "स्रोत: ECI अंतिम मतदाता सूची 2025, जवालामुखी (भाग 4 और 5)। केवल पंजीकृत मतदाता दिखते हैं। रिश्ते मतदाता सूची से निकाले गए हैं — किसी गलती के लिए पंचायत कार्यालय से संपर्क करें।")}
         </p>
       </motion.div>
     </div>
@@ -365,54 +377,92 @@ export default function FamilyTreePage() {
   const { user, requireAuth } = useAuth();
   const { lang } = useLang();
 
-  const [allVoters, setAllVoters]   = useState<any[]>([]);
+  const [dataSource, setDataSource] = useState<DataSource>("voter");
+
+  // Voter roll data
+  const [allVoters,   setAllVoters]   = useState<any[]>([]);
   const [allFamilies, setAllFamilies] = useState<Family[]>([]);
-  const [dataLoaded, setDataLoaded]  = useState(false);
+  const [voterLoaded, setVoterLoaded] = useState(false);
 
-  const [queryStr, setQueryStr] = useState("");
+  // NREGA data
+  const [nregaFamilies, setNregaFamilies] = useState<Family[]>([]);
+  const [nregaLoaded,   setNregaLoaded]   = useState(false);
+
+  const [queryStr,       setQueryStr]       = useState("");
   const [selectedFamily, setSelectedFamily] = useState<Family | null>(null);
-  const [loading, setLoading]   = useState(false);
-  const [showBrowse, setShowBrowse] = useState(false);
+  const [loading,        setLoading]        = useState(false);
+  const [showBrowse,     setShowBrowse]     = useState(false);
 
-  // Load all data once on mount (601 voters, 149 families — small enough)
+  const dataLoaded = dataSource === "voter" ? voterLoaded : nregaLoaded;
+
+  // Load voter roll + voter families once logged in
   useEffect(() => {
-    if (!user) return;
+    if (!user || voterLoaded) return;
     setLoading(true);
     Promise.all([
       getDocs(collection(db, "voters")),
       getDocs(collection(db, "families")),
     ]).then(([vSnap, fSnap]) => {
-      const voters   = vSnap.docs.map((d) => d.data()).filter((v) => isCleanName(v.name ?? ""));
-      const families = fSnap.docs.map((d) => d.data() as Family);
-      setAllVoters(voters);
-      setAllFamilies(families);
-      setDataLoaded(true);
+      setAllVoters(vSnap.docs.map((d) => d.data()).filter((v) => isCleanName(v.name ?? "")));
+      setAllFamilies(fSnap.docs.map((d) => d.data() as Family));
+      setVoterLoaded(true);
     }).catch(console.error).finally(() => setLoading(false));
-  }, [user]);
+  }, [user, voterLoaded]);
 
-  // Filtered suggestions — live as user types
+  // Load NREGA families when switching to NREGA tab
+  useEffect(() => {
+    if (!user || nregaLoaded || dataSource !== "nrega") return;
+    setLoading(true);
+    getDocs(collection(db, "nrega_families")).then((snap) => {
+      setNregaFamilies(snap.docs.map((d) => d.data() as Family));
+      setNregaLoaded(true);
+    }).catch(console.error).finally(() => setLoading(false));
+  }, [user, nregaLoaded, dataSource]);
+
+  // Flat member list for NREGA search (one entry per member, carries family ref)
+  const nregaMembers = useMemo(() =>
+    nregaFamilies.flatMap((f) =>
+      f.members
+        .filter((m) => isCleanName(m.name))
+        .map((m) => ({ ...m, _familyId: f.id }))
+    ),
+    [nregaFamilies]
+  );
+
+  // Suggestions — voter roll or NREGA depending on active source
   const suggestions = useMemo(() => {
     if (!queryStr.trim() || queryStr.trim().length < 2) return [];
     const q = norm(queryStr);
-    return allVoters
-      .filter((v) => norm(v.name).includes(q))
+    if (dataSource === "voter") {
+      return allVoters.filter((v) => norm(v.name).includes(q)).slice(0, 15);
+    }
+    // NREGA — search by member name, deduplicate by family
+    const seen = new Set<string>();
+    return nregaMembers
+      .filter((m) => norm(m.name).includes(q))
+      .filter((m) => { if (seen.has((m as any)._familyId)) return false; seen.add((m as any)._familyId); return true; })
       .slice(0, 15);
-  }, [queryStr, allVoters]);
+  }, [queryStr, allVoters, nregaMembers, dataSource]);
 
-  const selectVoter = useCallback((voter: any) => {
-    const vn = norm(voter.name);
-    // Try exact match first, then partial — handles minor OCR name variations
-    // between the voters collection and the families collection.
-    const fam =
-      allFamilies.find((f) => f.members.some((m) => norm(m.name) === vn)) ||
-      allFamilies.find((f) => f.members.some((m) => {
-        const mn = norm(m.name);
-        return mn.includes(vn) || vn.includes(mn);
-      }));
+  const selectPerson = useCallback((person: any) => {
+    const pn = norm(person.name);
+    let fam: Family | undefined;
+    if (dataSource === "voter") {
+      fam =
+        allFamilies.find((f) => f.members.some((m) => norm(m.name) === pn)) ||
+        allFamilies.find((f) => f.members.some((m) => {
+          const mn = norm(m.name);
+          return mn.includes(pn) || pn.includes(mn);
+        }));
+    } else {
+      const famId = person._familyId;
+      fam = nregaFamilies.find((f) => f.id === famId) ||
+        nregaFamilies.find((f) => f.members.some((m) => norm(m.name) === pn));
+    }
     setSelectedFamily(fam ?? null);
-    setQueryStr(voter.name);
+    setQueryStr(person.name);
     setShowBrowse(false);
-  }, [allFamilies]);
+  }, [allFamilies, nregaFamilies, dataSource]);
 
   const handleSearch = () => {
     if (!user) {
@@ -420,17 +470,32 @@ export default function FamilyTreePage() {
       return;
     }
     if (!queryStr.trim()) return;
-    // Try direct search from suggestions
-    if (suggestions.length > 0) selectVoter(suggestions[0]);
+    if (suggestions.length > 0) selectPerson(suggestions[0]);
   };
 
-  // Browse: alphabetically sorted clean names
-  const browseNames = useMemo(() =>
-    [...allVoters]
+  // Switch source — reset search state
+  const switchSource = (src: DataSource) => {
+    setDataSource(src);
+    setQueryStr("");
+    setSelectedFamily(null);
+    setShowBrowse(false);
+  };
+
+  // Browse list — current source
+  const browseNames = useMemo(() => {
+    if (dataSource === "voter") {
+      return [...allVoters]
+        .sort((a, b) => (a.name || "").localeCompare(b.name || "", "hi"))
+        .slice(0, 200);
+    }
+    // NREGA — browse by head name
+    return [...nregaFamilies]
+      .map((f) => ({ name: f.headName, _familyId: f.id, gender: "M", age: 0 }))
       .sort((a, b) => (a.name || "").localeCompare(b.name || "", "hi"))
-      .slice(0, 200),
-    [allVoters]
-  );
+      .slice(0, 200);
+  }, [allVoters, nregaFamilies, dataSource]);
+
+  const activeCount = dataSource === "voter" ? allVoters.filter(v => isCleanName(v.name)).length : nregaMembers.length;
 
   return (
     <div style={{ backgroundColor: "var(--bg)", minHeight: "100vh" }}>
@@ -467,9 +532,29 @@ export default function FamilyTreePage() {
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 pb-16 sm:pb-24">
 
+        {/* ── Data Source Toggle ── */}
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
+          className="flex gap-2 -mt-6 relative z-20 mb-3 px-1">
+          {([
+            { src: "voter" as DataSource, icon: "🗳️", label: lang === "en" ? "Voter Roll" : "मतदाता सूची" },
+            { src: "nrega" as DataSource, icon: "🏗️", label: lang === "en" ? "NREGA" : "नरेगा" },
+          ] as const).map(({ src, icon, label }) => (
+            <button key={src} onClick={() => switchSource(src)}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all"
+              style={{
+                background: dataSource === src ? "linear-gradient(135deg,#14532d,#166534)" : "var(--card)",
+                color: dataSource === src ? "#fff" : "var(--text-3)",
+                border: `1px solid ${dataSource === src ? "transparent" : "var(--border)"}`,
+                boxShadow: dataSource === src ? "0 2px 8px rgba(20,83,45,0.3)" : "none",
+              }}>
+              {icon} {label}
+            </button>
+          ))}
+        </motion.div>
+
         {/* ── Search Card ── */}
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-          className="card p-5 sm:p-6 -mt-8 relative z-10">
+          className="card p-5 sm:p-6 relative z-10">
 
           {!user ? (
             <div className="text-center py-4">
@@ -493,7 +578,9 @@ export default function FamilyTreePage() {
               {loading && (
                 <div className="flex items-center gap-2 mb-4 text-xs" style={{ color: "var(--text-3)" }}>
                   <span className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                  {lang === "en" ? "Loading voter records…" : "मतदाता रिकॉर्ड लोड हो रहे हैं…"}
+                  {dataSource === "nrega"
+                    ? (lang === "en" ? "Loading NREGA data…" : "NREGA डेटा लोड हो रहा है…")
+                    : (lang === "en" ? "Loading voter records…" : "मतदाता रिकॉर्ड लोड हो रहे हैं…")}
                 </div>
               )}
 
@@ -501,9 +588,13 @@ export default function FamilyTreePage() {
               {dataLoaded && (
                 <p className="text-[11px] mb-3 flex items-center gap-1.5" style={{ color: "var(--text-3)" }}>
                   <Info size={11} />
-                  {lang === "en"
-                    ? `${allVoters.filter(v=>isCleanName(v.name)).length} voter records loaded — type your name in Hindi script (हिंदी)`
-                    : `${allVoters.filter(v=>isCleanName(v.name)).length} मतदाता रिकॉर्ड लोड — हिंदी में नाम टाइप करें`}
+                  {dataSource === "nrega"
+                    ? (lang === "en"
+                        ? `${nregaFamilies.length} NREGA families · ${activeCount} members loaded`
+                        : `${nregaFamilies.length} NREGA परिवार · ${activeCount} सदस्य लोड`)
+                    : (lang === "en"
+                        ? `${activeCount} voter records loaded — type name in Hindi (हिंदी)`
+                        : `${activeCount} मतदाता रिकॉर्ड लोड — हिंदी में नाम टाइप करें`)}
                 </p>
               )}
 
@@ -536,7 +627,7 @@ export default function FamilyTreePage() {
                       className="absolute top-full left-0 right-0 mt-1 rounded-2xl overflow-hidden z-20 shadow-xl"
                       style={{ backgroundColor: "var(--bg)", border: "1px solid var(--border)" }}>
                       {suggestions.map((v, i) => (
-                        <motion.button key={i} onClick={() => selectVoter(v)}
+                        <motion.button key={i} onClick={() => selectPerson(v)}
                           whileHover={{ backgroundColor: "rgba(27,67,50,0.06)" }}
                           className="w-full text-left px-4 py-3 flex items-center gap-3 border-b last:border-0"
                           style={{ borderColor: "var(--border)" }}>
@@ -544,11 +635,12 @@ export default function FamilyTreePage() {
                           <div>
                             <p className="font-semibold text-sm font-hindi" style={{ color: "var(--text)" }}>{v.name}</p>
                             <p className="text-[10px] mt-0.5" style={{ color: "var(--text-3)" }}>
-                              {v.relType === "father" && v.gender === "M" ? "S/O" :
-                               v.relType === "father" && v.gender === "F" ? "D/O" :
-                               v.relType === "husband" ? "W/O" :
-                               v.relType === "wife" ? "H/O" : ""}{" "}
-                              {extractFirstName(v.relName)} · {v.age > 0 ? `${v.age} yr` : ""} · Part {v.part}
+                              {dataSource === "nrega"
+                                ? `NREGA · ${v.relType === "head" ? (lang === "en" ? "Head" : "मुखिया") : lang === "en" ? "Member" : "सदस्य"} · ${v.age > 0 ? `${v.age} yr` : ""}`
+                                : `${v.relType === "father" && v.gender === "M" ? "S/O" :
+                                   v.relType === "father" && v.gender === "F" ? "D/O" :
+                                   v.relType === "husband" ? "W/O" :
+                                   v.relType === "wife" ? "H/O" : ""} ${extractFirstName(v.relName)} · ${v.age > 0 ? `${v.age} yr` : ""} · Part ${v.part}`}
                             </p>
                           </div>
                         </motion.button>
@@ -576,7 +668,7 @@ export default function FamilyTreePage() {
                   className="mt-3 flex items-center gap-1.5 text-xs font-medium"
                   style={{ color: "var(--green-lt, #40916C)" }}>
                   {showBrowse ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
-                  {lang === "en" ? `Browse all ${browseNames.length} names` : `सभी ${browseNames.length} नाम देखें`}
+                  {lang === "en" ? `Browse all ${browseNames.length} ${dataSource === "nrega" ? "families" : "names"}` : `सभी ${browseNames.length} ${dataSource === "nrega" ? "परिवार" : "नाम"} देखें`}
                 </button>
               )}
 
@@ -587,12 +679,12 @@ export default function FamilyTreePage() {
                     exit={{ opacity: 0, height: 0 }} className="mt-3 overflow-hidden">
                     <div className="max-h-64 overflow-y-auto rounded-xl border" style={{ borderColor: "var(--border)" }}>
                       {browseNames.map((v, i) => (
-                        <button key={i} onClick={() => selectVoter(v)}
+                        <button key={i} onClick={() => selectPerson(v)}
                           className="w-full text-left px-3 py-2.5 flex items-center gap-2 border-b last:border-0 hover:bg-green-50 transition-colors"
                           style={{ borderColor: "var(--border)" }}>
-                          <span>{v.gender === "F" ? "👩" : "👨"}</span>
+                          <span>{(v as any).gender === "F" ? "👩" : "👨"}</span>
                           <span className="text-sm font-hindi" style={{ color: "var(--text)" }}>{v.name}</span>
-                          <span className="ml-auto text-[10px]" style={{ color: "var(--text-3)" }}>{v.age > 0 ? `${v.age}yr` : ""}</span>
+                          <span className="ml-auto text-[10px]" style={{ color: "var(--text-3)" }}>{(v as any).age > 0 ? `${(v as any).age}yr` : ""}</span>
                         </button>
                       ))}
                     </div>
@@ -607,11 +699,18 @@ export default function FamilyTreePage() {
         {!selectedFamily && user && dataLoaded && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
             className="mt-5 grid grid-cols-3 gap-3">
-            {[
-              { icon: "🗳️", val: allVoters.length, label: lang === "en" ? "Voters" : "मतदाता" },
-              { icon: "🏠", val: allFamilies.length, label: lang === "en" ? "Households" : "परिवार" },
-              { icon: "📋", val: "2", label: lang === "en" ? "Roll Parts" : "भाग" },
-            ].map(({ icon, val, label }, i) => (
+            {(dataSource === "nrega"
+              ? [
+                  { icon: "🏗️", val: nregaFamilies.length, label: lang === "en" ? "Families" : "परिवार" },
+                  { icon: "👥", val: nregaMembers.length,   label: lang === "en" ? "Members" : "सदस्य" },
+                  { icon: "📋", val: "2024–25",             label: lang === "en" ? "Year" : "वर्ष" },
+                ]
+              : [
+                  { icon: "🗳️", val: allVoters.length,   label: lang === "en" ? "Voters" : "मतदाता" },
+                  { icon: "🏠", val: allFamilies.length,  label: lang === "en" ? "Households" : "परिवार" },
+                  { icon: "📋", val: "2",                 label: lang === "en" ? "Roll Parts" : "भाग" },
+                ]
+            ).map(({ icon, val, label }, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 + i * 0.08 }} className="card p-4 text-center">
                 <p className="text-2xl mb-1">{icon}</p>
@@ -627,7 +726,7 @@ export default function FamilyTreePage() {
           {selectedFamily && (
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }} className="mt-6">
-              <FamilyTree family={selectedFamily} searchedName={queryStr} />
+              <FamilyTree family={selectedFamily} searchedName={queryStr} source={dataSource} />
             </motion.div>
           )}
         </AnimatePresence>
