@@ -44,14 +44,41 @@ function memberIcon(m: Member) {
   return m.age > 60 ? "👴" : m.age > 30 ? "👨" : m.age > 14 ? "🧑" : "👦";
 }
 
-function relLabel(relType: string, lang: string) {
-  const map: Record<string, [string, string]> = {
-    father: ["S/D of", "पुत्र/पुत्री"],
-    husband: ["W/O", "पत्नी"],
-    mother: ["Child of", "संतान"],
-    wife: ["H/O", "पति"],
-  };
-  return lang === "en" ? (map[relType]?.[0] ?? relType) : (map[relType]?.[1] ?? relType);
+// Extract the reference person's name from the noisy OCR relName field.
+// relName often looks like "राम लाल पिता का नाम: बिहारी लाल" — we want "राम लाल".
+function extractFirstName(relName: string): string {
+  const before = (relName || "")
+    .split(/(पिता|पति|माता|पत्नी)\s+का\s+नाम/)[0]
+    .replace(/[^ऀ-ॿa-zA-Z\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return before.split(/\s+/).filter(Boolean).slice(0, 3).join(" ") || "";
+}
+
+// Derive the actual family role from gender + relType + whether this is the head.
+// relType in the voter roll means HOW the person was identified — not their role:
+//   relType="father"  → identified by father's name → could be son OR daughter
+//   relType="husband" → identified by husband's name → the person IS a wife
+//   relType="wife"    → identified by wife's name → the person IS a husband
+// Males with relType="husband" are an OCR artifact; treat them as sons.
+function deriveRole(m: Member, headId: string, lang: string): { label: string; color: string } {
+  const en = lang === "en";
+  if (m.id === headId)
+    return { label: en ? "Head" : "मुखिया", color: "#C9922A" };
+  if (m.gender === "F" && m.relType === "husband")
+    return { label: en ? "Wife" : "पत्नी", color: "#db2777" };
+  if (m.gender === "M" && m.relType === "father")
+    return { label: en ? "Son" : "पुत्र", color: "#2563eb" };
+  if (m.gender === "F" && m.relType === "father")
+    return { label: en ? "Daughter" : "पुत्री", color: "#7c3aed" };
+  if (m.relType === "wife")
+    return { label: en ? "Husband" : "पति", color: "#2563eb" };
+  if (m.relType === "mother")
+    return { label: en ? "Child" : "संतान", color: "#16a34a" };
+  // Male + relType="husband" = OCR artifact; best-guess is son
+  if (m.gender === "M" && m.relType === "husband")
+    return { label: en ? "Son" : "पुत्र", color: "#2563eb" };
+  return { label: en ? "Member" : "सदस्य", color: "var(--text-3)" };
 }
 
 function genColor(gender: string) {
@@ -62,8 +89,16 @@ function genColor(gender: string) {
 
 // ── Member card ────────────────────────────────────────────────────────────────
 
-function MemberCard({ m, highlight, index }: { m: Member; highlight: boolean; index: number }) {
+function MemberCard({ m, highlight, index, headId }: { m: Member; highlight: boolean; index: number; headId: string }) {
+  const { lang } = useLang();
   const col = genColor(m.gender);
+  const { label: roleLabel, color: roleColor } = deriveRole(m, headId, lang);
+  const refName = m.id !== headId ? extractFirstName(m.relName) : "";
+  const refPrefix =
+    m.relType === "husband" && m.gender === "F" ? (lang === "en" ? "W/O" : "पति:") :
+    m.relType === "father"                       ? (lang === "en" ? "S/D of" : "पिता:") :
+    m.relType === "wife"                         ? (lang === "en" ? "H/O" : "पत्नी:") : "";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16, scale: 0.95 }}
@@ -90,17 +125,20 @@ function MemberCard({ m, highlight, index }: { m: Member; highlight: boolean; in
           {m.name}
         </p>
         <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
-          <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium"
-            style={{ backgroundColor: col.bg, color: col.text }}>
+          {/* Correct role badge */}
+          <span className="text-[10px] px-1.5 py-0.5 rounded-full font-semibold"
+            style={{ backgroundColor: `${roleColor}18`, color: roleColor }}>
+            {roleLabel}
+          </span>
+          <span className="text-[10px]" style={{ color: "var(--text-3)" }}>
             {m.gender === "F" ? "महिला" : "पुरुष"} · {m.age > 0 ? `${m.age} yr` : "?"}
           </span>
-          {m.relType && (
-            <span className="text-[10px] px-1.5 py-0.5 rounded-full"
-              style={{ backgroundColor: "rgba(27,67,50,0.08)", color: "var(--green-lt, #40916C)" }}>
-              {m.relType === "father" ? "पुत्र/पुत्री" : m.relType === "husband" ? "पत्नी" : m.relType}
-            </span>
-          )}
         </div>
+        {refName && refPrefix && (
+          <p className="text-[10px] mt-0.5 font-hindi truncate" style={{ color: "var(--text-3)" }}>
+            {refPrefix} {refName}
+          </p>
+        )}
       </div>
     </motion.div>
   );
@@ -108,27 +146,57 @@ function MemberCard({ m, highlight, index }: { m: Member; highlight: boolean; in
 
 // ── Family Tree Visualization ─────────────────────────────────────────────────
 
+function SectionLabel({ label }: { label: string }) {
+  return (
+    <div className="flex items-center gap-2 mb-3">
+      <span className="text-xs font-semibold" style={{ color: "var(--text-3)" }}>{label}</span>
+      <div className="flex-1 h-px" style={{ backgroundColor: "var(--border)" }} />
+    </div>
+  );
+}
+
 function FamilyTree({ family, searchedName }: { family: Family; searchedName: string }) {
   const { lang } = useLang();
   const members = family.members;
-
-  const elders = members.filter((m) => m.age >= 55).sort((a, b) => b.age - a.age);
-  const adults  = members.filter((m) => m.age >= 22 && m.age < 55).sort((a, b) => b.age - a.age);
-  const youth   = members.filter((m) => m.age > 0 && m.age < 22).sort((a, b) => b.age - a.age);
-  const unknown = members.filter((m) => m.age === 0);
-
-  const gens = [
-    { label: lang === "en" ? "Elders (55+)" : "बुजुर्ग (55+)", icon: "👴", items: elders },
-    { label: lang === "en" ? "Adults"       : "वयस्क",          icon: "👨", items: adults },
-    { label: lang === "en" ? "Youth"        : "युवा",            icon: "🧑", items: youth },
-    { label: lang === "en" ? "Others"       : "अन्य",            icon: "👤", items: unknown },
-  ].filter((g) => g.items.length > 0);
-
   const searchNorm = norm(searchedName);
+  const isHit = (m: Member) => searchNorm.length > 1 && norm(m.name).includes(searchNorm);
+
+  // ── Build relationship groups ──────────────────────────────────────────────
+  const head = members.find((m) => m.id === family.headId) || members[0];
+  const headNorm = norm(head?.name || "");
+
+  // Spouse: female with relType=husband whose extracted relName matches the head's name,
+  // OR is directly linked to the head via linkedTo.
+  const spouse = members.find((m) =>
+    m.id !== head?.id &&
+    m.gender === "F" &&
+    m.relType === "husband" &&
+    (m.linkedTo === head?.id ||
+      headNorm.length > 1 && (
+        norm(extractFirstName(m.relName)).includes(headNorm) ||
+        headNorm.includes(norm(extractFirstName(m.relName)))
+      ))
+  );
+
+  // Children: relType=father (identified by father's name), whose father = head.
+  const children = members.filter((m) =>
+    m.id !== head?.id &&
+    m.id !== spouse?.id &&
+    m.relType === "father" &&
+    (m.linkedTo === head?.id ||
+      headNorm.length > 1 && (
+        norm(extractFirstName(m.relName)).includes(headNorm) ||
+        headNorm.includes(norm(extractFirstName(m.relName)))
+      ))
+  ).sort((a, b) => b.age - a.age);
+
+  const coreIds = new Set([head?.id, spouse?.id, ...children.map((c) => c.id)].filter(Boolean) as string[]);
+  const others = members.filter((m) => !coreIds.has(m.id)).sort((a, b) => b.age - a.age);
 
   return (
-    <div className="space-y-6">
-      {/* Household header */}
+    <div className="space-y-5">
+
+      {/* ── Household header ── */}
       <motion.div {...fadeUp()} className="rounded-2xl p-5 text-center relative overflow-hidden"
         style={{ background: "linear-gradient(135deg,#1B4332,#2D6A4F)", border: "1px solid rgba(201,146,42,0.2)" }}>
         <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at 80% 20%, rgba(201,146,42,0.1), transparent 60%)" }} />
@@ -143,39 +211,74 @@ function FamilyTree({ family, searchedName }: { family: Family; searchedName: st
         </div>
       </motion.div>
 
-      {/* Generation rows with SVG connectors */}
-      {gens.map((gen, gi) => (
-        <motion.div key={gi} {...fadeUp(gi * 0.1)}>
-          {gi > 0 && (
-            <div className="flex flex-col items-center my-2">
-              <motion.div className="w-0.5 h-6" style={{ backgroundColor: "var(--border)" }}
-                initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ delay: gi * 0.1 + 0.2 }} />
-              <ChevronDown size={14} style={{ color: "var(--text-3)" }} />
+      {/* ── Head + Spouse (side-by-side with connector) ── */}
+      {head && (
+        <motion.div {...fadeUp(0.05)}>
+          <SectionLabel label={lang === "en" ? "Head of Household" : "परिवार के मुखिया"} />
+          <div className="flex items-stretch gap-2">
+            <div className="flex-1">
+              <MemberCard m={head} highlight={isHit(head)} index={0} headId={family.headId} />
             </div>
-          )}
-          {/* Gen label */}
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-base">{gen.icon}</span>
-            <span className="text-xs font-semibold" style={{ color: "var(--text-3)" }}>{gen.label}</span>
-            <div className="flex-1 h-px" style={{ backgroundColor: "var(--border)" }} />
+            {spouse && (
+              <>
+                {/* Horizontal connector */}
+                <div className="flex items-center">
+                  <div className="flex flex-col items-center gap-0.5">
+                    <div className="w-5 h-px" style={{ backgroundColor: "#C9922A", opacity: 0.5 }} />
+                    <span className="text-[9px]" style={{ color: "#C9922A" }}>❤</span>
+                    <div className="w-5 h-px" style={{ backgroundColor: "#C9922A", opacity: 0.5 }} />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <MemberCard m={spouse} highlight={isHit(spouse)} index={1} headId={family.headId} />
+                </div>
+              </>
+            )}
           </div>
+        </motion.div>
+      )}
+
+      {/* ── Vertical connector to children ── */}
+      {children.length > 0 && (
+        <div className="flex flex-col items-center">
+          <motion.div className="w-px" style={{ backgroundColor: "var(--border)", height: 24 }}
+            initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ delay: 0.15 }} />
+          <ChevronDown size={13} style={{ color: "var(--text-3)" }} />
+        </div>
+      )}
+
+      {/* ── Children ── */}
+      {children.length > 0 && (
+        <motion.div {...fadeUp(0.15)}>
+          <SectionLabel label={lang === "en" ? `Children (${children.length})` : `संतान (${children.length})`} />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {gen.items.map((m, mi) => (
-              <MemberCard key={m.id} m={m} index={mi}
-                highlight={norm(m.name).includes(searchNorm) && searchNorm.length > 1} />
+            {children.map((m, i) => (
+              <MemberCard key={m.id} m={m} highlight={isHit(m)} index={i + 2} headId={family.headId} />
             ))}
           </div>
         </motion.div>
-      ))}
+      )}
 
-      {/* Disclaimer */}
-      <motion.div {...fadeUp(0.4)} className="flex items-start gap-2 p-3 rounded-xl"
+      {/* ── Other household members ── */}
+      {others.length > 0 && (
+        <motion.div {...fadeUp(0.25)}>
+          <SectionLabel label={lang === "en" ? `Other Household Members (${others.length})` : `अन्य सदस्य (${others.length})`} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {others.map((m, i) => (
+              <MemberCard key={m.id} m={m} highlight={isHit(m)} index={i} headId={family.headId} />
+            ))}
+          </div>
+        </motion.div>
+      )}
+
+      {/* ── Disclaimer ── */}
+      <motion.div {...fadeUp(0.35)} className="flex items-start gap-2 p-3 rounded-xl"
         style={{ backgroundColor: "rgba(59,130,246,0.06)", border: "1px solid rgba(59,130,246,0.12)" }}>
         <Info size={12} className="mt-0.5 shrink-0" style={{ color: "#3b82f6" }} />
         <p className="text-[11px] leading-relaxed" style={{ color: "var(--text-3)" }}>
           {lang === "en"
-            ? "Source: ECI Final Voter Roll 2025, Jawalamukhi (Parts 4 & 5). Only registered voters are shown. OCR parsing may have minor name spelling variations. For corrections, contact Dehrian Panchayat office."
-            : "स्रोत: ECI अंतिम मतदाता सूची 2025, जवालामुखी (भाग 4 और 5)। केवल पंजीकृत मतदाता दिखते हैं। OCR से नामों में मामूली अंतर हो सकता है।"}
+            ? "Source: ECI Final Voter Roll 2025, Jawalamukhi (Parts 4 & 5). Only registered voters shown. Relationships are derived from voter roll fields — some groupings may need correction. For errors, contact Dehrian Panchayat office."
+            : "स्रोत: ECI अंतिम मतदाता सूची 2025, जवालामुखी (भाग 4 और 5)। केवल पंजीकृत मतदाता दिखते हैं। रिश्ते मतदाता सूची से निकाले गए हैं — किसी गलती के लिए पंचायत कार्यालय से संपर्क करें।"}
         </p>
       </motion.div>
     </div>
@@ -223,9 +326,15 @@ export default function FamilyTreePage() {
   }, [queryStr, allVoters]);
 
   const selectVoter = useCallback((voter: any) => {
-    const fam = allFamilies.find((f) =>
-      f.members.some((m) => norm(m.name) === norm(voter.name) || m.name === voter.name)
-    );
+    const vn = norm(voter.name);
+    // Try exact match first, then partial — handles minor OCR name variations
+    // between the voters collection and the families collection.
+    const fam =
+      allFamilies.find((f) => f.members.some((m) => norm(m.name) === vn)) ||
+      allFamilies.find((f) => f.members.some((m) => {
+        const mn = norm(m.name);
+        return mn.includes(vn) || vn.includes(mn);
+      }));
     setSelectedFamily(fam ?? null);
     setQueryStr(voter.name);
     setShowBrowse(false);
@@ -361,7 +470,11 @@ export default function FamilyTreePage() {
                           <div>
                             <p className="font-semibold text-sm font-hindi" style={{ color: "var(--text)" }}>{v.name}</p>
                             <p className="text-[10px] mt-0.5" style={{ color: "var(--text-3)" }}>
-                              {v.relType === "father" ? "S/D of" : "W/O"} {(v.relName || "").split(" ")[0]} · {v.age > 0 ? `${v.age} yr` : ""} · Part {v.part}
+                              {v.relType === "father" && v.gender === "M" ? "S/O" :
+                               v.relType === "father" && v.gender === "F" ? "D/O" :
+                               v.relType === "husband" ? "W/O" :
+                               v.relType === "wife" ? "H/O" : ""}{" "}
+                              {extractFirstName(v.relName)} · {v.age > 0 ? `${v.age} yr` : ""} · Part {v.part}
                             </p>
                           </div>
                         </motion.button>
