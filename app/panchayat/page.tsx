@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import type { Transition } from "framer-motion";
-import { Phone, MapPin, Mail, Clock, Users, Shield, Star } from "lucide-react";
+import { Phone, MapPin, Mail, Clock, Users, Shield, Star, AlertCircle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLang } from "@/contexts/LanguageContext";
 import { T } from "@/data/translations";
@@ -46,11 +46,30 @@ export default function PanchayatPage() {
     if (phone) window.location.href = `tel:${phone}`;
   };
 
+  const hasName = (m?: { name: string }) => !!m?.name?.trim();
+
   const pradhan    = members.find((m) => m.designation === "Gram Pradhan");
   const upPradhan  = members.find((m) => m.designation === "Up-Pradhan");
   const sachiv     = members.find((m) => m.designation === "Gram Sachiv");
   const sewak      = members.find((m) => m.designation === "Gram Sewak");
   const wardPanchs = members.filter((m) => m.designation === "Ward Panch");
+
+  const pendingBanner = !hasName(pradhan) && (
+    <motion.div {...fadeUp()} className="mt-8 flex items-start gap-3 p-4 rounded-2xl"
+      style={{ backgroundColor: "rgba(201,146,42,0.08)", border: "1px solid rgba(201,146,42,0.2)" }}>
+      <AlertCircle size={16} className="shrink-0 mt-0.5" style={{ color: "#C9922A" }} />
+      <div>
+        <p className="text-sm font-semibold" style={{ color: "#C9922A" }}>
+          {lang === "en" ? "Details Being Updated" : "विवरण अपडेट हो रहा है"}
+        </p>
+        <p className="text-xs mt-0.5 leading-relaxed" style={{ color: "var(--text-3)" }}>
+          {lang === "en"
+            ? "Panchayat member details are being verified and will appear here shortly. For immediate assistance, contact the Panchayat office in Dehrian or call Civil Hospital Jawalamukhi: 01970-222001."
+            : "पंचायत सदस्यों का विवरण जल्द ही यहाँ दिखाई देगा। तत्काल सहायता के लिए डेहरियाँ पंचायत कार्यालय से संपर्क करें।"}
+        </p>
+      </div>
+    </motion.div>
+  );
 
   return (
     <div style={{ backgroundColor: "var(--bg)", minHeight: "100vh" }}>
@@ -90,8 +109,10 @@ export default function PanchayatPage() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-8 sm:pb-20 space-y-10 sm:space-y-14">
 
+        {pendingBanner}
+
         {/* ── Gram Pradhan — Hero Card ── */}
-        {pradhan && (
+        {pradhan && hasName(pradhan) && (
           <motion.div {...fadeUp()} className="mt-8">
             <div className="relative rounded-3xl overflow-hidden p-6 sm:p-8"
               style={{ background: "linear-gradient(135deg, #78350f, #b45309, #C9922A)", border: "1px solid rgba(232,184,75,0.3)" }}>
@@ -131,7 +152,7 @@ export default function PanchayatPage() {
         )}
 
         {/* ── Staff Section: Up-Pradhan, Sachiv, Sewak ── */}
-        {[upPradhan, sachiv, sewak].some(Boolean) && (
+        {[upPradhan, sachiv, sewak].some((m) => m && hasName(m)) && (
           <div>
             <motion.div {...fadeUp()} className="flex items-center gap-3 mb-5">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center"
@@ -145,7 +166,7 @@ export default function PanchayatPage() {
             </motion.div>
 
             <div className="grid sm:grid-cols-3 gap-4">
-              {[upPradhan, sachiv, sewak].filter(Boolean).map((m, i) => {
+              {[upPradhan, sachiv, sewak].filter((m) => m && hasName(m)).map((m, i) => {
                 if (!m) return null;
                 const col = designationColor[m.designation] || designationColor["Ward Panch"];
                 const emoji = designationEmoji[m.designation] || "👤";
@@ -183,7 +204,7 @@ export default function PanchayatPage() {
         )}
 
         {/* ── Ward Members Grid ── */}
-        {wardPanchs.length > 0 && (
+        {wardPanchs.some((m) => hasName(m)) && (
           <div>
             <motion.div {...fadeUp()} className="flex items-center gap-3 mb-5">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center"
@@ -197,7 +218,7 @@ export default function PanchayatPage() {
             </motion.div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-              {wardPanchs.map((m, i) => (
+              {wardPanchs.filter((m) => hasName(m)).map((m, i) => (
                 <motion.div key={m.id} {...fadeUp(i * 0.06)}
                   className="card p-4 flex flex-col items-center text-center gap-2.5">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"

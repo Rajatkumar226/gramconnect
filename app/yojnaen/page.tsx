@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, ExternalLink, ChevronDown, FileText, Users, Shield } from "lucide-react";
+import { Search, ExternalLink, ChevronDown, FileText, Users, Shield, BadgeCheck } from "lucide-react";
 import schemes from "@/data/schemes.json";
 import { useLang } from "@/contexts/LanguageContext";
 import { T } from "@/data/translations";
@@ -71,8 +71,27 @@ export default function YojnaenPage() {
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 pb-8 sm:pb-20">
+        {/* Source / trust banner */}
+        <motion.div {...fadeUp()} className="mt-8 mb-4 flex flex-wrap items-center gap-3 p-3.5 rounded-2xl"
+          style={{ backgroundColor: "rgba(27,67,50,0.06)", border: "1px solid rgba(27,67,50,0.12)" }}>
+          <div className="flex items-center gap-1.5">
+            <BadgeCheck size={14} style={{ color: "#2D6A4F" }} />
+            <span className="text-xs font-semibold" style={{ color: "#2D6A4F" }}>
+              {lang === "en" ? "Verified from Official Govt. Portals" : "सरकारी पोर्टल से सत्यापित"}
+            </span>
+          </div>
+          <span className="hidden sm:block w-px h-4" style={{ backgroundColor: "rgba(27,67,50,0.2)" }} />
+          <span className="text-xs" style={{ color: "var(--text-3)" }}>
+            {lang === "en" ? "Sources: pmkisan.gov.in · pmjay.gov.in · nrega.nic.in · hpsbys.in · nsap.nic.in" : "स्रोत: केंद्र एवं HP सरकार के आधिकारिक पोर्टल"}
+          </span>
+          <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full"
+            style={{ backgroundColor: "rgba(201,146,42,0.1)", color: "#C9922A" }}>
+            {lang === "en" ? "Updated: May 2025" : "अपडेट: मई 2025"}
+          </span>
+        </motion.div>
+
         {/* Search */}
-        <motion.div {...fadeUp()} className="mt-8 mb-5">
+        <motion.div {...fadeUp(0.04)} className="mb-5">
           <div className="card p-4">
             <div className="relative">
               <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: "var(--text-3)" }} />

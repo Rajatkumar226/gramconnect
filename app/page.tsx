@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Transition } from "framer-motion";
 import {
-  FileText, Stethoscope, Phone, Store, Users,
+  FileText, Stethoscope, Phone, Store, Users, TreePine,
   ArrowRight, Bell, AlertTriangle, CloudRain,
   CheckCircle2, Megaphone, Shield, ChevronDown,
 } from "lucide-react";
@@ -25,7 +25,8 @@ const quickLinkDefs = [
   { icon: Stethoscope, href: "/health",    from: "#1e3a5f", to: "#2d5986", iconCol: "#7ab3e0" },
   { icon: Phone,       href: "/emergency", from: "#7f1d1d", to: "#b91c1c", iconCol: "#fca5a5" },
   { icon: Store,       href: "/directory", from: "#78350f", to: "#b45309", iconCol: "#fde68a" },
-  { icon: Users,       href: "/panchayat", from: "#312e81", to: "#4f46e5", iconCol: "#a5b4fc" },
+  { icon: Users,    href: "/panchayat",   from: "#312e81", to: "#4f46e5", iconCol: "#a5b4fc" },
+  { icon: TreePine, href: "/family-tree", from: "#052e16", to: "#166534", iconCol: "#86efac" },
 ];
 
 export default function HomePage() {
@@ -200,7 +201,7 @@ export default function HomePage() {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-5">
             {quickLinkDefs.map((l, i) => (
               <motion.div key={l.href} {...fadeUp(i * 0.08)}>
                 <Link href={l.href} className="group block h-full">
