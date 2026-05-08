@@ -47,9 +47,10 @@ const MALE_SUFFIXES   = ["कुमार", "राम", "लाल", "सिं
 function inferGender(m: Member): "M" | "F" {
   if (m.relType === "husband") return "F"; // person IS a wife — 100% reliable
   if (m.relType === "wife")    return "M"; // person IS a husband — 100% reliable
-  for (const s of FEMALE_SUFFIXES) if (m.name.includes(s)) return "F";
-  for (const s of MALE_SUFFIXES)   if (m.name.endsWith(s) || m.name.includes(` ${s}`)) return "M";
-  return m.gender; // OCR field as last resort
+  const name = m.name || "";
+  for (const s of FEMALE_SUFFIXES) if (name.includes(s)) return "F";
+  for (const s of MALE_SUFFIXES)   if (name.endsWith(s) || name.includes(` ${s}`)) return "M";
+  return m.gender || "M"; // OCR field as last resort
 }
 
 function memberIcon(m: Member) {
@@ -103,73 +104,77 @@ function genColor(m: Member) {
     : { bg: "rgba(59,130,246,0.1)", border: "rgba(59,130,246,0.3)", text: "#2563eb" };
 }
 
-// ── Member card ────────────────────────────────────────────────────────────────
+// ── Tree constants ────────────────────────────────────────────────────────────
 
-function MemberCard({ m, highlight, index, headId }: { m: Member; highlight: boolean; index: number; headId: string }) {
+const NODE_W    = 108; // px — column width per node
+const NODE_SIZE = 68;  // px — circle diameter
+const LINE_COL  = "#C9922A";
+
+// ── Circular Tree Node ────────────────────────────────────────────────────────
+
+function TreeNode({
+  m, highlight, headId, compact = false,
+}: {
+  m: Member; highlight: boolean; headId: string; compact?: boolean;
+}) {
   const { lang } = useLang();
   const col = genColor(m);
   const { label: roleLabel, color: roleColor } = deriveRole(m, headId, lang);
-  const refName = m.id !== headId ? extractFirstName(m.relName) : "";
-  const refPrefix =
-    m.relType === "husband" ? (lang === "en" ? "W/O" : "पति:") :
-    m.relType === "father"  ? (lang === "en" ? "S/D of" : "पिता:") :
-    m.relType === "wife"    ? (lang === "en" ? "H/O" : "पत्नी:") : "";
+  const sz = compact ? 52 : NODE_SIZE;
+  const nw = compact ? 80 : NODE_W;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ delay: index * 0.05, type: "spring", stiffness: 260, damping: 22 }}
-      className="flex items-center gap-3 p-3 rounded-2xl border transition-all"
-      style={{
-        borderColor: highlight ? "#C9922A" : col.border,
-        backgroundColor: highlight ? "rgba(201,146,42,0.08)" : col.bg,
-        boxShadow: highlight ? "0 0 0 2px rgba(201,146,42,0.25)" : undefined,
-      }}>
-      {/* Avatar */}
-      <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0 relative"
-        style={{ backgroundColor: col.bg, border: `1.5px solid ${col.border}` }}>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: nw }}>
+      <motion.div
+        initial={{ scale: 0.75, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 280, damping: 22 }}
+        style={{
+          width: sz, height: sz, borderRadius: "50%",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: compact ? "1.35rem" : "1.9rem", flexShrink: 0,
+          backgroundColor: highlight ? "rgba(201,146,42,0.15)" : col.bg,
+          border: `2.5px solid ${highlight ? "#C9922A" : col.border}`,
+          boxShadow: highlight
+            ? "0 0 0 4px rgba(201,146,42,0.25), 0 2px 12px rgba(0,0,0,0.1)"
+            : "0 2px 8px rgba(0,0,0,0.08)",
+          position: "relative",
+        }}>
         {memberIcon(m)}
         {highlight && (
-          <motion.span className="absolute -top-1 -right-1 text-[10px]"
-            animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 1.5, repeat: Infinity }}>⭐</motion.span>
+          <motion.span
+            style={{ position: "absolute", top: -5, right: -5, fontSize: 13, lineHeight: 1 }}
+            animate={{ scale: [1, 1.35, 1] }} transition={{ duration: 1.6, repeat: Infinity }}>
+            ⭐
+          </motion.span>
         )}
-      </div>
-      {/* Info */}
-      <div className="flex-1 min-w-0">
-        <p className="font-bold text-sm font-hindi truncate" style={{ color: highlight ? "var(--gold)" : "var(--text)" }}>
-          {m.name}
-        </p>
-        <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
-          {/* Correct role badge */}
-          <span className="text-[10px] px-1.5 py-0.5 rounded-full font-semibold"
-            style={{ backgroundColor: `${roleColor}18`, color: roleColor }}>
-            {roleLabel}
-          </span>
-          <span className="text-[10px]" style={{ color: "var(--text-3)" }}>
-            {inferGender(m) === "F" ? "महिला" : "पुरुष"} · {m.age > 0 ? `${m.age} yr` : "?"}
-          </span>
-        </div>
-        {refName && refPrefix && (
-          <p className="text-[10px] mt-0.5 font-hindi truncate" style={{ color: "var(--text-3)" }}>
-            {refPrefix} {refName}
-          </p>
-        )}
-      </div>
-    </motion.div>
+      </motion.div>
+
+      <p className="font-hindi"
+        style={{
+          marginTop: 7, fontSize: compact ? 10 : 11, fontWeight: 700, lineHeight: 1.3,
+          color: highlight ? "var(--gold)" : "var(--text)",
+          textAlign: "center", maxWidth: nw - 4, wordBreak: "break-word",
+        }}>
+        {m.name}
+      </p>
+
+      <span style={{
+        display: "inline-block", marginTop: 4, fontSize: 9,
+        padding: "2px 7px", borderRadius: 999, fontWeight: 600,
+        backgroundColor: `${roleColor}20`, color: roleColor,
+      }}>
+        {roleLabel}
+      </span>
+
+      {m.age > 0 && (
+        <span style={{ fontSize: 9, color: "var(--text-3)", marginTop: 2 }}>{m.age} yr</span>
+      )}
+    </div>
   );
 }
 
 // ── Family Tree Visualization ─────────────────────────────────────────────────
-
-function SectionLabel({ label }: { label: string }) {
-  return (
-    <div className="flex items-center gap-2 mb-3">
-      <span className="text-xs font-semibold" style={{ color: "var(--text-3)" }}>{label}</span>
-      <div className="flex-1 h-px" style={{ backgroundColor: "var(--border)" }} />
-    </div>
-  );
-}
 
 function FamilyTree({ family, searchedName }: { family: Family; searchedName: string }) {
   const { lang } = useLang();
@@ -181,11 +186,9 @@ function FamilyTree({ family, searchedName }: { family: Family; searchedName: st
   const head = members.find((m) => m.id === family.headId) || members[0];
   const headNorm = norm(head?.name || "");
 
-  // Spouse: female with relType=husband whose extracted relName matches the head's name,
-  // OR is directly linked to the head via linkedTo.
+  // relType="husband" → this person IS a wife (relType is more reliable than m.gender OCR field)
   const spouse = members.find((m) =>
     m.id !== head?.id &&
-    m.gender === "F" &&
     m.relType === "husband" &&
     (m.linkedTo === head?.id ||
       headNorm.length > 1 && (
@@ -194,7 +197,6 @@ function FamilyTree({ family, searchedName }: { family: Family; searchedName: st
       ))
   );
 
-  // Children: relType=father (identified by father's name), whose father = head.
   const children = members.filter((m) =>
     m.id !== head?.id &&
     m.id !== spouse?.id &&
@@ -209,10 +211,18 @@ function FamilyTree({ family, searchedName }: { family: Family; searchedName: st
   const coreIds = new Set([head?.id, spouse?.id, ...children.map((c) => c.id)].filter(Boolean) as string[]);
   const others = members.filter((m) => !coreIds.has(m.id)).sort((a, b) => b.age - a.age);
 
+  const hasSpouse   = !!spouse;
+  const hasChildren = children.length > 0;
+
+  // Heart connector width between head and spouse
+  const HEART_W = 48;
+  // Each child gets this column width (node + horizontal padding)
+  const CHILD_COL = NODE_W + 20;
+
   return (
     <div className="space-y-5">
 
-      {/* ── Household header ── */}
+      {/* ── Household Header ── */}
       <motion.div {...fadeUp()} className="rounded-2xl p-5 text-center relative overflow-hidden"
         style={{ background: "linear-gradient(135deg,#1B4332,#2D6A4F)", border: "1px solid rgba(201,146,42,0.2)" }}>
         <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at 80% 20%, rgba(201,146,42,0.1), transparent 60%)" }} />
@@ -227,68 +237,116 @@ function FamilyTree({ family, searchedName }: { family: Family; searchedName: st
         </div>
       </motion.div>
 
-      {/* ── Head + Spouse (side-by-side with connector) ── */}
-      {head && (
-        <motion.div {...fadeUp(0.05)}>
-          <SectionLabel label={lang === "en" ? "Head of Household" : "परिवार के मुखिया"} />
-          <div className="flex items-stretch gap-2">
-            <div className="flex-1">
-              <MemberCard m={head} highlight={isHit(head)} index={0} headId={family.headId} />
-            </div>
-            {spouse && (
-              <>
-                {/* Horizontal connector */}
-                <div className="flex items-center">
-                  <div className="flex flex-col items-center gap-0.5">
-                    <div className="w-5 h-px" style={{ backgroundColor: "#C9922A", opacity: 0.5 }} />
-                    <span className="text-[9px]" style={{ color: "#C9922A" }}>❤</span>
-                    <div className="w-5 h-px" style={{ backgroundColor: "#C9922A", opacity: 0.5 }} />
+      {/* ── Tree Diagram Card ── */}
+      <motion.div {...fadeUp(0.06)} className="card p-5 sm:p-7" style={{ overflowX: "auto" }}>
+        {/* Flex column — all rows centered horizontally so lines align naturally */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "max-content", minWidth: "100%" }}>
+
+          {/* ── Generation 1: Couple row ── */}
+          {head && (
+            <div style={{ display: "flex", alignItems: "flex-start" }}>
+              <motion.div
+                initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ type: "spring", stiffness: 260, damping: 22 }}>
+                <TreeNode m={head} highlight={isHit(head)} headId={family.headId} />
+              </motion.div>
+
+              {hasSpouse && (
+                <>
+                  {/* ❤ connector centered at circle mid-height */}
+                  <div style={{
+                    display: "flex", flexDirection: "column", alignItems: "center",
+                    paddingTop: NODE_SIZE / 2 - 11, width: HEART_W, gap: 2,
+                  }}>
+                    <div style={{ width: "100%", height: 2, backgroundColor: LINE_COL, opacity: 0.55 }} />
+                    <span style={{ fontSize: 12, color: LINE_COL, lineHeight: 1 }}>❤</span>
+                    <div style={{ width: "100%", height: 2, backgroundColor: LINE_COL, opacity: 0.55 }} />
                   </div>
-                </div>
-                <div className="flex-1">
-                  <MemberCard m={spouse} highlight={isHit(spouse)} index={1} headId={family.headId} />
-                </div>
-              </>
-            )}
-          </div>
-        </motion.div>
-      )}
 
-      {/* ── Vertical connector to children ── */}
-      {children.length > 0 && (
-        <div className="flex flex-col items-center">
-          <motion.div className="w-px" style={{ backgroundColor: "var(--border)", height: 24 }}
-            initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ delay: 0.15 }} />
-          <ChevronDown size={13} style={{ color: "var(--text-3)" }} />
+                  <motion.div
+                    initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ type: "spring", stiffness: 260, damping: 22, delay: 0.07 }}>
+                    <TreeNode m={spouse!} highlight={isHit(spouse!)} headId={family.headId} />
+                  </motion.div>
+                </>
+              )}
+            </div>
+          )}
+
+          {/* ── Vertical drop from couple ── */}
+          {hasChildren && (
+            <motion.div
+              initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
+              transition={{ delay: 0.15, duration: 0.3 }}
+              style={{ width: 2, height: 36, backgroundColor: LINE_COL, opacity: 0.45, transformOrigin: "top" }} />
+          )}
+
+          {/* ── Generation 2: Children with bracket connector ── */}
+          {hasChildren && (
+            <div style={{ display: "flex" }}>
+              {children.map((child, i) => {
+                const isFirst = i === 0;
+                const isLast  = i === children.length - 1;
+                const isOnly  = children.length === 1;
+
+                return (
+                  <div key={child.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", width: CHILD_COL }}>
+                    {/* Bracket segment: horizontal rail + vertical drop */}
+                    <div style={{ width: "100%", height: 32, position: "relative" }}>
+                      {/* Left half of horizontal rail */}
+                      {!isOnly && !isFirst && (
+                        <div style={{
+                          position: "absolute", top: 0, left: 0, width: "50%",
+                          height: 2, backgroundColor: LINE_COL, opacity: 0.45,
+                        }} />
+                      )}
+                      {/* Right half of horizontal rail */}
+                      {!isOnly && !isLast && (
+                        <div style={{
+                          position: "absolute", top: 0, right: 0, width: "50%",
+                          height: 2, backgroundColor: LINE_COL, opacity: 0.45,
+                        }} />
+                      )}
+                      {/* Vertical drop to node */}
+                      <div style={{
+                        position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)",
+                        width: 2, height: "100%", backgroundColor: LINE_COL, opacity: 0.45,
+                      }} />
+                    </div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 + i * 0.06, type: "spring", stiffness: 260, damping: 22 }}>
+                      <TreeNode m={child} highlight={isHit(child)} headId={family.headId} />
+                    </motion.div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
-      )}
+      </motion.div>
 
-      {/* ── Children ── */}
-      {children.length > 0 && (
-        <motion.div {...fadeUp(0.15)}>
-          <SectionLabel label={lang === "en" ? `Children (${children.length})` : `संतान (${children.length})`} />
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {children.map((m, i) => (
-              <MemberCard key={m.id} m={m} highlight={isHit(m)} index={i + 2} headId={family.headId} />
-            ))}
-          </div>
-        </motion.div>
-      )}
-
-      {/* ── Other household members ── */}
+      {/* ── Other Household Members (compact nodes) ── */}
       {others.length > 0 && (
-        <motion.div {...fadeUp(0.25)}>
-          <SectionLabel label={lang === "en" ? `Other Household Members (${others.length})` : `अन्य सदस्य (${others.length})`} />
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        <motion.div {...fadeUp(0.22)} className="card p-4 sm:p-5">
+          <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "var(--text-3)" }}>
+            {lang === "en" ? `Other Members (${others.length})` : `अन्य सदस्य (${others.length})`}
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 16, justifyContent: "center" }}>
             {others.map((m, i) => (
-              <MemberCard key={m.id} m={m} highlight={isHit(m)} index={i} headId={family.headId} />
+              <motion.div key={m.id}
+                initial={{ opacity: 0, scale: 0.88 }} animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: i * 0.05 }}>
+                <TreeNode m={m} highlight={isHit(m)} headId={family.headId} compact />
+              </motion.div>
             ))}
           </div>
         </motion.div>
       )}
 
       {/* ── Disclaimer ── */}
-      <motion.div {...fadeUp(0.35)} className="flex items-start gap-2 p-3 rounded-xl"
+      <motion.div {...fadeUp(0.3)} className="flex items-start gap-2 p-3 rounded-xl"
         style={{ backgroundColor: "rgba(59,130,246,0.06)", border: "1px solid rgba(59,130,246,0.12)" }}>
         <Info size={12} className="mt-0.5 shrink-0" style={{ color: "#3b82f6" }} />
         <p className="text-[11px] leading-relaxed" style={{ color: "var(--text-3)" }}>
