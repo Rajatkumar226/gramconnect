@@ -104,15 +104,10 @@ export const T = {
     },
     login: {
       message: "Login to access all features",
-      title: "Enter Mobile Number", sub: "We'll send an OTP to verify you",
-      send: "Send OTP", sending: "Sending…", changeNum: "Change number",
-      otpTitle: "Enter OTP", otpSub: "Sent to",
-      demo: "Demo mode — your OTP is",
-      verify: "Verify & Continue",
+      title: "Sign in to GramConnect", sub: "Use your Google account to continue",
       terms: "By continuing you agree to Dehrian Panchayat's terms of use",
       googleBtn: "Continue with Google",
       googleLoading: "Signing in…",
-      or: "or sign in with mobile",
     },
     footer: {
       tagline: "Connecting Dehrian with government services, local businesses, and emergency support — digitally.",
@@ -241,15 +236,10 @@ export const T = {
     },
     login: {
       message: "सभी सुविधाओं के लिए लॉगिन करें",
-      title: "मोबाइल नंबर दर्ज करें", sub: "हम OTP भेजकर आपकी पहचान सत्यापित करेंगे",
-      send: "OTP भेजें", sending: "भेज रहे हैं…", changeNum: "नंबर बदलें",
-      otpTitle: "OTP दर्ज करें", otpSub: "भेजा गया",
-      demo: "डेमो मोड — आपका OTP है",
-      verify: "सत्यापित करें",
+      title: "GramConnect में साइन इन करें", sub: "जारी रखने के लिए अपना Google अकाउंट उपयोग करें",
       terms: "जारी रखने पर आप डेहरियाँ पंचायत की उपयोग शर्तों से सहमत हैं",
       googleBtn: "Google से जारी रखें",
       googleLoading: "साइन इन हो रहा है…",
-      or: "या मोबाइल से साइन इन करें",
     },
     footer: {
       tagline: "डेहरियाँ को सरकारी सेवाओं, स्थानीय व्यापार और आपातकालीन सहायता से डिजिटली जोड़ रहे हैं।",
