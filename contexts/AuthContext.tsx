@@ -1,10 +1,10 @@
 "use client";
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 
-export type AuthUser = { uid: string; phone: string; name: string };
+export type AuthUser = { uid: string; phone: string; name: string; email?: string; photoURL?: string };
 type ModalState = { message: string; onSuccess?: () => void } | null;
 
 type AuthCtx = {
@@ -12,6 +12,7 @@ type AuthCtx = {
   modalState: ModalState;
   requireAuth: (message: string, onSuccess?: () => void) => void;
   saveProfile: (uid: string, phone: string, name: string) => Promise<void>;
+  loginWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
   closeModal: () => void;
 };
@@ -26,8 +27,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const unsub = onAuthStateChanged(auth, async (fbUser) => {
       if (fbUser) {
         const snap = await getDoc(doc(db, "users", fbUser.uid));
-        const name = snap.exists() ? (snap.data().name as string) : "User";
-        setUser({ uid: fbUser.uid, phone: fbUser.phoneNumber ?? "", name });
+        if (snap.exists()) {
+          const data = snap.data();
+          setUser({
+            uid: fbUser.uid,
+            phone: (data.phone as string) ?? fbUser.phoneNumber ?? "",
+            name: (data.name as string) ?? fbUser.displayName ?? "User",
+            email: fbUser.email ?? undefined,
+            photoURL: fbUser.photoURL ?? undefined,
+          });
+        } else {
+          // First Google login — auto-create Firestore profile from Google account data
+          const name = fbUser.displayName ?? "User";
+          const phone = fbUser.phoneNumber ?? "";
+          await setDoc(doc(db, "users", fbUser.uid), { phone, name, email: fbUser.email ?? "" }, { merge: true });
+          setUser({ uid: fbUser.uid, phone, name, email: fbUser.email ?? undefined, photoURL: fbUser.photoURL ?? undefined });
+        }
       } else {
         setUser(null);
       }
@@ -38,6 +53,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const saveProfile = useCallback(async (uid: string, phone: string, name: string) => {
     await setDoc(doc(db, "users", uid), { phone, name }, { merge: true });
     setUser({ uid, phone, name });
+    setModalState((prev) => { prev?.onSuccess?.(); return null; });
+  }, []);
+
+  const loginWithGoogle = useCallback(async () => {
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider);
     setModalState((prev) => { prev?.onSuccess?.(); return null; });
   }, []);
 
@@ -53,7 +74,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const closeModal = useCallback(() => setModalState(null), []);
 
   return (
-    <AuthContext.Provider value={{ user, modalState, requireAuth, saveProfile, logout, closeModal }}>
+    <AuthContext.Provider value={{ user, modalState, requireAuth, saveProfile, loginWithGoogle, logout, closeModal }}>
       {children}
     </AuthContext.Provider>
   );
